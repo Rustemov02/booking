@@ -1,35 +1,35 @@
 .languageList {
-    height: 0;
-    overflow: hidden;
-    width: fit-content;
-    border-radius: 8px;
-    background-color: lightblue;
-    transition: 0.8 ease-in;
-    -webkit-transition: 0.8 ease-in;
-    -moz-transition: 0.8 ease-in;
-    -ms-transition: 0.8 ease-in;
-    -o-transition: 0.8 ease-in;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    background-color: transparent;
-    padding-block: 2px;
-    opacity: 0;
+  height: 0;
+  overflow: hidden;
+  width: fit-content;
+  border-radius: 8px;
+  background-color: lightblue;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: transparent;
+  padding-block: 2px;
+  opacity: 0; 
+  transition: 0.8s;
+  margin-top: 3px;
+  -webkit-transition: 0.8s;
+  -moz-transition: 0.8s;
+  -ms-transition: 0.8s;
+  -o-transition: 0.8s;
 }
 
-
-.active{
-    height: auto;
-    overflow: auto;
-    max-height: 500px;
-    opacity: 1;
-    transition: 0.8s;
-    -webkit-transition: 0.8s;
-    -moz-transition: 0.8s;
-    -ms-transition: 0.8s;
-    -o-transition: 0.8s;
+.active {
+  height: auto;
+  overflow: auto;
+  max-height: 500px;
+  opacity: 1;
+  transition: 0.8s;
+  -webkit-transition: 0.8s;
+  -moz-transition: 0.8s;
+  -ms-transition: 0.8s;
+  -o-transition: 0.8s;
 }

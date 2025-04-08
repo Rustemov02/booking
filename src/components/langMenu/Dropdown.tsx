@@ -18,14 +18,15 @@ const LanguageDropdown = () => {
   return (
     <>
       <div className="w-fit cursor-pointer" onClick={()=>setIsOpen(!isOpen)}>
-        <img src={selectedLang} alt="enFlag" />
+        <img src={selectedLang} alt="flag" />
       </div>
 
       <div  className={`${styles.languageList} ${isOpen ? styles.active : ""} `}>
         {flagData.map((item) => (
-          <>
-            <img src={item} className="cursor-pointer" onClick={()=>handleClickImg(item)} />
-          </>
+           item !== selectedLang ? (
+             <img src={item} className="cursor-pointer" onClick={()=>handleClickImg(item)} />
+           ) : ""
+           
         ))}
       </div>
     </>
