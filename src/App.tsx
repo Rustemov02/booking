@@ -1,13 +1,11 @@
-import Button from "./components/button/Button"
+import GuestHeader from "./components/header/GuestHeader";
 
 function App() {
-
   return (
-    <div className="bg-primary-500">
-      <Button title="Sign in" />
- 
+    <div className="flex justify-center h-20 w-full px-4">
+      <GuestHeader />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -16,8 +16,8 @@ const LanguageDropdown = () => {
   }
 
   return (
-    <>
-      <div className="w-fit cursor-pointer" onClick={()=>setIsOpen(!isOpen)}>
+    <div>
+      <div className="w-fit cursor-pointer relative" onClick={()=>setIsOpen(!isOpen)}>
         <img src={selectedLang} alt="flag" />
       </div>
 
@@ -29,7 +29,7 @@ const LanguageDropdown = () => {
            
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

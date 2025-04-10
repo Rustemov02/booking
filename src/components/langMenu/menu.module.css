@@ -20,12 +20,16 @@
   -moz-transition: 0.8s;
   -ms-transition: 0.8s;
   -o-transition: 0.8s;
+  position: absolute;
+  top: auto;
+  visibility: hidden;
 }
 
 .active {
   height: auto;
   overflow: auto;
   max-height: 500px;
+  visibility: visible;
   opacity: 1;
   transition: 0.8s;
   -webkit-transition: 0.8s;

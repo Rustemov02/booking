@@ -5,16 +5,17 @@ interface ButtonProps {
   width?: number;
   height?: number;
   onClick?: () => void;
+  className?: string;
 }
 
-const Button: FC<ButtonProps> = ({ title, onClick, width, height }) => {
+const Button: FC<ButtonProps> = ({ title, onClick, width, height , className }) => {
   const standartButtonStyle =
-    "py-2 px-4 border border-primary-500 rounded-[4px] cursor-pointer w-full";
+    "py-1 px-4 border border-[#07689F] text-[#07689F] rounded-[4px] cursor-pointer w-full min-w-fit font-bold text-16";
 
   return (
     <>
       <button
-        className={standartButtonStyle}
+        className={`${standartButtonStyle} ${className}`}
         style={{ width: `${width}px`, height: `${height}px` }}
         onClick={onClick}
       >
