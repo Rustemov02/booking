@@ -13,7 +13,7 @@ const GuestHeader = () => {
       <span className="hidden md:block">
         <LanguageDropdown />
       </span>
-      <div className="w-1/2 sm:block hidden">
+      <div className="w-1/2 md:block hidden">
         <Search />
       </div>
 
