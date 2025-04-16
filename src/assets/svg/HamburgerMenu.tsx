@@ -1,5 +1,5 @@
 
-const HamburgerMenu = ({ size }: {size : number}) => {
+const HamburgerMenu = ({ size}: {size : number}) => {
   return (
     <>
       <svg

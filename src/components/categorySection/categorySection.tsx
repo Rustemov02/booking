@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SectionCard from "./SectionCard";
+import styles from './section.module.css'
 
 const CategorySection = () => {
   const categoryData = [
@@ -14,7 +15,7 @@ const CategorySection = () => {
  
   
   return (
-    <div className="flex flex-row justify-center gap-4">
+    <div className={styles.card_container}>
       {categoryData.map((item) => {
         return <SectionCard title={item} selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>;
       })}
