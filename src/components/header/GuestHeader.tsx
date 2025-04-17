@@ -6,7 +6,7 @@ import Search from "../search/Search";
 
 const GuestHeader = () => {
   return (
-    <div className="flex flex-row items-center justify-between px-4 py-6 gap-4 w-full max-w-[1220px]  ">
+    <div className="flex flex-row items-center justify-between px-4 py-6 gap-4 w-full max-w-[1220px] m-auto  ">
       <div>
         <img src={Logo} alt="Logo" className="w-[80px] md:w-[130px] h-[130px]" />
       </div>
