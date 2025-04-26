@@ -24,7 +24,7 @@ const LanguageDropdown = () => {
       <div  className={`${styles.languageList} ${isOpen ? styles.active : ""} `}>
         {flagData.map((item) => (
            item !== selectedLang ? (
-             <img src={item} className="cursor-pointer" onClick={()=>handleClickImg(item)} />
+             <img key={item} src={item} className="cursor-pointer" onClick={()=>handleClickImg(item)} />
            ) : ""
            
         ))}

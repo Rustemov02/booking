@@ -1,4 +1,4 @@
-const Close = (size : number) => {
+const Close = ({size} : {size : number}) => {
   return (
     <>
       <svg
@@ -8,7 +8,7 @@ const Close = (size : number) => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect width="60" height="60" rx="4" fill="white" />
+        <rect width="60" height="60" rx="4" fill="transparent" />
         <path d="M17 42.4561L42.4558 17.0002" stroke="black" stroke-width="4" />
         <path
           d="M17.2725 17.272L42.7283 42.7278"
