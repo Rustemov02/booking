@@ -1,31 +1,43 @@
 import HotelIcon from "../../assets/svg/hotel.svg";
-// import AddPeople from "../../assets/svg/peopleAdd.svg";
+import peopleAdd from "../../assets/svg/peopleAdd.svg";
 import CalendarIcon from "../../assets/svg/calendar.svg";
+import arrowDown from "../../assets/svg/arrow-down.svg";
+
 import { DatePicker } from "rsuite";
 import { useState } from "react";
+import styles from "./bar.module.css";
 
-const BookingBar = ({extraStyle } : {extraStyle?: string}) => {
+const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   const [isCheckInModalOpen, setIsCheckInModalOpen] = useState(false);
   const [isCheckOutModalOpen, setIsCheckOutModalOpen] = useState(false);
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+  const [isPersonalModalOpen, setIsPersonalModalOpen] =
+    useState<boolean>(false);
 
+
+    const Counter = () => {
+      return( 
+        <div className="border rounded-sm">
+          
+        </div>
+      )
+    }
   return (
-    <div className={`flex flex-row items-center w-fit rounded-[4px] border text-amber-500 overflow-hidden gap-2 bg-transparent ${extraStyle}`}>
+    <div className={`${styles.container} ${extraStyle}`}>
       {/* where are you going */}
-      <div className="pr-0 flex flex-row items-center gap-4 ">
+      <div className="pr-0 pl-4 flex flex-row items-center gap-4 border-r-2 border-amber-500 ">
         <img src={HotelIcon} alt="hotel" />
         <p className="text-[12px] text-[#000] font-normal">
           Where Are You Going To?
         </p>
       </div>
-      <div className="w-[2px] bg-amber-500 h-[43px] border"/>
       {/* Check In Date */}
       <div
-        className="flex flex-row items-center justify-between gap-6 relative w-auto cursor-pointer"
+        className="flex pl-4 border-r-2 border-amber-500 flex-row items-center justify-start gap-6 relative w-auto cursor-pointer"
         onClick={() => setIsCheckInModalOpen(true)}
       >
-        <img src={CalendarIcon} alt="person" />
+        <img src={CalendarIcon} alt="calendar" />
         <DatePicker
           open={isCheckInModalOpen}
           onClose={() => setIsCheckInModalOpen(false)}
@@ -41,7 +53,7 @@ const BookingBar = ({extraStyle } : {extraStyle?: string}) => {
             }
           }}
           cleanable={false}
-          className="absolute top-2 right-full"
+          className="absolute top-2"
           style={{ visibility: "hidden" }}
         />
         <p className="text-[12px] text-[#000] font-normal">{`${
@@ -50,10 +62,9 @@ const BookingBar = ({extraStyle } : {extraStyle?: string}) => {
             : checkInDate?.toLocaleDateString("tr-TR")
         }`}</p>
       </div>
-      <div className="w-[2px] bg-amber-500 h-[43px] border"/>
       {/* Check Out Date */}
       <div
-        className="flex flex-row items-center justify-between gap-6 relative w-auto cursor-pointer"
+        className="flex flex-row pl-4 border-r-2 border-amber-500 items-center justify-start gap-6 relative w-auto cursor-pointer"
         onClick={() => setIsCheckOutModalOpen(true)}
       >
         <img src={CalendarIcon} alt="person" />
@@ -73,7 +84,7 @@ const BookingBar = ({extraStyle } : {extraStyle?: string}) => {
             }
           }}
           cleanable={false}
-          className="absolute top-4 left-0"
+          className="absolute top-2"
           style={{ visibility: "hidden" }}
         />
         <p className="text-[12px] text-[#000] font-normal">{`${
@@ -81,7 +92,30 @@ const BookingBar = ({extraStyle } : {extraStyle?: string}) => {
             ? "Check Out Date"
             : checkOutDate?.toLocaleDateString("tr-TR")
         }`}</p>
-      </div> 
+      </div>
+
+      {/* Person count */}
+      <div className="relative flex flex-row items-center justify-between px-4 gap-1">
+        <img src={peopleAdd} alt="person" />
+        <div className="flex flex-row items-end gap-4">
+          <p className="text-[12px] text-[#000] font-normal">Adults</p>
+          <p className="text-[12px] text-[#000] font-normal">Children</p>
+          <p className="text-[12px] text-[#000] font-normal">Rooms</p>
+        </div>
+        <img
+          src={arrowDown}
+          alt="arrowDown"
+          className="cursor-pointer"
+          onClick={() => setIsPersonalModalOpen(!isPersonalModalOpen)}
+        />
+        <div
+          className={`${
+            isPersonalModalOpen ? "opacity-100 max-h-auto" : "opacity-0 h-0"
+          } absolute top-12 right-0 p-4 bg-white rounded-sm transition-all duration-500 border w-full`}
+        >
+          <div><p>Yetişkin</p> </div>
+        </div>
+      </div>
       {/* SEARCH */}
       <button className="p-[10px] bg-[#07689F]">
         <p className="text-[#FFF] text-[16px]">Search</p>
