@@ -6,7 +6,7 @@ const Intro = () => {
       <div
         className="w-full h-[400px] mt-10 relative"
         style={{
-          // backgroundImage: "url('/backgroundImg.jpg')",
+          backgroundImage: "url('/backgroundImg.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
