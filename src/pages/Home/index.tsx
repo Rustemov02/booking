@@ -9,7 +9,7 @@ const Home = () => {
       <GuestHeader />
       <CategorySection />
       <Intro />
-      {/* <DestinationsPage/> */}
+      <DestinationsPage/>
     </>
   );
 };

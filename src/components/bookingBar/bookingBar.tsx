@@ -2,11 +2,11 @@ import HotelIcon from "../../assets/svg/hotel.svg";
 import peopleAdd from "../../assets/svg/peopleAdd.svg";
 import CalendarIcon from "../../assets/svg/calendar.svg";
 import arrowDown from "../../assets/svg/arrow-down.svg";
-import IncreaseIcon from "../../assets/svg/add.svg?react";
-import DecreaseIcon from "../../assets/svg/remove.svg?react";
 import { DatePicker } from "rsuite";
 import { useState } from "react";
 import styles from "./bar.module.css";
+import Counter from "../counter/Counter";
+import Switch from "../toggleSwitch/Switch";
 
 const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   const [isCheckInModalOpen, setIsCheckInModalOpen] = useState(false);
@@ -16,38 +16,6 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   const [isPersonalModalOpen, setIsPersonalModalOpen] =
     useState<boolean>(false);
 
-  const Counter = ({
-    count,
-    onChange,
-  }: {
-    count: number;
-    onChange: (value: number) => void;
-  }) => {
-    const [currentNumb, setCurrentNumb] = useState<number>(count || 0);
-
-    const handleDecrease = () => {
-      const newValue = currentNumb - 1;
-      setCurrentNumb(newValue);
-      onChange(newValue);
-    };
-
-    const handleIncrease = () => {
-      const newValue = currentNumb + 1;
-      setCurrentNumb(newValue);
-      onChange(newValue);
-    };
-
-    return (
-      <div className="flex flex-row items-center justify-between border w-full max-w-25 rounded-sm py-2 px-1 bg-white ">
-        <DecreaseIcon onClick={handleDecrease} className="cursor-pointer" />
-        <span>{currentNumb}</span>
-        <IncreaseIcon onClick={handleIncrease} className="cursor-pointer" />
-      </div>
-    );
-  };
-
-  const [adultsNumber, setAdultsNumber] = useState(0);
-  const [toggle, setToggle] = useState(false);
   return (
     <div className={`${styles.container} ${extraStyle}`}>
       {/* where are you going */}
@@ -135,12 +103,13 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
         />
         <div
           className={`${
-            isPersonalModalOpen ? "opacity-100 max-h-auto overflow-auto" : "opacity-0 h-0 overflow-hidden"
+            isPersonalModalOpen
+              ? "opacity-100 max-h-auto overflow-auto"
+              : "opacity-0 h-0 overflow-hidden"
           } absolute top-12 right-0 p-4 space-y-2 bg-white rounded-sm transition-all duration-500 border w-full`}
         >
           <div className="flex flex-row items-center justify-between gap-4">
-            <p>Adults</p>{" "}
-            <Counter count={adultsNumber} onChange={setAdultsNumber} />
+            <p>Adults</p> <Counter count={0} onChange={() => {}} />
           </div>
           <div className="flex flex-row items-center justify-between gap-4">
             <p>Children</p> <Counter count={0} onChange={() => {}} />
@@ -149,24 +118,9 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
             <p>Rooms</p> <Counter count={0} onChange={() => {}} />
           </div>
           <hr />
-          {/* traveling üith pets */}
+          {/* traveling with pets */}
           <div className="flex flex-row items-center justify-between">
-            <p>Are you traveling with a pet?</p>{" "}
-            <div
-              // UPDATE: you can use here twMerge
-              onClick={() => setToggle(!toggle)}
-              className={`w-[35px] h-[24px] flex items-center ${
-                toggle ? "justify-end bg-blue-700" : "justify-start bg-gray-600"
-              } transition-all duration-500  rounded-xl cursor-pointer`}
-            >
-              <div
-                className="w-[24px] h-[24px] border bg-[#ffffff] rounded-full transform transition-transform duration-500"
-                style={{
-                  transform: toggle ? "translateX(3px)" : "translateX(-2px)",
-                  borderColor: toggle ? "#1447e6" : "#4a5565",
-                }}
-              ></div>
-            </div>
+            <p>Are you traveling with a pet?</p> <Switch onChange={() => {}} />
           </div>
         </div>
       </div>

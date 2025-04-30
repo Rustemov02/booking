@@ -9,7 +9,6 @@ import SideModal from "../modal/sideModal";
 
 const GuestHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
- 
 
   return (
     <>
@@ -42,15 +41,10 @@ const GuestHeader = () => {
           >
             <HamburgerMenu size={40} />
           </div>
- 
         </div>
       </div>
 
-
-      
-
-      <SideModal isOpen={isOpen} onClose={()=>setIsOpen(false)}/>
-      
+      <SideModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 };
