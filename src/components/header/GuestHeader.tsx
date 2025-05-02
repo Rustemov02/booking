@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import HamburgerMenu from "../../assets/svg/HamburgerMenu";
 import Logo from "../../assets/svg/Logo.svg";
 import Button from "../button/Button";

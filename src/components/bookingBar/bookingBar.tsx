@@ -1,7 +1,7 @@
 import HotelIcon from "../../assets/svg/hotel.svg";
 import peopleAdd from "../../assets/svg/peopleAdd.svg";
 import CalendarIcon from "../../assets/svg/calendar.svg";
-import arrowDown from "../../assets/svg/arrow-down.svg";
+import ArrowDown from "../../assets/svg/arrow-down.svg?react";
 import { DatePicker } from "rsuite";
 import { useState } from "react";
 import styles from "./bar.module.css";
@@ -17,9 +17,9 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
     useState<boolean>(false);
 
   return (
-    <div className={`${styles.container} ${extraStyle}`}>
+    <div className={`hidden md-2:flex flex-row items-center flex-wrap w-4/5 border border-[#A6A6A6] bg-white rounded-[4px] ${extraStyle}`}>
       {/* where are you going */}
-      <div className="pr-0 pl-4 flex flex-row items-center gap-4 border-r-2 border-amber-500 ">
+      <div className={`${styles.item}`}>
         <img src={HotelIcon} alt="hotel" />
         <p className="text-[12px] text-[#000] font-normal">
           Where Are You Going To?
@@ -27,7 +27,7 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
       </div>
       {/* Check In Date */}
       <div
-        className="flex pl-4 border-r-2 border-amber-500 flex-row items-center justify-start gap-6 relative w-auto cursor-pointer"
+        className={`justify-start gap-6 relative cursor-pointer ${styles.item}`}
         onClick={() => setIsCheckInModalOpen(true)}
       >
         <img src={CalendarIcon} alt="calendar" />
@@ -57,7 +57,7 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
       </div>
       {/* Check Out Date */}
       <div
-        className="flex flex-row pl-4 border-r-2 border-amber-500 items-center justify-start gap-6 relative w-auto cursor-pointer"
+        className={`justify-start gap-6 relative cursor-pointer ${styles.item}`}
         onClick={() => setIsCheckOutModalOpen(true)}
       >
         <img src={CalendarIcon} alt="person" />
@@ -88,25 +88,34 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
       </div>
 
       {/* Person count */}
-      <div className="relative flex flex-row items-center justify-between px-4 gap-1">
+      <div className={`relative  justify-between gap-1 ${styles.item}`}>
         <img src={peopleAdd} alt="person" />
         <div className="flex flex-row items-end gap-4">
           <p className="text-[12px] text-[#000] font-normal">Adults</p>
           <p className="text-[12px] text-[#000] font-normal">Children</p>
           <p className="text-[12px] text-[#000] font-normal">Rooms</p>
         </div>
-        <img
+        {/* <img
           src={arrowDown}
           alt="arrowDown"
           className="cursor-pointer"
           onClick={() => setIsPersonalModalOpen(!isPersonalModalOpen)}
-        />
+        /> */}
+        <span>
+          <ArrowDown
+            className={`cursor-pointer transition-transform duration-300 ${
+              isPersonalModalOpen ? "rotate-x-180 " : "rotate-x-0"
+            }`}
+            onClick={() => setIsPersonalModalOpen(!isPersonalModalOpen)}
+          />
+        </span>
+        {/*  --- Modal ---  */}
         <div
           className={`${
             isPersonalModalOpen
               ? "opacity-100 max-h-auto overflow-auto"
               : "opacity-0 h-0 overflow-hidden"
-          } absolute top-12 right-0 p-4 space-y-2 bg-white rounded-sm transition-all duration-500 border w-full`}
+          } absolute top-12 right-0 p-4 space-y-2 bg-white rounded-sm transition-all duration-500 border w-auto`}
         >
           <div className="flex flex-row items-center justify-between gap-4">
             <p>Adults</p> <Counter count={0} onChange={() => {}} />
@@ -125,8 +134,8 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
         </div>
       </div>
       {/* SEARCH */}
-      <button className="p-[10px] bg-[#07689F]">
-        <p className="text-[#FFF] text-[16px]">Search</p>
+      <button className={`${styles.searchBtn} `}>
+        <p className={`text-[#FFF] text-[16px] ${styles.searchBtn}`}>Search</p>
       </button>
     </div>
   );
