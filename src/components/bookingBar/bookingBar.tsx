@@ -17,7 +17,7 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
     useState<boolean>(false);
 
   return (
-    <div className={`hidden md-2:flex flex-row items-center flex-wrap w-4/5 border border-[#A6A6A6] bg-white rounded-[4px] ${extraStyle}`}>
+    <div className={`hidden lg:flex md-2:flex flex-row items-center flex-wrap w-4/5 border border-[#A6A6A6] bg-white rounded-[4px] ${extraStyle}`}>
       {/* where are you going */}
       <div className={`${styles.item}`}>
         <img src={HotelIcon} alt="hotel" />
@@ -88,19 +88,13 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
       </div>
 
       {/* Person count */}
-      <div className={`relative  justify-between gap-1 ${styles.item}`}>
+      <div className={`relative  justify-between gap-1 ${styles.item} !border-none`}>
         <img src={peopleAdd} alt="person" />
         <div className="flex flex-row items-end gap-4">
           <p className="text-[12px] text-[#000] font-normal">Adults</p>
           <p className="text-[12px] text-[#000] font-normal">Children</p>
           <p className="text-[12px] text-[#000] font-normal">Rooms</p>
-        </div>
-        {/* <img
-          src={arrowDown}
-          alt="arrowDown"
-          className="cursor-pointer"
-          onClick={() => setIsPersonalModalOpen(!isPersonalModalOpen)}
-        /> */}
+        </div> 
         <span>
           <ArrowDown
             className={`cursor-pointer transition-transform duration-300 ${
