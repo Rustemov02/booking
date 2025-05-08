@@ -86,7 +86,6 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
             : checkOutDate?.toLocaleDateString("tr-TR")
         }`}</p>
       </div>
-
       {/* Person count */}
       <div className={`relative  justify-between gap-1 ${styles.item} !border-none`}>
         <img src={peopleAdd} alt="person" />
