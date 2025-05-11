@@ -4,37 +4,19 @@ import Intro from "../../pages/Home/Intro";
 import DestinationsPage from "./Destinations/DestinatoinsPage";
 import PastOffers from "./PastOffers/PastOffers";
 
-import { supabase } from "../../lib/supabaseClient";
-import { useEffect } from "react";
 const Home = () => {
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data, error } = await supabase
-        .from("booking_rooms_list")
-        .select("*");
-        
-      if (error) {
-        console.log("Error fetching data: ", error.message);
-      } else {
-        console.log("Fetched data: ", data);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
   return (
     <>
       <GuestHeader />
 
-      {/* <CategorySection />
+      <CategorySection />
       <Intro />
-      <DestinationsPage />
+      {/* <DestinationsPage />
       <PastOffers /> */}
 
       {/* additional component */}
       {/* FIXME:  improve style and add upload image for background*/}
-      {/* <div
+      <div
         className="w-full mb-48 h-[400px] mt-10 relative"
         style={{
           backgroundImage: "url('/backgroundImg.jpg')",
@@ -43,16 +25,19 @@ const Home = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <p className="text-[16px] text-white font-semibold absolute top-11 left-13">
-          Get Inspirations For Your Next Trip <br />
-          <span>Read About Wonderful Adventure We Love Most</span>
-        </p>
-        <p className="text-[16px] lg:text-[28px] text-white font-bold w-[40%] text-end absolute bottom-11 right-13">
-          Difficult Roads Lead To Beautiful Destination.
-          <br />
-          <span>Read More {">"}</span>
-        </p>
-      </div> */}
+          <p className="text-[20px] sm:text-[28px] lg:text-[40px] transition-all text-white font-bold absolute top-11 left-13 flex flex-col">
+            <span>Get Inspirations For Your Next Trip</span>
+            <span className="text-[14px] sm:text-[18px] lg:text-[20px] font-normal w-3/4 lg:w-full lg:font-semibold">
+              Read About Wonderful Adventure We Love Most
+            </span>
+          </p>
+          <p className="flex flex-col text-[22px] sm:text-[32px] md:text-[38px] lg:text-[40px] text-white font-bold w-[90%] sm:w-[60%] lg:w-[40%] text-end absolute bottom-11 right-13">
+            <span>Difficult Roads Lead To Beautiful Destination.</span>
+            <span className="text-[18px] font-normal cursor-pointer transition-all duration-500 hover:scale-x-95">
+              Read More {">"}
+            </span>
+          </p>
+      </div>
     </>
   );
 };
