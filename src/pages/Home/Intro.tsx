@@ -7,7 +7,7 @@ const Intro = () => {
       <div
         className="w-full h-[400px] mt-10 relative"
         style={{
-          backgroundImage: "url('/backgroundImg.jpg')",
+          // backgroundImage: "url('/backgroundImg.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -19,7 +19,7 @@ const Intro = () => {
         </p>
       </div>
       {/* <MiniBar /> */}
-      <BookingBar extraStyle="absolute  top-105 mx-auto bg-white" />
+      <BookingBar extraStyle="absolute  top-105  mx-auto bg-white" />
     </div>
   );
 };

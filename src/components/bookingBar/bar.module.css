@@ -22,7 +22,7 @@
   height: 100%;
   min-width: fit-content;
   gap: 16px;
-  border-right: solid 2px var(--color-amber-500);
+  border-right: solid 2px #a6a6a6;
 }
 
 .searchBtn {
