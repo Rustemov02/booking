@@ -19,7 +19,7 @@ const Intro = () => {
         </p>
       </div>
       {/* <MiniBar /> */}
-      <BookingBar extraStyle="absolute  top-105  mx-auto bg-white" />
+      <BookingBar extraStyle="absolute  top-105 mx-auto bg-white" />
     </div>
   );
 };

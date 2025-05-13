@@ -1,2 +1,5 @@
-
 https://www.figma.com/design/c7Qlidga53QUBxO8JQ0Q6p/%F0%9F%8C%8EEasySet24--Community-?node-id=102-1176&p=f&m=dev
+  
+  
+  ====> use motion frame for animation (installed)
+  

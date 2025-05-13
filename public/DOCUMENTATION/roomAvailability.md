@@ -1,6 +1,7 @@
 # 🏨 Room Availability API Spec
 
 ## ✅ Endpoint
+
 `GET /api/rooms/availability`
 
 Bu endpoint istifadəçinin seçdiyi tarix və nəfər sayına uyğun olaraq mövcud otaqları qaytarır.
@@ -9,11 +10,13 @@ Bu endpoint istifadəçinin seçdiyi tarix və nəfər sayına uyğun olaraq mö
 
 ## 📥 Query Parameters
 
-| Parametr   | Tip     | Təsviri                         | Nümunə           |
-|------------|---------|----------------------------------|------------------|
-| `checkIn`  | string  | Gəlmə tarixi (ISO format)        | `2025-06-01`     |
-| `checkOut` | string  | Çıxış tarixi (ISO format)        | `2025-06-05`     |
-| `guests`   | number  | Ümumi nəfər sayı                | `2`              |
+| Parametr   | Tip    | Təsviri                   | Nümunə       |
+| ---------- | ------ | ------------------------- | ------------ |
+| `checkIn`  | string | Gəlmə tarixi (ISO format) | `2025-06-01` |
+| `checkOut` | string | Çıxış tarixi (ISO format) | `2025-06-05` |
+| `adults`   | number | Böyüklərin sayı           | `2`          |
+| `children` | number | Uşaq sayı                 | `1`          |
+| `rooms`    | number | Otaq sayı                 | `2`          |
 
 ---
 
@@ -57,17 +60,21 @@ Bu endpoint istifadəçinin seçdiyi tarix və nəfər sayına uyğun olaraq mö
 ## 📚 Əlavə İzahlar
 
 ### 🔢 `totalPrice`
+
 - Bu sahə `pricePerNight` ilə gecə sayı (`checkOut - checkIn`) əsasında backend tərəfindən avtomatik hesablanmalıdır.
 - Frontend bu sahəni alıb birbaşa göstərməlidir, hesablamanı təkrarlamağa ehtiyac yoxdur.
 
 ### ✅ `available`
+
 - Backend yalnız uyğun otaqlar üçün `available: true` dəyəri qaytarmalıdır.
 - Uyğun olmayan otaqlar cavabda ya çıxmamalıdır, ya da `available: false` olaraq qaytarıla bilər (dizayna uyğun).
 
 ### ❌ Uyğun otaq olmadıqda
+
 - Əgər göstərilən tarixlər və nəfər sayına uyğun heç bir otaq yoxdursa:
+
 ```json
 {
   "rooms": []
 }
-```   
+```

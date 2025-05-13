@@ -1,15 +1,13 @@
 ## 🛏️ Otaq Seçimi Sonrası Backend Cavabı - Detallar
 
-Bu cavab, istifadəçi konkret bir otağı seçdikdən sonra həmin otağın daha ətraflı məlumatlarını təqdim etməlidir.
+Bu cavab, istifadəçi konkret bir otağı seçdikdən sonra həmin otağın daha ətraflı məlumatlarını təqdim edir.
 
 ### Response Format:
 
 ```json
 {
   "room": {
-    "id": "room_101",  // Otağın unikal ID-si
-    "hotelId": "hotel_001",  // Otelin ID-si
-    "hotelName": "City Hotel",  // Otelin adı
+    "id": "room_101",  // Otağın unikal ID-si 
     "name": "Standard Room",  // Otağın adı
     "description": "Comfortable room with city view",  // Otağın təsviri
     "capacity": 2,  // Otağın tutumu (nəfər sayı)
@@ -42,8 +40,6 @@ Bu cavab, istifadəçi konkret bir otağı seçdikdən sonra həmin otağın dah
 
  
 ## Əlavə Sahələr və Açıqlamalar:
-
-- **`hotelId` və `hotelName`**: Bu sahələr, bir neçə otelin olduğu bir sistemdə, istifadəçinin seçdiyi otağın hansı oteldən olduğunu göstərəcək.
   
 - **`checkInTime` və `checkOutTime`**: Bu, istifadəçinin otağa giriş və çıxış saatlarını qeyd etmək üçün əlavə edilə bilər.
   

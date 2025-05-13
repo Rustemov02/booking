@@ -72,7 +72,7 @@ export default {
           400: "hsl(var(--Primary-400))",
           500: "hsl(var(--Primary-500))",
           600: "hsl(var(--Primary-600))",
-          700: "(var(--Primary-700))",
+          700: "hsl(var(--Primary-700))",
           800: "hsl(var(--Primary-800))",
           900: "hsl(var(--Primary-900))",
         },

@@ -1,9 +1,9 @@
+import { Outlet } from "react-router-dom";
 import CategorySection from "../../components/categorySection/categorySection";
 import GuestHeader from "../../components/header/GuestHeader";
 import Intro from "../../pages/Home/Intro";
-import DestinationsPage from "./Destinations/DestinatoinsPage";
+import DestinationsPage from "./Destinations/DestinationsPage";
 import PastOffers from "./PastOffers/PastOffers";
-
 const Home = () => {
   return (
     <>
@@ -11,12 +11,12 @@ const Home = () => {
 
       <CategorySection />
       <Intro />
-      {/* <DestinationsPage />
-      <PastOffers /> */}
+      <DestinationsPage />
+      <PastOffers />
 
       {/* additional component */}
       {/* FIXME:  improve style and add upload image for background*/}
-      <div
+      {/* <div
         className="w-full mb-48 h-[400px] mt-10 relative"
         style={{
           backgroundImage: "url('/backgroundImg.jpg')",
@@ -37,7 +37,8 @@ const Home = () => {
               Read More {">"}
             </span>
           </p>
-      </div>
+      </div> */}
+      <Outlet />
     </>
   );
 };

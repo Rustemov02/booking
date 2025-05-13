@@ -1,11 +1,10 @@
-import {useState } from "react";
+import { useState } from "react";
 import HamburgerMenu from "../../assets/svg/HamburgerMenu";
 import Logo from "../../assets/svg/Logo.svg";
 import Button from "../button/Button";
 import LanguageDropdown from "../langMenu/Dropdown";
 import Search from "../search/Search";
 import SideModal from "../modal/sideModal";
-// import SideModal from "../modal/sideModal";
 
 const GuestHeader = () => {
   const [isOpen, setIsOpen] = useState(false);

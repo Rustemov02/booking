@@ -122,7 +122,7 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
           <hr />
           {/* traveling with pets */}
           <div className="flex flex-row items-center justify-between">
-            <p>Are you traveling with a pet?</p> <Switch onChange={() => {}} />
+            <p className="w-4/5">Are you traveling with a pet?</p> <Switch onChange={() => {}} />
           </div>
         </div>
       </div>

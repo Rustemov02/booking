@@ -2,25 +2,39 @@ import { FC, useState } from "react";
 import Cup from "../../assets/images/cup.jpg";
 import HeartIcon from "../../assets/svg/like.svg?react";
 import Sun from "../../assets/svg/sun.svg?react";
+import { useNavigate } from "react-router-dom";
+import { CardTypes } from "../../types";
 
-interface CardTypes {
-  possibleSave? : boolean; // for heart icon
-  title : string;
-  text? : string;
-  rating? : number | null; // for rating number
-  sun? : number | null;
-  date? : string ;
-  desc?: string;
-}
-const Card:FC<CardTypes> = ({title , text , desc , rating , date}) => {
+const Card: FC<CardTypes> = ({
+  id,
+  basePath,
+  title,
+  text,
+  desc,
+  rating,
+  date,
+}) => {
   const [isSaved, setIsSaved] = useState(false);
 
   const toggleSave = () => {
     setIsSaved(!isSaved);
   };
 
+  const navigate = useNavigate();
+
+  const handleRoute = () => {
+    if (!basePath) return;
+    if (typeof basePath === "function") {
+      navigate(basePath(id.toString()));
+    } else {
+      navigate(`${basePath}/${id}`);
+    }
+  };
   return (
-    <div className="p-2 pb-6 gap-2 rounded-[8px] transition-all duration-300 hover:opacity-80 bg-white border border-neutral-300 flex flex-col w-full max-w-[270px] h-auto max-h-[420px] cursor-pointer">
+    <div
+      onClick={handleRoute}
+      className="p-2 pb-6 gap-2 rounded-[8px] transition-all duration-300 hover:opacity-80 bg-white border border-neutral-300 flex flex-col w-full max-w-[270px] h-auto max-h-[420px] cursor-pointer"
+    >
       {/* IMAGE  */}
       <div className="relative">
         <img src={Cup} alt="cardImage" className="rounded-t-[4px] w-full " />
@@ -56,7 +70,9 @@ const Card:FC<CardTypes> = ({title , text , desc , rating , date}) => {
       {/* TITLE */}
       <div>
         <p className="text-[20px] font-bold text-[#000]">{title}</p>
-        <span className="text-neutral-700 text-[16px] font-semibold">{text}</span>
+        <span className="text-neutral-700 text-[16px] font-semibold">
+          {text}
+        </span>
       </div>
       {/* DATE */}
       <span className="text-[12px] font-medium text-[#000]">{date}</span>
