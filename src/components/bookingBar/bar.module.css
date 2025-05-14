@@ -4,6 +4,7 @@
   align-items: center;
   flex-wrap: wrap;
   width: 80%;
+  max-width: 1220px;
   border: solid #a6a6a6 1px;
   background: white;
   border-radius: 4px;

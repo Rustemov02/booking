@@ -1,16 +1,20 @@
 import { Outlet } from "react-router-dom";
-import CategorySection from "../../components/categorySection/categorySection";
-import GuestHeader from "../../components/header/GuestHeader";
+// import CategorySection from "../../components/categorySection/categorySection";
+// import GuestHeader from "../../components/header/GuestHeader";
 import Intro from "../../pages/Home/Intro";
-import DestinationsPage from "./Destinations/DestinationsPage";
-import PastOffers from "./PastOffers/PastOffers";
-const Home = () => {
-  return (
-    <>
-      <GuestHeader />
+// import DestinationsPage from "./Destinations/DestinationsPage";
+// import PastOffers from "./PastOffers/PastOffers";
+// import UseDebounce from "../../hooks/useDebounce.tsx";
+ 
 
-      <CategorySection />
-      <Intro />
+const Home = () => {; 
+  return (
+    <> 
+
+      {/* <GuestHeader />
+
+      <CategorySection />*/}
+      <Intro /> 
       {/* <DestinationsPage /> */}
       {/* <PastOffers /> */}
 
