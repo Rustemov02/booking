@@ -7,7 +7,14 @@ const PastOffers = () => {
       <PageHeader title="Compare The Highest Reviewed Past Offers" />
       <div className="text-[14px] font-normal text-[#000]">Browse By Type</div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] items-center flex-wrap gap-6">
-        <Card title="Flight" />
+        <Card title="Flight" id={2} />
+        <Card title="Flight" id={2} />
+        <Card title="Flight" id={2} />
+        <Card title="Flight" id={2} />
+        <Card title="Flight" id={2} />
+        <Card title="Flight" id={2} />
+        <Card title="Flight" id={2} />
+        <Card title="Flight" id={2} />
       </div>
     </div>
   );
