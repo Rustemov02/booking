@@ -20,3 +20,12 @@ export interface CardTypes {
   isSaved?: boolean;
   setIsSaved?: (isSaved: boolean) => void;
 }
+
+export interface BookingBarTypes {
+  checkIn: Date | string | null;
+  checkOut: Date | string | null;
+  adults: number;
+  children: number;
+  rooms: number;
+  withPet:boolean;
+}

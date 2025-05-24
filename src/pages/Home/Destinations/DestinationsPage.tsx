@@ -30,6 +30,60 @@ const DestinationsPage = () => {
           date="Wed 25 Jan-Fri 27 Jan"
           desc="A Tour Of The City And Its Surroundings Led By A Professional Guide"
         />
+         <Card
+          id={2}
+          basePath={routes.destinationDetail}
+          title="Berlin"
+          text="SIDE"
+          rating={3.2}
+          date="Wed 25 Jan-Fri 27 Jan"
+          desc="A Tour Of The City And Its Surroundings Led By A Professional Guide"
+        />
+         <Card
+          id={2}
+          basePath={routes.destinationDetail}
+          title="Berlin"
+          text="SIDE"
+          rating={3.2}
+          date="Wed 25 Jan-Fri 27 Jan"
+          desc="A Tour Of The City And Its Surroundings Led By A Professional Guide"
+        />
+         <Card
+          id={2}
+          basePath={routes.destinationDetail}
+          title="Berlin"
+          text="SIDE"
+          rating={3.2}
+          date="Wed 25 Jan-Fri 27 Jan"
+          desc="A Tour Of The City And Its Surroundings Led By A Professional Guide"
+        />
+         <Card
+          id={2}
+          basePath={routes.destinationDetail}
+          title="Berlin"
+          text="SIDE"
+          rating={3.2}
+          date="Wed 25 Jan-Fri 27 Jan"
+          desc="A Tour Of The City And Its Surroundings Led By A Professional Guide"
+        />
+         <Card
+          id={2}
+          basePath={routes.destinationDetail}
+          title="Berlin"
+          text="SIDE"
+          rating={3.2}
+          date="Wed 25 Jan-Fri 27 Jan"
+          desc="A Tour Of The City And Its Surroundings Led By A Professional Guide"
+        />
+         <Card
+          id={2}
+          basePath={routes.destinationDetail}
+          title="Berlin"
+          text="SIDE"
+          rating={3.2}
+          date="Wed 25 Jan-Fri 27 Jan"
+          desc="A Tour Of The City And Its Surroundings Led By A Professional Guide"
+        /> 
       </div>
     </div>
   );

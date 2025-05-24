@@ -4,19 +4,23 @@ import GuestHeader from "../../components/header/GuestHeader";
 import Intro from "../../pages/Home/Intro";
 import DestinationsPage from "./Destinations/DestinationsPage";
 import PastOffers from "./PastOffers/PastOffers";
-const Home = () => {
+import UseDebounce from "../../hooks/useDebounce.tsx";
+ 
+
+const Home = () => {; 
   return (
-    <>
+    <> 
+
       <GuestHeader />
 
       <CategorySection />
-      <Intro />
-      {/* <DestinationsPage /> */}
-      {/* <PastOffers /> */}
+      <Intro /> 
+      <DestinationsPage /> 
+      <PastOffers />
 
       {/* additional component */}
-      {/* FIXME:  improve style and add upload image for background*/}
-      {/* <div
+      {/* FIXME:  improve style and add upload image for background */}
+      <div
         className="w-full mb-48 h-[400px] mt-10 relative"
         style={{
           backgroundImage: "url('/backgroundImg.jpg')",
@@ -37,7 +41,7 @@ const Home = () => {
               Read More {">"}
             </span>
           </p>
-      </div> */}
+      </div>
       <Outlet />
     </>
   );

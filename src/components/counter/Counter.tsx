@@ -12,7 +12,9 @@ const Counter = ({
   const [currentNumb, setCurrentNumb] = useState<number>(count || 0);
 
   const handleDecrease = () => {
+    
     const newValue = currentNumb - 1;
+    if(newValue < 0) return
     setCurrentNumb(newValue);
     onChange(newValue);
   };
