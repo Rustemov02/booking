@@ -5,13 +5,19 @@ import Button from "../button/Button";
 import LanguageDropdown from "../langMenu/Dropdown";
 import Search from "../search/Search";
 import SideModal from "../modal/sideModal";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const GuestHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  console.log(location.pathname);
+
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/register";
 
   return (
     <>
-      <div className="flex flex-row items-center justify-between px-4 py-6 gap-4 w-full max-w-[1220px] m-auto">
+      <div className="flex flex-row items-center justify-between px-4 gap-4 w-full max-w-[1220px] m-auto ">
         <div>
           <img
             src={Logo}
@@ -22,14 +28,18 @@ const GuestHeader = () => {
         <span className="hidden md:block">
           <LanguageDropdown />
         </span>
-        <div className="w-1/2 md:block hidden">
-          <Search />
-        </div>
+        {!isAuthPage && (
+          <div className="w-1/2 md:block hidden">
+            <Search />
+          </div>
+        )}
 
-        <div className="flex-1 items-center gap-2 hidden md:flex">
-          <Button title="Sign In" className="grid-cols-1 " />
-          <Button title="Register" className="grid-cols-1 " />
-        </div>
+        {!isAuthPage && (
+          <div className="flex-1 items-center gap-2 hidden md:flex">
+            <Button to="/login" title="Sign In" className="grid-cols-1 " />
+            <Button to="/register" title="Register" className="grid-cols-1 " />
+          </div>
+        )}
 
         <div className="flex md:hidden">
           <div
