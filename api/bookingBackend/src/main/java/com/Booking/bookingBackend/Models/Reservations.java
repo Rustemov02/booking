@@ -40,7 +40,5 @@ public class Reservations {
     @Temporal(TemporalType.DATE)
     private LocalDate checkOutDate;
 
-    private Long pricePerNight;
-    
-    private Long totalPrice = (checkInDate.until(checkInDate, ChronoUnit.DAYS)) * pricePerNight;
+    private Long totalPrice = (checkInDate.until(checkInDate, ChronoUnit.DAYS)) * room.getPricePerNight();
 }
