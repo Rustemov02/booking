@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const HomePage = lazy(() => import("../pages/Home"));
+const LoginPage = lazy(() => import("../pages/Auth/Login"));
 
 const allRoutes = [
   {
@@ -31,7 +32,7 @@ const allRoutes = [
   },
   {
     path: "/login",
-    element: <div>Login page</div>,
+    element: <LoginPage />,
     roles: null,
     children: null,
   },
