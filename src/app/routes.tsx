@@ -6,7 +6,7 @@ const HomePage = lazy(() => import("../pages/Home"));
 const LoginPage = lazy(() => import("../pages/Auth/Login"));
 
 const allRoutes = [
-  {
+  { 
     path: "/",
     element: <Navigate to="/hotel" replace />,
   },

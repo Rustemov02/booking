@@ -15,13 +15,13 @@ const AuthLayoutWrapper = ({ children }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-row items-center gap-15 space-between rounded-[16px] w-3/4 mx-auto p-13 pr-32 border border-[#A6A6A6] bg-[#EFEFEF]">
-      <div className="w-auto max-w-[400px] h-auto max-h-[600px]">
+    <div className="flex flex-row items-center gap-15 space-start rounded-[16px] w-3/4 mx-auto p-13 pr-32 border border-[#A6A6A6] bg-[#EFEFEF]">
+      <div className="w-auto max-w-[416px] h-auto max-h-[600px]">
         <img src={Travel} alt="Travel" />
       </div>
-      <div className="flex flex-col  justify-between w-full">
+      <div className="flex flex-col  justify-between w-full items-center gap-4">
         {children}
-        <div className="flex flex-row gap-4 items-center">
+        <div className="flex flex-row gap-4">
           {icons.map((item) => (
             <div className="rounded-[4px] border border-[#D9D9D9] bg-[#FFF] cursor-pointer hover:bg-[#D9D9D9] transition-all duration-300 w-fit py-2 px-4">
               <img src={item} />
