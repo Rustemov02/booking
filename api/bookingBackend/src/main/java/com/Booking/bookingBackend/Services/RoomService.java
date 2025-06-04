@@ -1,18 +1,13 @@
 package com.Booking.bookingBackend.Services;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.Booking.bookingBackend.Models.Room;
 import com.Booking.bookingBackend.Repositories.RoomRepository;
-import com.Booking.bookingBackend.Models.Reservations;
 
 @Service
 public class RoomService {
@@ -20,17 +15,7 @@ public class RoomService {
     private RoomRepository roomRepository;
     
     public Optional<Room> createRoom(Room room) throws Exception{
-       try{ 
-        if(roomRepository.findOne(Example.of(room)).isPresent()){
-            throw new Exception("Room already exists");
-        }
-        else{
             return Optional.of(roomRepository.save(room)); 
-        }
-       }catch(Exception e){
-        e.getMessage();
-        return null;
-       }
     }
 
     public Optional<Room> findRoomById(Integer id){
@@ -39,6 +24,10 @@ public class RoomService {
 
     public Optional<List<Room>> findAll(){
         return Optional.of(roomRepository.findAll());
+    }
+
+    public void deleteRoom(Room room){
+        roomRepository.delete(room);
     }
 
     // public Optional<List<Room>> findRoomsByBedType(String bedType){

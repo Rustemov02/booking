@@ -6,17 +6,13 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
-import com.Booking.bookingBackend.Services.ReservationService;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,11 +43,11 @@ public class Room {
    
     private Integer capacity = childrenRoomCapacity + adultRoomCapacity;
     
-    //private Integer pricePerNight;
+    private Integer pricePerNight;
     
     private Boolean availability = false;
     
-    private List<URI> url;
+    private List<URI> images;
     
     private List<String> amenities;
     

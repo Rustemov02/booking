@@ -3,19 +3,19 @@ package com.Booking.bookingBackend.Models.DTOs;
 import java.net.URI;
 import java.util.List;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RoomDTO {
-    private Integer id;
+public class RoomIU {
+    @NotNull(message = "Room name cannot be empty")
     private String name;
     private String description;
-    private Integer capacity;
+    private Integer adultRoomCapacity;
+    private Integer childrenRoomCapacity;
     private Integer pricePerNight;
-    private Long totalPrice;
-    private Boolean availability;
     private List<URI> images;
     private List<String> amenities;
     private String cancellationPolicy;

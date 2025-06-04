@@ -8,8 +8,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Booking.bookingBackend.Models.Reservations;
 import com.Booking.bookingBackend.Models.Room;
 import com.Booking.bookingBackend.Models.DTOs.RoomDTO;
+import com.Booking.bookingBackend.Models.DTOs.RoomIU;
 import com.Booking.bookingBackend.Services.ReservationService;
 import com.Booking.bookingBackend.Services.RoomService;
 
@@ -44,28 +50,73 @@ public class OrderController {
             if(!roomListOptional.isPresent()){
                 throw new Exception("There is no room yet");
             }
-            List<Reservations> availableReservations = reservationService.getAllReservations()
-                                                .stream()
-                                                .filter(reservs -> !(reservs.getCheckInDate().isAfter(checkOutDate) 
-                                                && reservs.getCheckOutDate().isBefore(checkInDate))
-                                                && reservs.getRoom().getAdultRoomCapacity() == adults
-                                                && reservs.getRoom().getChildrenRoomCapacity() == children)
-                                                .collect(Collectors.toList());
-            availableReservations.forEach(available -> available.getRoom().setAvailability(true));
-            List<RoomDTO> roomDTOList = new ArrayList<>();
-            for(Reservations available: availableReservations){
-                RoomDTO roomDto = new RoomDTO();
-                BeanUtils.copyProperties(available.getRoom(), roomDto);
-                BeanUtils.copyProperties(available, roomDto);
-                roomDTOList.add(roomDto);
+            Optional<List<Reservations>> availableReservationsOptional = reservationService.checkReservationAvailability(checkInDate, checkOutDate, adults, children);
+            List<Reservations> availableReservations = new ArrayList<>();
+            if(availableReservationsOptional.isPresent()){
+                availableReservations = availableReservationsOptional.get();
             }
-            return ResponseEntity.of(Optional.of(roomDTOList));
+            List<RoomDTO> availableRooms = availableReservations.stream().map(reserv -> {
+                RoomDTO roomDto = new RoomDTO();
+                Room room = reserv.getRoom();
+                BeanUtils.copyProperties(room, roomDto);
+                roomDto.setTotalPrice(reserv.getTotalPrice());
+                return roomDto;
+            }).collect(Collectors.toList());
+            return ResponseEntity.ok(availableRooms);
+
 
             
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        
+    
     }
+
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<RoomDTO>> getAllRooms(){
+        return ResponseEntity.ok(roomService.findAll().get().stream()
+                                                                .map(room -> {  RoomDTO roomDto = new RoomDTO();
+                                                                                BeanUtils.copyProperties(room, roomDto);
+                                                                                return roomDto;})
+                                                                .collect(Collectors.toList()));
+    }
+
+    @PostMapping(path = "/create")
+    public ResponseEntity<?> creatRoom(RoomIU roomIu){
+        Room room = new Room();
+        BeanUtils.copyProperties(roomIu, room);
+        try{
+            roomService.createRoom(room);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        RoomDTO roomDto = new RoomDTO();
+        BeanUtils.copyProperties(room, roomDto);
+        return ResponseEntity.ok(roomDto);
+    }
+
+    @DeleteMapping(path = "/delete?{id}")
+    public ResponseEntity<HttpStatus> deleteRoom(@PathVariable Integer id){
+        Optional<Room> room = roomService.findRoomById(id);
+        if(room.isPresent()){
+            roomService.deleteRoom(room.get());
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping(path = "/order")
+    public ResponseEntity<Reservations> createReservation(@RequestParam Reservations reservation){
+        return ResponseEntity.ok(reservationService.reserveReservation(reservation));
+    } 
+
+    @DeleteMapping(path = "/order/delete")
+    public ResponseEntity<HttpStatus> deleteReservation(@RequestParam Reservations reservation){
+        reservationService.deleteReservation(reservation);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    
 }
