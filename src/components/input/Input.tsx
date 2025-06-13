@@ -29,7 +29,7 @@ const Input = ({
       <label className="text-[14px] text-[#000] font-normal">{label}</label>
       <div className="flex flex-row items-center justify-between  px-2 py-3 w-full bg-[#fff] rounded-[10px] border border-[#A6A6A6] text-[#A6A6A6]">
         <input
-          className=" outline-none bg-none placeholder:text-[#A6A6A6] cursor-pointer"
+          className=" outline-none bg-none placeholder:text-[#A6A6A6]"
           type={type}
           name={name}
           value={value}
@@ -44,7 +44,7 @@ const Input = ({
               })}
             </>
           ) : (
-            <span>{icons}</span>
+            <span className='cursor-pointer'>{icons}</span>
           ))}
       </div>
       <span>{errorMessage}</span>
