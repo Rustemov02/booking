@@ -9,8 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,23 +22,31 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reservations {
-    @Id
+     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    
-    @ManyToOne
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "room_id")
     private Room room;
 
-    @Temporal(TemporalType.DATE)
     private LocalDate checkInDate;
-    
-    @Temporal(TemporalType.DATE)
     private LocalDate checkOutDate;
 
-    private Long totalPrice = (checkInDate.until(checkInDate, ChronoUnit.DAYS)) * room.getPricePerNight();
+    private Long totalPrice;
+
+    @PrePersist
+    @PreUpdate
+    public void calculateTotalPrice() {
+        if (checkInDate != null && checkOutDate != null && room != null) {
+            long days = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+            if (days > 0) {
+                this.totalPrice = days * room.getPricePerNight();
+            }
+        }
+    }
 }
