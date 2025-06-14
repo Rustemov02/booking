@@ -17,12 +17,12 @@ const GuestHeader = () => {
 
   return (
     <>
-      <div className="flex flex-row items-center justify-between px-4 gap-4 w-full max-w-[1220px] m-auto ">
+      <div className="flex flex-row items-center justify-between px-4 py-5 gap-4 w-full max-w-[1220px] mx-auto">
         <div>
           <img
             src={Logo}
             alt="Logo"
-            className="w-[80px] md:w-[130px] h-[130px]"
+            className="w-[80px] md:w-[130px]"
           />
         </div>
         <span className="hidden md:block">

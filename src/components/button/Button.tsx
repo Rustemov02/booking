@@ -30,6 +30,7 @@ const Button: FC<ButtonProps> = ({
 
     onClick;
   };
+  
   return (
     <div className={`${standartButtonStyle}`}>
       <button
