@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 
 const HomePage = lazy(() => import("../pages/Home"));
 const LoginPage = lazy(() => import("../pages/Auth/Login"));
+const RegisterPage = lazy(() => import("../pages/Auth/Register"));
 
 const allRoutes = [
-  { 
+  {
     path: "/",
     element: <Navigate to="/hotel" replace />,
   },
@@ -33,6 +34,12 @@ const allRoutes = [
   {
     path: "/login",
     element: <LoginPage />,
+    roles: null,
+    children: null,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
     roles: null,
     children: null,
   },

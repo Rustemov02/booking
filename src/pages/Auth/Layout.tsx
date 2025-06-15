@@ -16,9 +16,9 @@ const AuthLayoutWrapper = ({ children }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-start gap-25 h-screen">
+    <div className="flex flex-col justify-start gap-15 h-screen">
       <GuestHeader />
-      <div className="flex flex-row items-start gap-15 rounded-[16px] w-[60%] max-w-[860px] mx-auto p-13  pr-32 border border-[#A6A6A6] bg-[#EFEFEF]">
+      <div className="flex flex-row items-start gap-15 rounded-[16px] lg:w-[60%] w-4/5 max-w-[860px] mx-auto p-13  pr-32 border border-[#A6A6A6] bg-[#EFEFEF]">
         <div className="">
           <img
             src={Travel}

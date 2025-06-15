@@ -1,4 +1,3 @@
-import GuestHeader from "../../../components/header/GuestHeader";
 import Input from "../../../components/input/Input";
 import AuthLayout from "../Layout";
 import CloseEye from "../../../assets/svg/closeEye.svg?react";
@@ -28,9 +27,7 @@ const Login = () => {
         <Button title="Login" />
       </div>
       <span className="text-[14px] text-[#000] font-normal">Or</span>
-    </AuthLayout>
-    // </div>
-    // </div>
+    </AuthLayout> 
   );
 };
 

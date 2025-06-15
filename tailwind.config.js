@@ -135,7 +135,7 @@ export default {
       md: "720px",
       xss: "880px",
       lg: "1080px",
-      "lg-2": "1240px",
+      lg2: "1240px",
       xl: "1440px",
       "xl2-mini": "1600px",
       xl2: "1920px",
