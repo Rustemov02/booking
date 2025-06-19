@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, JSX, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ButtonProps {
@@ -8,21 +8,31 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   to?: string;
+  variant?: string;
+  size?: string;
+  icon?: ReactNode | JSX.Element;
 }
 
 const Button: FC<ButtonProps> = ({
   title,
   onClick,
-  width,
-  height,
   className,
+  variant = "standart",
+  size = "standart",
+  icon,
   to,
 }) => {
-  const standartButtonStyle =
-    "py-1 px-4 border border-[#07689F] text-[#07689F] rounded-[4px] cursor-pointer w-full min-w-fit font-bold text-16";
+  const sizeStylesStandart =
+    "rounded-[4px] py-2 px-4 text-bold text-[16px]/[22px]";
+  const sizeStylesSmall = "h-[22px] rounded-[4px]";
+  const standart =
+    "bg-[#07689F] border border-[#07689F]  text-[#FFF]  hover:bg-[#FFF] hover:text-[#07689F] hover:border hover:border-[#07689F]";
+  const primary =
+    "bg-transparent border-1 border-[#07689F] text-[#07689F] hover:bg-[#07689F] hover:border-[#07689F] hover:text-[#FFF]";
 
+  const variantStyles = variant === "standart" ? standart : primary;
+  const sizeStyles = size === "standart" ? sizeStylesStandart : sizeStylesSmall;
   const navigate = useNavigate();
-
   const handleClickButton = () => {
     if (to) {
       navigate(`${to}`);
@@ -30,14 +40,17 @@ const Button: FC<ButtonProps> = ({
 
     onClick;
   };
-  
+
   return (
-    <div className={`${standartButtonStyle}`}>
-      <button
-        className={`${standartButtonStyle} ${className} w-[${width}px] h-[${height}px] `}
-        onClick={handleClickButton}
-      >
-        {title}
+    <div
+      onClick={handleClickButton}
+      className={`${variantStyles} ${sizeStyles} w-full text-center cursor-pointer transition-all duration-500`}
+    >
+      <button className={` ${className}  w-full flex flex-row items-center ${icon ? 'justify-between' : 'justify-center'}`}>
+        <p>{title} </p>
+        {icon && (
+          <span className="w-[24px] h-[24px]"> {icon}</span>
+        )}
       </button>
     </div>
   );

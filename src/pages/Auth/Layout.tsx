@@ -41,7 +41,7 @@ const AuthLayoutWrapper = ({ children }: Props) => {
                 Already have an account ?
                 <span
                   onClick={() => navigate("/login")}
-                  className="text-[#07689F]"
+                  className="text-[#07689F] cursor-pointer"
                 >
                   {" "}
                   Login !
@@ -52,7 +52,7 @@ const AuthLayoutWrapper = ({ children }: Props) => {
                 Don't have an account in society ?
                 <span
                   onClick={() => navigate("/register")}
-                  className="text-[#07689F]"
+                  className="text-[#07689F] cursor-pointer"
                 >
                   {" "}
                   Register !

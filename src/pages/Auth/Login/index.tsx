@@ -19,7 +19,7 @@ const Login = () => {
         />
         <div className="flex flex-row items-center justify-between">
           <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#121]">
-            <input type="checkbox" />
+            <input type="checkbox" className="cursor-pointer" />
             Remember Me
           </span>
           <p className="text-[#07689F] text-[14px]">Forgot password?</p>

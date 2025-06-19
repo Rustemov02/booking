@@ -30,7 +30,7 @@ const Register = () => {
         </div>
         <div className="flex flex-row items-center justify-between ">
           <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#121]">
-            <input type="checkbox" />I agree to all the Terms and Privacy
+            <input type="checkbox" className="cursor-pointer "/>I agree to all the Terms and Privacy
             Policies
           </span>
         </div>
