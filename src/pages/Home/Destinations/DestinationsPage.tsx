@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import apiRequest from "../../../api/apiRequest";
 import Card from "../../../components/card/Card";
 import PageHeader from "../../../components/pageHeader/PageHeader";
@@ -5,6 +6,24 @@ import getRoutes from "../../../modules";
 
 const DestinationsPage = () => {
   const routes = getRoutes();
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = await apiRequest({
+          method: "GET",
+          url: "/api/rooms/all", 
+          onError: (err) => console.log(err),
+
+        });
+        console.log(response)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchRooms();
+  }, []);
 
   const handleRequest = async () => {};
   return (
