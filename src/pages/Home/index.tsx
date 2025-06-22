@@ -9,7 +9,7 @@ import Footer from "../Footer/Footer";
 const Home = () => {
   return (
     <>
-      <GuestHeader />
+      {/* <GuestHeader /> */}
 
       <CategorySection />
       <Intro />
@@ -43,7 +43,7 @@ const Home = () => {
       </div>
 
 
-      <Footer/>
+      {/* <Footer/> */}
       <Outlet />
     </>
   );

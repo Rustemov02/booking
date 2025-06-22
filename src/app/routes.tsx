@@ -1,7 +1,9 @@
 import { lazy } from "react";
-import { Navigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { Navigate, Outlet } from "react-router-dom";
 
+// Layouts
+const PageLayout = lazy(() => import("../pages/Layout"));
+const AuthLayout = lazy(() => import("../pages/Auth/Layout"));
 const HomePage = lazy(() => import("../pages/Home"));
 const LoginPage = lazy(() => import("../pages/Auth/Login"));
 const RegisterPage = lazy(() => import("../pages/Auth/Register"));
@@ -14,35 +16,48 @@ const allRoutes = [
   {
     path: "hotel", // I use "hotel" because it is possible to use different path for each page (like flight, apartment, etc.)
     element: (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <HomePage />
-      </motion.div>
-    ), //you should use here Layout component (if you have one)
+      <PageLayout>
+        <Outlet />
+      </PageLayout>
+    ),
     roles: null,
-    children: [],
+    children: [
+      //the layout page using as the main element and other pages are in the children array..
+      {
+        path: "/hotel",
+        element: <HomePage />,
+      },
+      {
+        path: "destinations/:id",
+        element: <div>Destination Card detail page</div>,
+      },
+    ],
   },
   {
-    path: "hotel/destinations/:id",
-    element: <div>Destination Card detail page</div>,
+    path: "/",
+    element: (
+      <AuthLayout>
+        <Outlet />
+      </AuthLayout>
+    ),
     roles: null,
+    children: [
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
+      },
+    ],
   },
-  {
-    path: "/login",
-    element: <LoginPage />,
-    roles: null,
-    children: null,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
-    roles: null,
-    children: null,
-  },
+  // {
+  //   path: "/register",
+  //   element: <RegisterPage />,
+  //   roles: null,
+  //   children: null,
+  // },
 ];
 
 export default allRoutes;

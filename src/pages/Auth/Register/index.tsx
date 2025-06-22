@@ -1,11 +1,10 @@
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
-import AuthLayout from "../Layout";
 import CloseEye from "../../../assets/svg/closeEye.svg?react";
 
 const Register = () => {
   return (
-    <AuthLayout>
+    <>
       <div className="flex flex-col gap-4 w-full">
         <h5 className="text-[20px] font-bold">Register</h5>
 
@@ -37,7 +36,7 @@ const Register = () => {
         <Button title="Register now" /> 
       </div>
       <span className="text-[14px] text-[#000] font-normal">Or</span>
-    </AuthLayout>
+    </>
   );
 };
 

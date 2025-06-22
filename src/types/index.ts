@@ -19,6 +19,7 @@ export interface CardTypes {
   desc?: string;
   isSaved?: boolean;
   setIsSaved?: (isSaved: boolean) => void;
+  onClick?: ()=>void
 }
 
 export interface BookingBarTypes {

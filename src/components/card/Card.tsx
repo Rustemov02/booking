@@ -13,6 +13,7 @@ const Card: FC<CardTypes> = ({
   desc,
   rating,
   date,
+  onClick,
 }) => {
   const [isSaved, setIsSaved] = useState(false);
 
@@ -23,6 +24,7 @@ const Card: FC<CardTypes> = ({
   const navigate = useNavigate();
 
   const handleRoute = () => {
+    onClick?.();
     if (!basePath) return;
     if (typeof basePath === "function") {
       navigate(basePath(id.toString()));
