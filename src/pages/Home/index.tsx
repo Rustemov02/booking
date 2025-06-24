@@ -11,7 +11,7 @@ const Home = () => {
     <>
       {/* <GuestHeader /> */}
 
-      <CategorySection />
+      {/* <CategorySection /> */}
       <Intro />
       <DestinationsPage />
       <PastOffers />

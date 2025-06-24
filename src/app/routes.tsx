@@ -7,6 +7,9 @@ const AuthLayout = lazy(() => import("../pages/Auth/Layout"));
 const HomePage = lazy(() => import("../pages/Home"));
 const LoginPage = lazy(() => import("../pages/Auth/Login"));
 const RegisterPage = lazy(() => import("../pages/Auth/Register"));
+const SearchResultPage = lazy(
+  () => import("../pages/SearchResult/SearchResult")
+);
 
 const allRoutes = [
   {
@@ -30,6 +33,10 @@ const allRoutes = [
       {
         path: "destinations/:id",
         element: <div>Destination Card detail page</div>,
+      },
+      {
+        path: "searchResult",
+        element: <SearchResultPage />,
       },
     ],
   },

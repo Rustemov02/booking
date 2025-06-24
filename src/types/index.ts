@@ -19,7 +19,8 @@ export interface CardTypes {
   desc?: string;
   isSaved?: boolean;
   setIsSaved?: (isSaved: boolean) => void;
-  onClick?: ()=>void
+  onClick?: () => void;
+  position?: string;
 }
 
 export interface BookingBarTypes {
@@ -28,5 +29,5 @@ export interface BookingBarTypes {
   adults: number;
   children: number;
   rooms: number;
-  withPet:boolean;
+  withPet: boolean;
 }

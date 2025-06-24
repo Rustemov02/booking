@@ -11,6 +11,7 @@ import Close from "../../assets/svg/Close";
 import { BookingBarTypes } from "../../types";
 import toast from "react-hot-toast";
 import useClickOutSide from "../../hooks/useClickOutside";
+import { useNavigate, useRoutes } from "react-router-dom";
 
 const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   // structure
@@ -21,7 +22,8 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   const [isPersonalModalOpen, setIsPersonalModalOpen] =
     useState<boolean>(false);
 
-  //data
+    const navigate = useNavigate()
+   //data
   const [bookingData, setBookingData] = useState<BookingBarTypes>({
     checkIn: null,
     checkOut: null,
@@ -39,11 +41,12 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   };
 
   const handleSubmit = () => {
-    if (!bookingData.checkIn || !bookingData.checkOut) { 
-     return toast.error("Bütün məlumatları daxil edin !")
-    };
 
-    console.log(bookingData);
+    navigate('searchResult')
+    // if (!bookingData.checkIn || !bookingData.checkOut) { 
+    //  return toast.error("Bütün məlumatları daxil edin !")
+    // };
+
   };  
   const testRef = useClickOutSide(()=>setIsPersonalModalOpen(false))
   return (
