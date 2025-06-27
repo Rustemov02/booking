@@ -38,7 +38,7 @@ const Button: FC<ButtonProps> = ({
       navigate(`${to}`);
     }
 
-    onClick;
+    onClick?.();
   };
 
   return (
