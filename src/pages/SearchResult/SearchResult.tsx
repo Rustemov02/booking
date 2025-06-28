@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BookingBar from "../../components/bookingBar/bookingBar";
 import MarkFilter from "../../components/markFilter/MarkFilter";
+import Card from "../../components/card/Card";
 
 const SearchResult = () => {
   const testData = [
@@ -21,8 +22,26 @@ const SearchResult = () => {
     "Bathtub",
   ];
 
+  const gustsRating = [
+    "All",
+    "Outstanding 9+",
+    "Very good 8+",
+    "Good 7+",
+    "Excelent",
+    "Poor",
+  ];
+
+  const distanceFromCentre = [
+    "Less Than 1 km",
+    "Less Than 5 km",
+    "Less Than 15 km",
+  ];
+
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
+  const [selectedRating, setSelectedRating] = useState<string[]>([]);
+  const [selectedDistance, setSelectedDistance] = useState<string[]>([]);
+
   return (
     <div className={`container`}>
       {/* Header */}
@@ -63,9 +82,37 @@ const SearchResult = () => {
               selectedFilterItems={setSelectedRooms}
             />
           </div>
+
+          <div>
+            <MarkFilter
+              isCheckbox={false}
+              title="Gusts Rating"
+              options={gustsRating}
+              selectedFilterItems={setSelectedRating}
+            />
+          </div>
+
+          <div>
+            <MarkFilter
+              isCheckbox={false}
+              title="Distance From The Centre"
+              options={distanceFromCentre}
+              selectedFilterItems={setSelectedDistance}
+            />
+          </div>
         </div>
         {/* Result */}
-        <div className="border flex flex-col">Result Side</div>
+        <div className="border flex flex-col">
+          <Card
+            id={1}
+            title="Test"
+            text="Side"
+            desc="It is just testing text for see what happen in the document"
+            rating={3}
+            date="Wen 25 Jan - Fri 27 Jan"
+            position='horizontal'
+          />
+        </div>
       </div>
     </div>
   );

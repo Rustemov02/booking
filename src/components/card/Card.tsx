@@ -14,7 +14,7 @@ const Card: FC<CardTypes> = ({
   rating,
   date,
   onClick,
-  position='vertical'
+  position = "vertical",
 }) => {
   const [isSaved, setIsSaved] = useState(false);
 

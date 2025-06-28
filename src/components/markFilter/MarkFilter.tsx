@@ -6,11 +6,13 @@ interface MarkFilterTypes {
   title: string;
   options: string[];
   selectedFilterItems: (items: string[]) => void;
+  isCheckbox?: boolean;
 }
 const MarkFilter = ({
   title,
   options,
   selectedFilterItems,
+  isCheckbox = true,
 }: MarkFilterTypes) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
@@ -18,8 +20,10 @@ const MarkFilter = ({
     ...selectedItems,
     ...options.filter((option) => !selectedItems.includes(option)),
   ];
+
   const filteredOptions =
     options.length > 5 ? displayOptions.slice(0, 5) : displayOptions;
+
   const [openHandleModal, setOpenHandleModal] = useState(false);
 
   const handleCheckboxChange = (
@@ -27,7 +31,11 @@ const MarkFilter = ({
     item: string
   ) => {
     if (e.target.checked) {
-      setSelectedItems((prev) => [...prev, item]);
+      if (isCheckbox) {
+        setSelectedItems((prev) => [...prev, item]);
+      } else {
+        setSelectedItems([item]);
+      }
     } else {
       setSelectedItems((prev) => prev.filter((i) => i !== item));
     }
@@ -46,7 +54,7 @@ const MarkFilter = ({
           <div className="flex flex-row items-center gap-[8px]">
             {/* FIXME: customize checkbox component  */}
             <input
-              type="checkbox"
+              type={`${isCheckbox ? "checkbox" : "radio"}`}
               checked={selectedItems.some((i) => i === item)}
               className="cursor-pointer"
               onChange={(e) => handleCheckboxChange(e, item)}
@@ -74,7 +82,7 @@ const MarkFilter = ({
         {options.map((item) => (
           <div className="flex flex-row items-center gap-4">
             <input
-              type="checkbox"
+              type={`${isCheckbox ? "checkbox" : "radio"}`}
               checked={selectedItems.some((i) => i === item)}
               className="cursor-pointer"
               onChange={(e) => handleCheckboxChange(e, item)}
