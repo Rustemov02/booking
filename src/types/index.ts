@@ -21,6 +21,9 @@ export interface CardTypes {
   setIsSaved?: (isSaved: boolean) => void;
   onClick?: () => void;
   position?: string;
+  hasBreakfast?: boolean;
+  personCount?: { adult: number; children: number };
+  price?: number;
 }
 
 export interface BookingBarTypes {

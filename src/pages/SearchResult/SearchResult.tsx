@@ -42,6 +42,7 @@ const SearchResult = () => {
   const [selectedRating, setSelectedRating] = useState<string[]>([]);
   const [selectedDistance, setSelectedDistance] = useState<string[]>([]);
 
+  const personCount = { adult: 1, children: 2 };
   return (
     <div className={`container`}>
       {/* Header */}
@@ -58,9 +59,9 @@ const SearchResult = () => {
       </div>
 
       {/* Main */}
-      <div className="grid grid-cols-[25%_auto] border mt-[40px] ">
+      <div className="grid grid-cols-[25%_auto] mt-[40px] ">
         {/* Filter */}
-        <div className="border flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[16px]">
           <p className="text-[24px] text-[#565656] font-bold">Filter by</p>
 
           <p className="text-[14px] text-[#000] font-normal">
@@ -102,15 +103,41 @@ const SearchResult = () => {
           </div>
         </div>
         {/* Result */}
-        <div className="border flex flex-col">
+        <div className="flex flex-col gap-6">
           <Card
             id={1}
             title="Test"
             text="Side"
             desc="It is just testing text for see what happen in the document"
             rating={3}
+            hasBreakfast
+            personCount={personCount}
             date="Wen 25 Jan - Fri 27 Jan"
-            position='horizontal'
+            position="horizontal"
+          />
+
+          <Card
+            id={1}
+            title="Test"
+            text="Side"
+            desc="It is just testing text for see what happen in the document"
+            rating={3}
+            hasBreakfast
+            personCount={personCount}
+            date="Wen 25 Jan - Fri 27 Jan"
+            position="horizontal"
+          />
+
+          <Card
+            id={1}
+            title="Test"
+            text="Side"
+            desc="It is just testing text for see what happen in the document"
+            rating={3}
+            hasBreakfast
+            personCount={personCount}
+            date="Wen 25 Jan - Fri 27 Jan"
+            position="horizontal"
           />
         </div>
       </div>

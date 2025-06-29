@@ -10,6 +10,7 @@ const RegisterPage = lazy(() => import("../pages/Auth/Register"));
 const SearchResultPage = lazy(
   () => import("../pages/SearchResult/SearchResult")
 );
+const FavouritesPage = lazy(() => import("../pages/Favourites/Favourites"));
 
 const allRoutes = [
   {
@@ -37,6 +38,10 @@ const allRoutes = [
       {
         path: "searchResult",
         element: <SearchResultPage />,
+      },
+      {
+        path: "favourites",
+        element: <FavouritesPage />,
       },
     ],
   },

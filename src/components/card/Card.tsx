@@ -4,6 +4,8 @@ import HeartIcon from "../../assets/svg/like.svg?react";
 import Sun from "../../assets/svg/sun.svg?react";
 import { useNavigate } from "react-router-dom";
 import { CardTypes } from "../../types";
+import Breakfast from "../../assets/svg/breakfast.svg?react";
+import People from "../../assets/svg/people.svg?react";
 
 const Card: FC<CardTypes> = ({
   id,
@@ -14,7 +16,10 @@ const Card: FC<CardTypes> = ({
   rating,
   date,
   onClick,
-  position = "vertical",
+  position = "vertical", // vertical - Y line ; horizontal - X line
+  hasBreakfast = false,
+  personCount,
+  price,
 }) => {
   const [isSaved, setIsSaved] = useState(false);
 
@@ -36,11 +41,21 @@ const Card: FC<CardTypes> = ({
   return (
     <div
       onClick={handleRoute}
-      className="p-2 pb-6 gap-2 rounded-[8px] transition-all duration-300 hover:opacity-80 bg-white border border-neutral-300 flex flex-col w-full max-w-[270px] h-auto max-h-[420px] cursor-pointer"
+      className={`gap-2 rounded-[8px] transition-all duration-300 hover:opacity-80 bg-white border border-neutral-300 flex ${
+        position === "horizontal"
+          ? "flex-row w-full items-center p-2 !h-[250px]"
+          : "flex-col max-w-[270px] max-h-[420px] p-2 pb-6 "
+      } h-auto  cursor-pointer`}
     >
       {/* IMAGE  */}
       <div className="relative">
-        <img src={Cup} alt="cardImage" className="rounded-t-[4px] w-full " />
+        <img
+          src={Cup}
+          alt="cardImage"
+          className={`rounded-t-[4px] ${
+            position === "horizontal" ? "w-[250px] !h-[230px] " : "w-full"
+          } `}
+        />
         <span
           className="absolute top-2 left-2 cursor-pointer"
           style={{ stroke: "red" }}
@@ -70,17 +85,54 @@ const Card: FC<CardTypes> = ({
           </div>
         </div>
       </div>
-      {/* TITLE */}
-      <div>
-        <p className="text-[20px] font-bold text-[#000]">{title}</p>
-        <span className="text-neutral-700 text-[16px] font-semibold">
-          {text}
-        </span>
-      </div>
-      {/* DATE */}
-      <span className="text-[12px] font-medium text-[#000]">{date}</span>
 
-      <p className="text-neutral-950 text-[10px] font-[300]">{desc}</p>
+      {position === "horizontal" ? (
+        <div className="h-full p-4 w-full">
+          {/* TITLE */}
+          <div>
+            <p className="text-[20px] font-bold text-[#000]">{title}</p>
+            <span className="text-neutral-700 text-[16px] font-semibold">
+              {text}
+            </span>
+          </div>
+          <div>
+            {hasBreakfast && (
+              <p className="flex flex-row items-center gap-[8px] text-[#565656] text-[12px]">
+                <span>
+                  <Breakfast />
+                </span>
+                Breakfast Included
+              </p>
+            )}
+            {personCount && (
+              <p className="flex flex-row items-center gap-[8px] text-[#565656] text-[12px] !mt-0">
+                <span>
+                  <People />
+                </span>{" "}
+                1 Adult , 2 Children
+              </p>
+            )}
+          </div>
+          {/* DATE */}
+          <span className="text-[12px] font-medium text-[#000]">{date}</span>
+
+          <p className="text-neutral-950 text-[10px] font-[300]">{desc}</p>
+        </div>
+      ) : (
+        <div className="h-full">
+          {/* TITLE */}
+          <div>
+            <p className="text-[20px] font-bold text-[#000]">{title}</p>
+            <span className="text-neutral-700 text-[16px] font-semibold">
+              {text}
+            </span>
+          </div>
+          {/* DATE */}
+          <span className="text-[12px] font-medium text-[#000]">{date}</span>
+
+          <p className="text-neutral-950 text-[10px] font-[300]">{desc}</p>
+        </div>
+      )}
     </div>
   );
 };
