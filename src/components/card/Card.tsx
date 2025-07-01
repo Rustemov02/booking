@@ -20,6 +20,7 @@ const Card: FC<CardTypes> = ({
   hasBreakfast = false,
   personCount,
   price,
+  className = "",
 }) => {
   const [isSaved, setIsSaved] = useState(false);
 
@@ -43,9 +44,9 @@ const Card: FC<CardTypes> = ({
       onClick={handleRoute}
       className={`gap-2 rounded-[8px] transition-all duration-300 hover:opacity-80 bg-white border border-neutral-300 flex ${
         position === "horizontal"
-          ? "flex-row w-full items-center p-2 !h-[250px]"
+          ? "flex-row w-full items-center p-2 !h-[200px]"
           : "flex-col max-w-[270px] max-h-[420px] p-2 pb-6 "
-      } h-auto  cursor-pointer`}
+      } h-auto  cursor-pointer ${className}`}
     >
       {/* IMAGE  */}
       <div className="relative">
@@ -53,7 +54,7 @@ const Card: FC<CardTypes> = ({
           src={Cup}
           alt="cardImage"
           className={`rounded-t-[4px] ${
-            position === "horizontal" ? "w-[250px] !h-[230px] " : "w-full"
+            position === "horizontal" ? "w-[250px] !h-[180px] " : "w-full"
           } `}
         />
         <span

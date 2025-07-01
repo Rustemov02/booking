@@ -24,6 +24,7 @@ export interface CardTypes {
   hasBreakfast?: boolean;
   personCount?: { adult: number; children: number };
   price?: number;
+  className?: string;
 }
 
 export interface BookingBarTypes {
