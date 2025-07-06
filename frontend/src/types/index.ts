@@ -33,5 +33,5 @@ export interface BookingBarTypes {
   adults: number;
   children: number;
   rooms: number;
-  withPet: boolean;
+  petFriendly: boolean;
 }

@@ -26,9 +26,19 @@ app.get("/api/rooms", (req: Request, res: Response) => {
 
 app.post("/api/rooms/search", (req: Request, res: Response) => {
   try {
-    const { checkIn, checkOut, adults, children, rooms } = req.body;
+    const { checkIn, checkOut, adults, children, rooms, petFriendly } =
+      req.body;
 
-    if (!checkIn || !checkOut || !adults || !children || !rooms) {
+    // TARİXƏ GÖRƏ FİLTER EDİLMƏYƏCƏK...
+
+    if (
+      !checkIn ||
+      !checkOut ||
+      !adults ||
+      !children ||
+      !rooms ||
+      !petFriendly
+    ) {
       res.status(400).json({ error: "Doldurulmayan sahələr qalıb" });
     }
 
@@ -39,8 +49,10 @@ app.post("/api/rooms/search", (req: Request, res: Response) => {
       const totalCapacity = room.capacity * roomsNeeded;
       return room.available === true && totalCapacity >= totalGuests;
     });
-    
-    res.json({ rooms: filteredRooms });
+
+    res.json({
+      rooms: filteredRooms,
+    });
   } catch (err) {
     res.status(500).json({ error: "### Failed while filtering rooms data" });
   }

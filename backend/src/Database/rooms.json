@@ -15,7 +15,8 @@
       "amenities": ["WiFi", "Air Conditioning", "TV"],
       "cancellationPolicy": "Free cancellation until 24h before check-in",
       "roomSize": 22,
-      "bedType": "Double Bed"
+      "bedType": "Double Bed",
+      "petFriendly": false
     },
     {
       "id": "room_102",
@@ -32,7 +33,8 @@
       "amenities": ["WiFi", "Air Conditioning", "TV", "Mini Bar", "Balcony"],
       "cancellationPolicy": "Free cancellation until 48h before check-in",
       "roomSize": 35,
-      "bedType": "King Size Bed"
+      "bedType": "King Size Bed",
+      "petFriendly": true
     },
     {
       "id": "room_103",
@@ -49,7 +51,8 @@
       "amenities": ["WiFi", "Air Conditioning", "TV", "Kitchenette", "Sofa Bed"],
       "cancellationPolicy": "Non-refundable",
       "roomSize": 50,
-      "bedType": "2 Queen Beds"
+      "bedType": "2 Queen Beds",
+      "petFriendly": true
     }
   ]
 }

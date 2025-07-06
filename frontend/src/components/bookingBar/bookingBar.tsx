@@ -3,7 +3,7 @@ import peopleAdd from "../../assets/svg/peopleAdd.svg";
 import CalendarIcon from "../../assets/svg/calendar.svg?react";
 import ArrowDown from "../../assets/svg/arrow-down.svg?react";
 import { DatePicker } from "rsuite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./bar.module.css";
 import Counter from "../counter/Counter";
 import Switch from "../toggleSwitch/Switch";
@@ -12,26 +12,29 @@ import { BookingBarTypes } from "../../types";
 import toast from "react-hot-toast";
 import useClickOutSide from "../../hooks/useClickOutside";
 import { useNavigate, useRoutes } from "react-router-dom";
+import apiRequest from "../../api/apiRequest";
 
 const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   // structure
   const [isCheckInModalOpen, setIsCheckInModalOpen] = useState(false);
   const [isCheckOutModalOpen, setIsCheckOutModalOpen] = useState(false);
-  const [checkInDate, setCheckInDate] = useState<Date | null>(null);
-  const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
   const [isPersonalModalOpen, setIsPersonalModalOpen] =
     useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    const navigate = useNavigate()
-   //data
+  const navigate = useNavigate();
+  //data
   const [bookingData, setBookingData] = useState<BookingBarTypes>({
     checkIn: null,
     checkOut: null,
     adults: 1,
     children: 0,
     rooms: 1,
-    withPet: false,
+    petFriendly: false,
   });
+
+  useEffect(() => console.log(bookingData), [bookingData]);
 
   const clearCheckData = (type: "checkIn" | "checkOut") => {
     setBookingData((prev) => ({
@@ -40,15 +43,43 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    setError("");
+    try {
+      const response = await apiRequest({
+        method: "POST",
+        url: "/api/rooms/search",
+        data: bookingData,
+        onError: (err) => {
+          setError(err?.response?.data?.error);
+        },
+      });
 
-    navigate('searchResult')
-    // if (!bookingData.checkIn || !bookingData.checkOut) { 
-    //  return toast.error("Bütün məlumatları daxil edin !")
-    // };
+      const queryParams = Object.entries(bookingData).reduce(
+        (acc, [key, value]) => {
+          acc[key] = String(value); // hər dəyəri string-ə çevir
+          return acc;
+        },
+        {} as Record<string, string>
+      );
+      const params = new URLSearchParams(queryParams);
 
-  };  
-  const testRef = useClickOutSide(()=>setIsPersonalModalOpen(false))
+      navigate(`/searchResult?${params}`);
+
+      console.log(params);
+    } catch (err) {
+      console.log("ERROR :", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
+  const testRef = useClickOutSide(() => setIsPersonalModalOpen(false));
+
   return (
     <div
       className={`hidden lg:flex md-2:flex flex-row items-center flex-wrap w-4/5 border border-[#A6A6A6] bg-white rounded-[4px] ${extraStyle}`}
@@ -127,7 +158,7 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
             oneTap
             shouldDisableDate={(date: Date) =>
               date < new Date(new Date().setHours(0, 0, 0, 0)) ||
-              (checkInDate !== null && date < checkInDate)
+              (bookingData?.checkIn !== null && date < bookingData?.checkIn)
             }
             toggleAs="div"
             placeholder="Check out Date"
@@ -157,8 +188,8 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
         )}
       </div>
       {/* Person count */}
-      <div 
-      ref={testRef}
+      <div
+        ref={testRef}
         className={`relative  justify-between gap-1 ${styles.item} !border-none`}
       >
         <img src={peopleAdd} alt="person" />
@@ -172,11 +203,11 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
             className={`cursor-pointer transition-transform duration-300 ${
               isPersonalModalOpen ? "rotate-x-180 " : "rotate-x-0"
             }`}
-            onClick={() => setIsPersonalModalOpen(prev => !prev)}
+            onClick={() => setIsPersonalModalOpen((prev) => !prev)}
           />
-        </span> 
+        </span>
         {/*  --- Personal Modal ---  */}
-        <div   
+        <div
           className={`${
             isPersonalModalOpen
               ? "opacity-100 max-h-auto overflow-auto p-4"
@@ -185,15 +216,30 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
         >
           <div className="flex flex-row items-center justify-between gap-4">
             <p>Adults</p>{" "}
-            <Counter count={bookingData.adults} onChange={() => {}} />
+            <Counter
+              count={bookingData.adults}
+              onChange={(value) =>
+                setBookingData((prev) => ({ ...prev, adults: value }))
+              }
+            />
           </div>
           <div className="flex flex-row items-center justify-between gap-4">
             <p>Children</p>{" "}
-            <Counter count={bookingData.children} onChange={() => {}} />
+            <Counter
+              count={bookingData.children}
+              onChange={(value) =>
+                setBookingData((prev) => ({ ...prev, children: value }))
+              }
+            />
           </div>
           <div className="flex flex-row items-center justify-between gap-4">
             <p>Rooms</p>{" "}
-            <Counter count={bookingData.rooms} onChange={() => {}} />
+            <Counter
+              count={bookingData.rooms}
+              onChange={(value) =>
+                setBookingData((prev) => ({ ...prev, rooms: value }))
+              }
+            />
           </div>
           <hr />
           {/* traveling with pets */}
@@ -201,7 +247,7 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
             <p className="w-4/5">Are you traveling with a pet?</p>{" "}
             <Switch
               onChange={(isActive) =>
-                setBookingData((prev) => ({ ...prev, withPet: isActive }))
+                setBookingData((prev) => ({ ...prev, petFriendly: isActive }))
               }
             />
           </div>
