@@ -2,8 +2,28 @@ import { useEffect, useState } from "react";
 import BookingBar from "../../components/bookingBar/bookingBar";
 import MarkFilter from "../../components/markFilter/MarkFilter";
 import Card from "../../components/card/Card";
+import { useSearchParams } from "react-router-dom";
+import { BookingBarTypes } from "../../types";
 
 const SearchResult = () => {
+  const [searchParams] = useSearchParams();
+  // const chec kIn = searchParams.get("checkIn");
+  // const checkOut = searchParams.get("checkOut");
+  // const adults = searchParams.get("adults");
+  // const children = searchParams.get("children");
+  // const rooms = searchParams.get("rooms");
+  // const petFriendly= searchParams.get("petFriendly");
+
+  const params = Object.fromEntries(searchParams.entries());
+
+  const bookingBarData: BookingBarTypes = {
+    checkIn: params.checkIn || null,
+    checkOut: params.checkOut || null,
+    adults: params.adults ? Number(params.adults) : 1,
+    children: params.children ? Number(params.children) : 0,
+    rooms: params.rooms ? Number(params.rooms) : 1,
+    petFriendly: params.petFriendly === "true",
+  };
   const testData = [
     "Breakfast included",
     "All-inclusive",
@@ -43,6 +63,7 @@ const SearchResult = () => {
   const [selectedDistance, setSelectedDistance] = useState<string[]>([]);
 
   const personCount = { adult: 1, children: 2 };
+
   return (
     <div className={`container`}>
       {/* Header */}
@@ -55,7 +76,7 @@ const SearchResult = () => {
             Find Exclusive Genius Rewards In Every Corner Of The World
           </p>
         </div>
-        <BookingBar extraStyle="w-full" />
+        <BookingBar extraStyle="w-full" data={bookingBarData} />
       </div>
 
       {/* Main */}
@@ -102,6 +123,7 @@ const SearchResult = () => {
             />
           </div>
         </div>
+
         {/* Result */}
         <div className="flex flex-col gap-6">
           <Card

@@ -36,8 +36,7 @@ app.post("/api/rooms/search", (req: Request, res: Response) => {
       !checkOut ||
       !adults ||
       !children ||
-      !rooms ||
-      !petFriendly
+      !rooms
     ) {
       res.status(400).json({ error: "Doldurulmayan sahələr qalıb" });
     }

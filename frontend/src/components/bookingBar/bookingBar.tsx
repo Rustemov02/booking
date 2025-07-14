@@ -11,10 +11,16 @@ import Close from "../../assets/svg/Close";
 import { BookingBarTypes } from "../../types";
 import toast from "react-hot-toast";
 import useClickOutSide from "../../hooks/useClickOutside";
-import { useNavigate, useRoutes } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import apiRequest from "../../api/apiRequest";
 
-const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
+const BookingBar = ({
+  extraStyle,
+  data,
+}: {
+  extraStyle?: string;
+  data?: BookingBarTypes;
+}) => {
   // structure
   const [isCheckInModalOpen, setIsCheckInModalOpen] = useState(false);
   const [isCheckOutModalOpen, setIsCheckOutModalOpen] = useState(false);
@@ -22,19 +28,20 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
     useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const location = useLocation();
 
   const navigate = useNavigate();
   //data
-  const [bookingData, setBookingData] = useState<BookingBarTypes>({
-    checkIn: null,
-    checkOut: null,
-    adults: 1,
-    children: 0,
-    rooms: 1,
-    petFriendly: false,
-  });
-
-  useEffect(() => console.log(bookingData), [bookingData]);
+  const [bookingData, setBookingData] = useState<BookingBarTypes>(
+    data || {
+      checkIn: null,
+      checkOut: null,
+      adults: 1,
+      children: 0,
+      rooms: 1,
+      petFriendly: false,
+    }
+  );
 
   const clearCheckData = (type: "checkIn" | "checkOut") => {
     setBookingData((prev) => ({
@@ -44,10 +51,11 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
   };
 
   const handleSubmit = async () => {
+    console.log(bookingData);
     setIsLoading(true);
     setError("");
     try {
-      const response = await apiRequest({
+       await apiRequest({
         method: "POST",
         url: "/api/rooms/search",
         data: bookingData,
@@ -58,16 +66,21 @@ const BookingBar = ({ extraStyle }: { extraStyle?: string }) => {
 
       const queryParams = Object.entries(bookingData).reduce(
         (acc, [key, value]) => {
-          acc[key] = String(value); // hər dəyəri string-ə çevir
+          acc[key] = String(value);  
           return acc;
         },
         {} as Record<string, string>
       );
       const params = new URLSearchParams(queryParams);
 
-      navigate(`/searchResult?${params}`);
+      const currentPath = location.pathname;
 
-      console.log(params);
+      const basePath = currentPath.includes("searchResult")
+        ? ""
+        : "searchResult";
+
+      navigate(`${basePath}?${params}`);
+ 
     } catch (err) {
       console.log("ERROR :", err);
     } finally {
