@@ -29,17 +29,17 @@ const DestinationsPage = () => {
   }, []);
 
   const handleSetRoomsData = async (id: string) => {
-    const selectedRoom = rooms.find((item: any) => item?.id === id) as
+    
+    const selectedRoom = rooms.find((item: any) => item?._id === id) as
       | RoomTypes
       | undefined;
 
+    console.log(selectedRoom);
     setRooms((prev: any) =>
       prev.map((item: any) =>
         item.id === id ? { ...item, isSaved: !item.isSaved } : item
       )
     );
-
-    console.log(typeof selectedRoom?.isSaved);
     try {
       const response = await apiRequest({
         method: "PATCH",
@@ -73,7 +73,7 @@ const DestinationsPage = () => {
             rating={3.2}
             desc={item.cancellationPolicy}
             isSaved={item.isSaved}
-            setIsSaved={() => handleSetRoomsData(item.id)}
+            setIsSaved={() => handleSetRoomsData(item._id)}
           />
         ))}
       </div>

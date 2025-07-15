@@ -3,16 +3,14 @@ import BookingBar from "../../components/bookingBar/bookingBar";
 import MarkFilter from "../../components/markFilter/MarkFilter";
 import Card from "../../components/card/Card";
 import { useSearchParams } from "react-router-dom";
-import { BookingBarTypes } from "../../types";
+import { BookingBarTypes, CardTypes } from "../../types";
+import apiRequest from "../../api/apiRequest";
+import toast from "react-hot-toast";
 
 const SearchResult = () => {
   const [searchParams] = useSearchParams();
-  // const checkIn = searchParams.get("checkIn");
-  // const checkOut = searchParams.get("checkOut");
-  // const adults = searchParams.get("adults");
-  // const children = searchParams.get("children");
-  // const rooms = searchParams.get("rooms");
-  // const petFriendly= searchParams.get("petFriendly");
+  const [error, setError] = useState("");
+  const [filterData, setFilterData] = useState([]);
 
   const params = Object.fromEntries(searchParams.entries());
 
@@ -24,6 +22,38 @@ const SearchResult = () => {
     rooms: params.rooms ? Number(params.rooms) : 1,
     petFriendly: params.petFriendly === "true",
   };
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
+
+  useEffect(() => {
+    const searchResult = async () => {
+      try {
+        const response = await apiRequest({
+          method: "POST",
+          url: "/api/rooms/search",
+          data: bookingBarData,
+          onError: (err) => {
+            setError(err?.response?.data?.error);
+          },
+        });
+
+        if (!response) {
+          toast.error("Xəta baş verdi");
+        }
+        setFilterData(response?.rooms);
+      } catch (err) {
+        console.log("ERROR :", err);
+      }
+    };
+
+    searchResult();
+  }, []);
+
+  useEffect(() => {
+    console.log(filterData);
+  }, [filterData]);
   const testData = [
     "Breakfast included",
     "All-inclusive",
@@ -126,41 +156,21 @@ const SearchResult = () => {
 
         {/* Result */}
         <div className="flex flex-col gap-6">
-          <Card
-            id={1}
-            title="Test"
-            text="Side"
-            desc="It is just testing text for see what happen in the document"
-            rating={3}
-            hasBreakfast
-            personCount={personCount}
-            date="Wen 25 Jan - Fri 27 Jan"
-            position="horizontal"
-          />
-
-          <Card
-            id={1}
-            title="Test"
-            text="Side"
-            desc="It is just testing text for see what happen in the document"
-            rating={3}
-            hasBreakfast
-            personCount={personCount}
-            date="Wen 25 Jan - Fri 27 Jan"
-            position="horizontal"
-          />
-
-          <Card
-            id={1}
-            title="Test"
-            text="Side"
-            desc="It is just testing text for see what happen in the document"
-            rating={3}
-            hasBreakfast
-            personCount={personCount}
-            date="Wen 25 Jan - Fri 27 Jan"
-            position="horizontal"
-          />
+          {filterData &&
+            filterData.map((item: any) => (
+              <Card
+                // onClick={handleRequest}
+                id={item.id}
+                price={item.pricePerNight}
+                // basePath={routes.destinationDetail}
+                title={item.name}
+                text={item.description}
+                rating={3.2}
+                desc={item.cancellationPolicy}
+                isSaved={item.isSaved}
+                // setIsSaved={() => handleSetRoomsData(item.id)}
+              />
+            ))}
         </div>
       </div>
     </div>

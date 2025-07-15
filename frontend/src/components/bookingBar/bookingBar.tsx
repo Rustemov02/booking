@@ -53,41 +53,23 @@ const BookingBar = ({
   const handleSubmit = async () => {
     setIsLoading(true);
     setError("");
-    try {
-      const response = await apiRequest({
-        method: "POST",
-        url: "/api/rooms/search",
-        data: bookingData,
-        onError: (err) => {
-          setError(err?.response?.data?.error);
-        },
-      });
 
-      if (!response) {
-        toast.error("Xəta baş verdi");
-      }
-      
-      const queryParams = Object.entries(bookingData).reduce(
-        (acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        },
-        {} as Record<string, string>
-      );
-      const params = new URLSearchParams(queryParams);
+    const queryParams = Object.entries(bookingData).reduce(
+      (acc, [key, value]) => {
+        acc[key] = String(value);
+        return acc;
+      },
+      {} as Record<string, string>
+    );
+    const params = new URLSearchParams(queryParams);
 
-      const currentPath = location.pathname;
+    const currentPath = location.pathname;
 
-      const basePath = currentPath.includes("searchResult")
-        ? ""
-        : "searchResult";
+    const basePath = currentPath.includes("searchResult") ? "" : "searchResult";
 
-      navigate(`${basePath}?${params}`);
-    } catch (err) {
-      console.log("ERROR :", err);
-    } finally {
-      setIsLoading(false);
-    }
+    navigate(`${basePath}?${params}`);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {

@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 dotenv.config();
 
 const MONGO_URL = process.env.MONGO_URL as string;
-console.log("MONGO_URI:", process.env.MONGO_URL);
 export const connectDB = async () => {
   try {
     await mongoose.connect(MONGO_URL as string);

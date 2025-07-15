@@ -37,7 +37,7 @@ export interface BookingBarTypes {
 }
 
 export interface RoomTypes {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   capacity: number;
