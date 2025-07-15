@@ -35,3 +35,20 @@ export interface BookingBarTypes {
   rooms: number;
   petFriendly?: boolean;
 }
+
+export interface RoomTypes {
+  id: string;
+  name: string;
+  description: string;
+  capacity: number;
+  pricePerNight: number;
+  totalPrice: number;
+  available: boolean;
+  isSaved: boolean;
+  images: string[];
+  amenities: string[];
+  cancellationPolicy: string;
+  roomSize: number;
+  bedType: string;
+  petFriendly: boolean;
+}

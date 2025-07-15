@@ -3,7 +3,7 @@ import apiRequest from "../../../api/apiRequest";
 import Card from "../../../components/card/Card";
 import PageHeader from "../../../components/pageHeader/PageHeader";
 import getRoutes from "../../../modules";
-import { CardTypes } from "../../../types";
+import { CardTypes, RoomTypes } from "../../../types";
 
 const DestinationsPage = () => {
   const routes = getRoutes();
@@ -29,17 +29,25 @@ const DestinationsPage = () => {
   }, []);
 
   const handleSetRoomsData = async (id: string) => {
+    const selectedRoom = rooms.find((item: any) => item?.id === id) as
+      | RoomTypes
+      | undefined;
+
     setRooms((prev: any) =>
       prev.map((item: any) =>
         item.id === id ? { ...item, isSaved: !item.isSaved } : item
       )
     );
 
+    console.log(typeof selectedRoom?.isSaved);
     try {
       const response = await apiRequest({
-        method: 'PATCH',
-
-      })
+        method: "PATCH",
+        url: `/api/rooms/${id}`,
+        data: { isSaved: selectedRoom?.isSaved },
+        onError: (err) => console.log("ERROR : ", err),
+      });
+      console.log(response);
     } catch (err) {
       console.log("Error : ", err);
     }

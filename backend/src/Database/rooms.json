@@ -13,7 +13,11 @@
         "https://example.com/images/room_101_1.jpg",
         "https://example.com/images/room_101_2.jpg"
       ],
-      "amenities": ["WiFi", "Air Conditioning", "TV"],
+      "amenities": [
+        "WiFi",
+        "Air Conditioning",
+        "TV"
+      ],
       "cancellationPolicy": "Free cancellation until 24h before check-in",
       "roomSize": 22,
       "bedType": "Double Bed",
@@ -32,7 +36,13 @@
         "https://example.com/images/room_102_1.jpg",
         "https://example.com/images/room_102_2.jpg"
       ],
-      "amenities": ["WiFi", "Air Conditioning", "TV", "Mini Bar", "Balcony"],
+      "amenities": [
+        "WiFi",
+        "Air Conditioning",
+        "TV",
+        "Mini Bar",
+        "Balcony"
+      ],
       "cancellationPolicy": "Free cancellation until 48h before check-in",
       "roomSize": 35,
       "bedType": "King Size Bed",
@@ -51,7 +61,13 @@
         "https://example.com/images/room_103_1.jpg",
         "https://example.com/images/room_103_2.jpg"
       ],
-      "amenities": ["WiFi", "Air Conditioning", "TV", "Kitchenette", "Sofa Bed"],
+      "amenities": [
+        "WiFi",
+        "Air Conditioning",
+        "TV",
+        "Kitchenette",
+        "Sofa Bed"
+      ],
       "cancellationPolicy": "Non-refundable",
       "roomSize": 50,
       "bedType": "2 Queen Beds",

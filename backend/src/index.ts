@@ -13,8 +13,10 @@ const fileContent = fs.readFileSync(filePath, "utf-8");
 const roomsData = JSON.parse(fileContent);
 
 // all rooms
-app.get("/api/rooms", (req: Request, res: Response) => {
+app.get("/api/rooms", async (req: Request, res: Response) => {
   try {
+    const fileContent = await fs.promises.readFile(filePath, "utf-8");
+    const roomsData = JSON.parse(fileContent);
     res.json(roomsData);
   } catch (err) {
     console.log("Error reading rooms data !");
@@ -22,22 +24,24 @@ app.get("/api/rooms", (req: Request, res: Response) => {
   }
 });
 
-// updaet rooms by id
+
+// update rooms by id
 app.patch("/api/rooms/:id", (req: Request, res: Response) => {
   try {
     const roomId = req.params.id;
     const { isSaved } = req.body;
 
-    const index = roomsData.findIndex((item: any) => item.id === roomId);
+    const index = roomsData.rooms.findIndex((item: any) => item.id === roomId);
 
     if (index === -1) {
       return res.status(404).json({ errorMessage: "Otaq tapılmadı" });
     }
 
     if (typeof isSaved === "boolean") {
-      roomsData[index].isSaved = isSaved;
+      roomsData.rooms[index].isSaved = isSaved;
+      fs.writeFileSync(filePath, JSON.stringify(roomsData, null, 2), "utf-8");
     }
-    res.json(roomsData[index]);
+    res.json(roomsData.rooms[index]);
   } catch (err) {
     console.log("Error updating room : ", err);
     res.status(500).json({ errorMessage: "### Failed to update room" });
@@ -53,7 +57,7 @@ app.post("/api/rooms/search", (req: Request, res: Response) => {
     // TARİXƏ GÖRƏ FİLTER EDİLMƏYƏCƏK...
 
     if (!checkIn || !checkOut || !adults || !children || !rooms) {
-      res.status(400).json({ error: "Doldurulmayan sahələr qalıb" });
+      return res.status(400).json({ error: "Doldurulmayan sahələr qalıb" });
     }
 
     const totalGuests = Number(adults) + Number(children);
