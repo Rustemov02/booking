@@ -7,7 +7,7 @@ import { BookingBarTypes } from "../../types";
 
 const SearchResult = () => {
   const [searchParams] = useSearchParams();
-  // const chec kIn = searchParams.get("checkIn");
+  // const checkIn = searchParams.get("checkIn");
   // const checkOut = searchParams.get("checkOut");
   // const adults = searchParams.get("adults");
   // const children = searchParams.get("children");

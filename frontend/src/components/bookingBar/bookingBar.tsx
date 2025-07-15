@@ -11,7 +11,7 @@ import Close from "../../assets/svg/Close";
 import { BookingBarTypes } from "../../types";
 import toast from "react-hot-toast";
 import useClickOutSide from "../../hooks/useClickOutside";
-import { useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import apiRequest from "../../api/apiRequest";
 
 const BookingBar = ({
@@ -51,11 +51,10 @@ const BookingBar = ({
   };
 
   const handleSubmit = async () => {
-    console.log(bookingData);
     setIsLoading(true);
     setError("");
     try {
-       await apiRequest({
+      const response = await apiRequest({
         method: "POST",
         url: "/api/rooms/search",
         data: bookingData,
@@ -64,9 +63,13 @@ const BookingBar = ({
         },
       });
 
+      if (!response) {
+        toast.error("Xəta baş verdi");
+      }
+      
       const queryParams = Object.entries(bookingData).reduce(
         (acc, [key, value]) => {
-          acc[key] = String(value);  
+          acc[key] = String(value);
           return acc;
         },
         {} as Record<string, string>
@@ -80,7 +83,6 @@ const BookingBar = ({
         : "searchResult";
 
       navigate(`${basePath}?${params}`);
- 
     } catch (err) {
       console.log("ERROR :", err);
     } finally {

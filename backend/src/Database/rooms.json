@@ -8,6 +8,7 @@
       "pricePerNight": 85,
       "totalPrice": 255,
       "available": true,
+      "isSaved": true,
       "images": [
         "https://example.com/images/room_101_1.jpg",
         "https://example.com/images/room_101_2.jpg"
@@ -26,6 +27,7 @@
       "pricePerNight": 120,
       "totalPrice": 360,
       "available": true,
+      "isSaved": false,
       "images": [
         "https://example.com/images/room_102_1.jpg",
         "https://example.com/images/room_102_2.jpg"
@@ -44,6 +46,7 @@
       "pricePerNight": 180,
       "totalPrice": 540,
       "available": false,
+      "isSaved": true,
       "images": [
         "https://example.com/images/room_103_1.jpg",
         "https://example.com/images/room_103_2.jpg"

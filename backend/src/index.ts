@@ -22,8 +22,29 @@ app.get("/api/rooms", (req: Request, res: Response) => {
   }
 });
 
-// filter rooms
+// updaet rooms by id
+app.patch("/api/rooms/:id", (req: Request, res: Response) => {
+  try {
+    const roomId = req.params.id;
+    const { isSaved } = req.body;
 
+    const index = roomsData.findIndex((item: any) => item.id === roomId);
+
+    if (index === -1) {
+      return res.status(404).json({ errorMessage: "Otaq tapılmadı" });
+    }
+
+    if (typeof isSaved === "boolean") {
+      roomsData[index].isSaved = isSaved;
+    }
+    res.json(roomsData[index]);
+  } catch (err) {
+    console.log("Error updating room : ", err);
+    res.status(500).json({ errorMessage: "### Failed to update room" });
+  }
+});
+
+// filter rooms
 app.post("/api/rooms/search", (req: Request, res: Response) => {
   try {
     const { checkIn, checkOut, adults, children, rooms, petFriendly } =
@@ -31,13 +52,7 @@ app.post("/api/rooms/search", (req: Request, res: Response) => {
 
     // TARİXƏ GÖRƏ FİLTER EDİLMƏYƏCƏK...
 
-    if (
-      !checkIn ||
-      !checkOut ||
-      !adults ||
-      !children ||
-      !rooms
-    ) {
+    if (!checkIn || !checkOut || !adults || !children || !rooms) {
       res.status(400).json({ error: "Doldurulmayan sahələr qalıb" });
     }
 

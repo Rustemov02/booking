@@ -21,11 +21,15 @@ const Card: FC<CardTypes> = ({
   personCount,
   price,
   className = "",
+  isSaved,
+  setIsSaved,
 }) => {
-  const [isSaved, setIsSaved] = useState(false);
+  // const [isSaved, setIsSaved] = useState(false);
 
-  const toggleSave = () => {
-    setIsSaved(!isSaved);
+  const toggleSave = (e: any) => {
+    e.stopPropagation();
+    console.log(isSaved);
+    setIsSaved?.(!isSaved);
   };
 
   const navigate = useNavigate();
@@ -58,7 +62,7 @@ const Card: FC<CardTypes> = ({
           } `}
         />
         <span
-          className="absolute top-2 left-2 cursor-pointer"
+          className="absolute top-2 left-2 cursor-pointer z-100"
           style={{ stroke: "red" }}
         >
           <HeartIcon
