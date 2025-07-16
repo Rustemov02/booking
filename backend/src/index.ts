@@ -1,26 +1,17 @@
 import express, { Request, Response } from "express";
+import mongoose from "mongoose";
 import { connectDB } from "./Database/db";
-import fs from "fs";
-import path from "path";
 import cors from "cors";
 import { Room } from "./Database/models/Room";
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log("MONGO_URI:", process.env.MONGO_URL);
 const app = express();
 const PORT = process.env.PORT || 8080;
-
-const router = express.Router();
 
 app.use(cors());
 app.use(express.json());
 connectDB();
-
-const filePath = path.join(__dirname, "./Database/rooms.json");
-
-const fileContent = fs.readFileSync(filePath, "utf-8");
-const roomsData = JSON.parse(fileContent);
 
 // =============================    GET ALL ROOMS WITH MONGO   ================================
 
@@ -56,7 +47,6 @@ app.post("/api/rooms/search", async (req: Request, res: Response) => {
       capacity: { $gte: totalGuests / roomsNeeded },
     });
 
-    console.log(filteredRooms);
     res.json({
       rooms: filteredRooms,
     });
@@ -65,43 +55,37 @@ app.post("/api/rooms/search", async (req: Request, res: Response) => {
   }
 });
 
-// update rooms by id
+// update rooms by id {isSaved}
 app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
   try {
     const roomId = req.params.id;
     const { isSaved } = req.body;
 
-    if (!isSaved) {
-      return res.status(400).json({ error: "Status təyin edilməyib !" });
-    }
-    
+    console.log("ROOM ID:", roomId);
+
     if (typeof isSaved !== "boolean") {
-      return res.status(400).json({ error: "isSaved boolean olmalıdır !" });
+      return res.status(400).json({ error: "isSaved boolean olmalıdır!" });
     }
 
-    const updatedRoom = await Room.findByIdAndUpdate(
-      roomId,
-      { isSaved: isSaved },
+    if (!mongoose.Types.ObjectId.isValid(roomId)) {
+      return res.status(400).json({ error: "Düzgün ObjectId göndərilməyib!" });
+    }
+ 
+    const objectId = new mongoose.Types.ObjectId(roomId);
+
+    const updatedRoom = await Room.findOneAndUpdate(
+      { _id: objectId },
+      { isSaved },
       { new: true }
     );
 
     if (!updatedRoom) {
-      return res.status(404).json({ error: "Otaq tapılmadı !" });
+      return res.status(404).json({ error: "Otaq tapılmadı!" });
     }
 
     res.json(updatedRoom);
-    // const index = roomsData.rooms.findIndex((item: any) => item.id === roomId);
-
-    // if (index === -1) {
-    //   return res.status(404).json({ errorMessage: "Otaq tapılmadı" });
-    // }
-
-    // if (typeof isSaved === "boolean") {
-    //   roomsData.rooms[index].isSaved = isSaved;
-    //   fs.writeFileSync(filePath, JSON.stringify(roomsData, null, 2), "utf-8");
-    // }
   } catch (err) {
-    console.log("Error updating room : ", err);
+    console.error("Error updating room:", err);
     res.status(500).json({ errorMessage: "### Failed to update room" });
   }
 });

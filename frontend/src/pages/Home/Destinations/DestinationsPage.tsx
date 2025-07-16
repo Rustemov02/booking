@@ -29,7 +29,6 @@ const DestinationsPage = () => {
   }, []);
 
   const handleSetRoomsData = async (id: string) => {
-    
     const selectedRoom = rooms.find((item: any) => item?._id === id) as
       | RoomTypes
       | undefined;
@@ -37,7 +36,7 @@ const DestinationsPage = () => {
     console.log(selectedRoom);
     setRooms((prev: any) =>
       prev.map((item: any) =>
-        item.id === id ? { ...item, isSaved: !item.isSaved } : item
+        item._id === id ? { ...item, isSaved: !item.isSaved } : item
       )
     );
     try {

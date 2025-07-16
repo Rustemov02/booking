@@ -49,7 +49,7 @@ const SearchResult = () => {
     };
 
     searchResult();
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     console.log(filterData);

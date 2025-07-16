@@ -70,6 +70,8 @@ const BookingBar = ({
     navigate(`${basePath}?${params}`);
 
     setIsLoading(false);
+
+    console.log('Search button clikced !')
   };
 
   useEffect(() => {
