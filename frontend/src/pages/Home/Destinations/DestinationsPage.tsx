@@ -28,28 +28,37 @@ const DestinationsPage = () => {
     fetchRooms();
   }, []);
 
-  const handleSetRoomsData = async (id: string) => {
-    const selectedRoom = rooms.find((item: any) => item?._id === id) as
-      | RoomTypes
-      | undefined;
+  const handleSetRoomsData = async (status: boolean, id?: string) => {
+    //  FIXME: you should export isSaved status from Card
+    // so you don't need find or filter method anymore
 
-    console.log(selectedRoom);
-    setRooms((prev: any) =>
-      prev.map((item: any) =>
-        item._id === id ? { ...item, isSaved: !item.isSaved } : item
-      )
-    );
-    try {
-      const response = await apiRequest({
-        method: "PATCH",
-        url: `/api/rooms/${id}`,
-        data: { isSaved: selectedRoom?.isSaved },
-        onError: (err) => console.log("ERROR : ", err),
-      });
-      console.log(response);
-    } catch (err) {
-      console.log("Error : ", err);
-    }
+
+    console.log(status);
+
+    // const selectedRoom = rooms.find((item: any) => item?._id === id) as
+    //   | RoomTypes
+    //   | undefined;
+
+    // if (!selectedRoom) return;
+
+    // const newIsSaved = !selectedRoom.isSaved;
+
+    // setRooms((prev: any) =>
+    //   prev.map((item: any) =>
+    //     item._id === id ? { ...item, isSaved: newIsSaved } : item
+    //   )
+    // );
+    // try {
+    //   const response = await apiRequest({
+    //     method: "PATCH",
+    //     url: `/api/rooms/${id}`,
+    //     data: { isSaved: newIsSaved },
+    //     onError: (err) => console.log("ERROR : ", err),
+    //   });
+    //   console.log("PATCH RESPONSE : ", response);
+    // } catch (err) {
+    //   console.log("Error : ", err);
+    // }
   };
 
   useEffect(() => console.log(rooms), [rooms]);
@@ -61,18 +70,12 @@ const DestinationsPage = () => {
       <PageHeader title="Explore Stay in Trending Destinations" />
       <div className="text- font-semibold text-[#000]">Find Hot Stays</div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] items-center flex-wrap gap-6">
-        {rooms?.map((item: any) => (
+        {rooms?.map((card: any) => (
           <Card
             onClick={handleRequest}
-            id={item.id}
-            price={item.pricePerNight}
             basePath={routes.destinationDetail}
-            title={item.name}
-            text={item.description}
-            rating={3.2}
-            desc={item.cancellationPolicy}
-            isSaved={item.isSaved}
-            setIsSaved={() => handleSetRoomsData(item._id)}
+            setIsSaved={(isSaved) => handleSetRoomsData(isSaved)} //temporary
+            data={card}
           />
         ))}
       </div>

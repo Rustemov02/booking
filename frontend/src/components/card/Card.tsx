@@ -8,27 +8,29 @@ import Breakfast from "../../assets/svg/breakfast.svg?react";
 import People from "../../assets/svg/people.svg?react";
 
 const Card: FC<CardTypes> = ({
-  id,
-  basePath,
-  title,
-  text,
-  desc,
-  rating,
-  date,
   onClick,
+  basePath,
   position = "vertical", // vertical - Y line ; horizontal - X line
-  hasBreakfast = false,
-  personCount,
-  price,
   className = "",
-  isSaved,
   setIsSaved,
+  personCount,
+  data,
 }) => {
-  // const [isSaved, setIsSaved] = useState(false);
+  if (!data) return;
+  const {
+    _id,
+    name,
+    text,
+    rating,
+    date,
+    hasBreakfast = false,
+    price,
+    description,
+    isSaved,
+  } = data;
 
   const toggleSave = (e: any) => {
     e.stopPropagation();
-    console.log(isSaved);
     setIsSaved?.(!isSaved);
   };
 
@@ -38,9 +40,9 @@ const Card: FC<CardTypes> = ({
     onClick?.();
     if (!basePath) return;
     if (typeof basePath === "function") {
-      navigate(basePath(id.toString()));
+      // navigate(basePath(id.toString()));
     } else {
-      navigate(`${basePath}/${id}`);
+      // navigate(`${basePath}/${id}`);
     }
   };
   return (
@@ -95,7 +97,7 @@ const Card: FC<CardTypes> = ({
         <div className="h-full p-4 w-full">
           {/* TITLE */}
           <div>
-            <p className="text-[20px] font-bold text-[#000]">{title}</p>
+            <p className="text-[20px] font-bold text-[#000]">{name}</p>
             <span className="text-neutral-700 text-[16px] font-semibold">
               {text}
             </span>
@@ -121,13 +123,15 @@ const Card: FC<CardTypes> = ({
           {/* DATE */}
           <span className="text-[12px] font-medium text-[#000]">{date}</span>
 
-          <p className="text-neutral-950 text-[10px] font-[300]">{desc}</p>
+          <p className="text-neutral-950 text-[10px] font-[300]">
+            {description}
+          </p>
         </div>
       ) : (
         <div className="h-full">
           {/* TITLE */}
           <div>
-            <p className="text-[20px] font-bold text-[#000]">{title}</p>
+            <p className="text-[20px] font-bold text-[#000]">{name}</p>
             <span className="text-neutral-700 text-[16px] font-semibold">
               {text}
             </span>
@@ -135,7 +139,9 @@ const Card: FC<CardTypes> = ({
           {/* DATE */}
           <span className="text-[12px] font-medium text-[#000]">{date}</span>
 
-          <p className="text-neutral-950 text-[10px] font-[300]">{desc}</p>
+          <p className="text-neutral-950 text-[10px] font-[300]">
+            {description}
+          </p>
         </div>
       )}
     </div>

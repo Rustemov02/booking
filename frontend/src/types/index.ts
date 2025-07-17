@@ -7,24 +7,30 @@ export interface RouteType {
   children?: RouteType[] | null;
 }
 
-export interface CardTypes {
-  id: number;
-  basePath?: string | ((id: string) => string);
-  possibleSave?: boolean; // for heart icon
-  title: string;
+export interface CardDataTypes {
+  _id: string;
+  name: string;
   text?: string;
-  rating?: number | null; // for rating number
+  rating?: number | null;
   sun?: number | null;
   date?: string;
-  desc?: string;
+  description?: string;
   isSaved?: boolean;
-  setIsSaved?: (isSaved: boolean) => void;
-  onClick?: () => void;
-  position?: string;
   hasBreakfast?: boolean;
-  personCount?: { adult: number; children: number };
   price?: number;
+  available: boolean;
+  capacity: number;
+  petFriendly: boolean;
+}
+export interface CardTypes {
+  basePath?: string | ((id: string) => string);
+  onClick?: () => void;
   className?: string;
+  position?: string;
+  setIsSaved?: (isSaved: boolean) => void;
+  personCount?: { adult: number; children: number };
+  // possibleSave?: boolean; // for heart icon
+  data: CardDataTypes;
 }
 
 export interface BookingBarTypes {
