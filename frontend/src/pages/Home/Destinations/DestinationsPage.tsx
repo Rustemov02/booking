@@ -29,12 +29,8 @@ const DestinationsPage = () => {
   }, []);
 
   const handleSetRoomsData = async (status: boolean, id?: string) => {
-    //  FIXME: you should export isSaved status from Card
-    // so you don't need find or filter method anymore
-
-
-    console.log(status);
-
+    
+ 
     // const selectedRoom = rooms.find((item: any) => item?._id === id) as
     //   | RoomTypes
     //   | undefined;
@@ -43,22 +39,22 @@ const DestinationsPage = () => {
 
     // const newIsSaved = !selectedRoom.isSaved;
 
-    // setRooms((prev: any) =>
-    //   prev.map((item: any) =>
-    //     item._id === id ? { ...item, isSaved: newIsSaved } : item
-    //   )
-    // );
-    // try {
-    //   const response = await apiRequest({
-    //     method: "PATCH",
-    //     url: `/api/rooms/${id}`,
-    //     data: { isSaved: newIsSaved },
-    //     onError: (err) => console.log("ERROR : ", err),
-    //   });
-    //   console.log("PATCH RESPONSE : ", response);
-    // } catch (err) {
-    //   console.log("Error : ", err);
-    // }
+    setRooms((prev: any) =>
+      prev.map((item: any) =>
+        item._id === id ? { ...item, isSaved: status } : item
+      )
+    );
+    try {
+      const response = await apiRequest({
+        method: "PATCH",
+        url: `/api/rooms/${id}`,
+        data: { isSaved: status },
+        onError: (err) => console.log("ERROR : ", err),
+      });
+      console.log("PATCH RESPONSE : ", response);
+    } catch (err) {
+      console.log("Error : ", err);
+    }
   };
 
   useEffect(() => console.log(rooms), [rooms]);
@@ -74,7 +70,7 @@ const DestinationsPage = () => {
           <Card
             onClick={handleRequest}
             basePath={routes.destinationDetail}
-            setIsSaved={(isSaved) => handleSetRoomsData(isSaved)} //temporary
+            setIsSaved={handleSetRoomsData}
             data={card}
           />
         ))}

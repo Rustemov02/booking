@@ -70,7 +70,7 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
     if (!mongoose.Types.ObjectId.isValid(roomId)) {
       return res.status(400).json({ error: "Düzgün ObjectId göndərilməyib!" });
     }
- 
+
     const objectId = new mongoose.Types.ObjectId(roomId);
 
     const updatedRoom = await Room.findOneAndUpdate(
@@ -78,6 +78,8 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
       { isSaved },
       { new: true }
     );
+
+    await console.log("Room updated ", updatedRoom);
 
     if (!updatedRoom) {
       return res.status(404).json({ error: "Otaq tapılmadı!" });

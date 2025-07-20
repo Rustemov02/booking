@@ -27,7 +27,7 @@ export interface CardTypes {
   onClick?: () => void;
   className?: string;
   position?: string;
-  setIsSaved?: (isSaved: boolean) => void;
+  setIsSaved?: (isSaved: boolean, id?: string) => void;
   personCount?: { adult: number; children: number };
   // possibleSave?: boolean; // for heart icon
   data: CardDataTypes;

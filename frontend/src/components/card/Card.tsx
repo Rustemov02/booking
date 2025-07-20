@@ -29,9 +29,10 @@ const Card: FC<CardTypes> = ({
     isSaved,
   } = data;
 
+  console.log(data)
   const toggleSave = (e: any) => {
     e.stopPropagation();
-    setIsSaved?.(!isSaved);
+    setIsSaved?.(!isSaved, data?._id);
   };
 
   const navigate = useNavigate();
