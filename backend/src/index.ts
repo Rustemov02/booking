@@ -27,6 +27,18 @@ app.get("/api/rooms", async (req: Request, res: Response) => {
   }
 });
 
+// GET Saved Rooms
+app.get("/api/rooms/favourites", async (req: Request, res: Response) => {
+  try {
+    const savedRooms = await Room.find({ isSaved: true });
+
+    res.json({ rooms: savedRooms });
+  } catch (err) {
+    console.log("Error while fetchind favourites rooms...");
+    return res.status(500).json({ error: "Favourites otaqlar tapılmadı !" });
+  }
+});
+
 // GET Filter rooms
 app.post("/api/rooms/search", async (req: Request, res: Response) => {
   try {
@@ -47,6 +59,7 @@ app.post("/api/rooms/search", async (req: Request, res: Response) => {
       capacity: { $gte: totalGuests / roomsNeeded },
     });
 
+    console.log("Filtered Rooms : ", filteredRooms);
     res.json({
       rooms: filteredRooms,
     });
@@ -91,17 +104,5 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
     res.status(500).json({ errorMessage: "### Failed to update room" });
   }
 });
-
-// all rooms
-// app.get("/api/rooms", async (req: Request, res: Response) => {
-//   try {
-//     const fileContent = await fs.promises.readFile(filePath, "utf-8");
-//     const roomsData = JSON.parse(fileContent);
-//     res.json(roomsData);
-//   } catch (err) {
-//     console.log("Error reading rooms data !");
-//     res.status(500).json({ error: "### Failed to read rooms data" });
-//   }
-// });
 
 app.listen(PORT, () => console.log(`Server running at localhost://${PORT} !`));

@@ -5,13 +5,14 @@ import Button from "../button/Button";
 import LanguageDropdown from "../langMenu/Dropdown";
 import Search from "../search/Search";
 import SideModal from "../modal/sideModal";
-import { useLocation} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Sun from "../../assets/svg/sun.svg?react";
+import FavouritesIcon from "../../assets/svg/like.svg?react";
 
 const GuestHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  console.log(location.pathname);
+  const navigate = useNavigate();
 
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/register";
@@ -25,11 +26,18 @@ const GuestHeader = () => {
         <span className="hidden md:block">
           <LanguageDropdown />
         </span>
+
         {!isAuthPage && (
           <div className="w-1/2 md:block hidden">
             <Search />
           </div>
         )}
+        <span>
+          <FavouritesIcon
+            onClick={() => navigate("favourites")}
+            style={{ fill: "transparent", cursor: "pointer" }}
+          />
+        </span>
 
         {!isAuthPage && (
           <div className="flex-1 items-center gap-2 hidden md:flex">
@@ -37,16 +45,16 @@ const GuestHeader = () => {
               to="/login"
               title="Sign In"
               variant="primary"
-              className="grid-cols-1 " 
-            /> 
+              className="grid-cols-1 "
+            />
             <Button
               to="/register"
-              title="Register"  
+              title="Register"
               variant="primary"
               className="grid-cols-1 "
             />
           </div>
-        )} 
+        )}
 
         <div className="flex md:hidden">
           <div

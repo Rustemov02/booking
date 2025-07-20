@@ -31,6 +31,7 @@ export interface CardTypes {
   personCount?: { adult: number; children: number };
   // possibleSave?: boolean; // for heart icon
   data: CardDataTypes;
+  setData?: React.Dispatch<React.SetStateAction<RoomTypes[]>>;
 }
 
 export interface BookingBarTypes {

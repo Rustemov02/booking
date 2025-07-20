@@ -3,7 +3,7 @@ import BookingBar from "../../components/bookingBar/bookingBar";
 import MarkFilter from "../../components/markFilter/MarkFilter";
 import Card from "../../components/card/Card";
 import { useSearchParams } from "react-router-dom";
-import { BookingBarTypes, CardTypes } from "../../types";
+import { BookingBarTypes } from "../../types";
 import apiRequest from "../../api/apiRequest";
 import toast from "react-hot-toast";
 
@@ -159,16 +159,15 @@ const SearchResult = () => {
           {filterData &&
             filterData.map((item: any) => (
               <Card
-                // onClick={handleRequest}
-                id={item.id}
-                price={item.pricePerNight}
-                // basePath={routes.destinationDetail}
-                title={item.name}
-                text={item.description}
-                rating={3.2}
-                desc={item.cancellationPolicy}
-                isSaved={item.isSaved}
                 // setIsSaved={() => handleSetRoomsData(item.id)}
+                // id={item.id}
+                // price={item.pricePerNight}
+                // title={item.name}
+                // text={item.description}
+                // rating={3.2}
+                // desc={item.cancellationPolicy}
+                // isSaved={item.isSaved}
+                data={item}
               />
             ))}
         </div>

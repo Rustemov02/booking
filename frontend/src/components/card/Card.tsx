@@ -2,10 +2,10 @@ import { FC, useState } from "react";
 import Cup from "../../assets/images/cup.jpg";
 import HeartIcon from "../../assets/svg/like.svg?react";
 import Sun from "../../assets/svg/sun.svg?react";
-import { useNavigate } from "react-router-dom";
 import { CardTypes } from "../../types";
 import Breakfast from "../../assets/svg/breakfast.svg?react";
 import People from "../../assets/svg/people.svg?react";
+import apiRequest from "../../api/apiRequest";
 
 const Card: FC<CardTypes> = ({
   onClick,
@@ -15,6 +15,7 @@ const Card: FC<CardTypes> = ({
   setIsSaved,
   personCount,
   data,
+  setData,
 }) => {
   if (!data) return;
   const {
@@ -24,18 +25,36 @@ const Card: FC<CardTypes> = ({
     rating,
     date,
     hasBreakfast = false,
-    price,
+    // price,
     description,
     isSaved,
   } = data;
 
-  console.log(data)
-  const toggleSave = (e: any) => {
-    e.stopPropagation();
-    setIsSaved?.(!isSaved, data?._id);
+  const handleSetRoomsData = async () => {
+    setData?.((prev: any) =>
+      prev.map((item: any) =>
+        item._id === _id ? { ...item, isSaved: !isSaved } : item
+      )
+    );
+    try {
+      const response = await apiRequest({
+        method: "PATCH",
+        url: `/api/rooms/${_id}`,
+        data: { isSaved: !isSaved },
+        onError: (err) => console.log("ERROR : ", err),
+      });
+      console.log("PATCH RESPONSE : ", response);
+    } catch (err) {
+      console.log("Error : ", err);
+    }
   };
 
-  const navigate = useNavigate();
+  console.log(data);
+  const toggleSave = (e: any) => {
+    e.stopPropagation();
+    // setIsSaved?.(!isSaved, data?._id);
+    handleSetRoomsData();
+  };
 
   const handleRoute = () => {
     onClick?.();

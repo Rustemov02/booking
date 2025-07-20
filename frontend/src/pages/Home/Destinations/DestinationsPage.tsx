@@ -3,12 +3,12 @@ import apiRequest from "../../../api/apiRequest";
 import Card from "../../../components/card/Card";
 import PageHeader from "../../../components/pageHeader/PageHeader";
 import getRoutes from "../../../modules";
-import { CardTypes, RoomTypes } from "../../../types";
+import { RoomTypes } from "../../../types";
 
 const DestinationsPage = () => {
   const routes = getRoutes();
 
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState<RoomTypes[]>([]);
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -27,36 +27,7 @@ const DestinationsPage = () => {
 
     fetchRooms();
   }, []);
-
-  const handleSetRoomsData = async (status: boolean, id?: string) => {
-    
  
-    // const selectedRoom = rooms.find((item: any) => item?._id === id) as
-    //   | RoomTypes
-    //   | undefined;
-
-    // if (!selectedRoom) return;
-
-    // const newIsSaved = !selectedRoom.isSaved;
-
-    setRooms((prev: any) =>
-      prev.map((item: any) =>
-        item._id === id ? { ...item, isSaved: status } : item
-      )
-    );
-    try {
-      const response = await apiRequest({
-        method: "PATCH",
-        url: `/api/rooms/${id}`,
-        data: { isSaved: status },
-        onError: (err) => console.log("ERROR : ", err),
-      });
-      console.log("PATCH RESPONSE : ", response);
-    } catch (err) {
-      console.log("Error : ", err);
-    }
-  };
-
   useEffect(() => console.log(rooms), [rooms]);
 
   // FOR CARD DETAILS
@@ -70,7 +41,7 @@ const DestinationsPage = () => {
           <Card
             onClick={handleRequest}
             basePath={routes.destinationDetail}
-            setIsSaved={handleSetRoomsData}
+            setData={setRooms}
             data={card}
           />
         ))}
