@@ -4,6 +4,8 @@ import { connectDB } from "./Database/db";
 import cors from "cors";
 import { Room } from "./Database/models/Room";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth";
+
 dotenv.config();
 
 const app = express();
@@ -11,6 +13,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
+app.use("/auth", authRoutes);
 connectDB();
 
 // =============================    GET ALL ROOMS WITH MONGO   ================================
