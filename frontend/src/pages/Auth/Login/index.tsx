@@ -2,8 +2,24 @@ import Input from "../../../components/input/Input";
 import CloseEye from "../../../assets/svg/closeEye.svg?react";
 import OpenEye from "../../../assets/svg/openEye.svg?react";
 import Button from "../../../components/button/Button";
+import apiRequest from "../../../api/apiRequest";
+import { useState } from "react";
 
 const Login = () => {
+  const [email, setMail] = useState("bunyamin");
+  const [password, setPassword] = useState("tester");
+
+  const handleLogin = async () => {
+    try {
+      const res = await apiRequest({
+        method: "POST",
+        url: "/auth/login",
+        data: { email, password },
+      });
+    } catch (err) {
+      console.log("LOGIN ERRROR : ", err);
+    }
+  };
   return (
     <>
       <div className="flex flex-col gap-4 w-full">
@@ -23,7 +39,7 @@ const Login = () => {
           </span>
           <p className="text-[#07689F] text-[14px]">Forgot password?</p>
         </div>
-        <Button title="Login" />
+        <Button title="Login" onClick={handleLogin} />
       </div>
       <span className="text-[14px] text-[#000] font-normal">Or</span>
     </>
