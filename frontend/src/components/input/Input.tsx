@@ -10,6 +10,7 @@ interface TypeInput {
   errorMessage?: string;
   style?: any;
   icons?: ReactNode | ReactNode[];
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({
@@ -21,9 +22,9 @@ const Input = ({
   label,
   errorMessage,
   style,
+  onChange,
   icons,
 }: TypeInput) => {
-  console.log(typeof icons);
   return (
     <div style={style} className="flex flex-col gap-1 items-star w-full">
       <label className="text-[14px] text-[#000] font-normal">{label}</label>
@@ -35,6 +36,7 @@ const Input = ({
           value={value}
           defaultValue={defaultValue}
           placeholder={placeholder}
+          onChange={onChange}
         />
         {icons &&
           (Array.isArray(icons) ? (
@@ -44,7 +46,7 @@ const Input = ({
               })}
             </>
           ) : (
-            <span className='cursor-pointer'>{icons}</span>
+            <span className="cursor-pointer">{icons}</span>
           ))}
       </div>
       <span>{errorMessage}</span>

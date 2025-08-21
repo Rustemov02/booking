@@ -4,12 +4,25 @@ import CloseEye from "../../../assets/svg/closeEye.svg?react";
 import apiRequest from "../../../api/apiRequest";
 import { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Register = () => {
-  const [email, setMail] = useState("bunyamin");
-  const [password, setPassword] = useState("tester");
+  const [isAgree, setIsAgree] = useState(false);
+  const [email, setMail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = async () => {
+    if (!isAgree) {
+      return toast("You must accept the agreement !", {
+        icon: "🤨",
+      });
+    }
+
+    if (password !== confirmPassword) {
+      return toast.error("Şifrələr uyğun gəlmir !");
+    }
+
     try {
       const res = await apiRequest({
         method: "POST",
@@ -18,13 +31,11 @@ const Register = () => {
       });
 
       console.log("Register data : ", res);
-    } catch (err) {
+    } catch (err: any) {
       console.log("ERROR : ", err);
+      toast.error(err?.response?.data?.message);
     }
   };
-
-
-  
 
   return (
     <>
@@ -32,28 +43,50 @@ const Register = () => {
         <h5 className="text-[20px] font-bold">Register</h5>
 
         <div className="w-full flex flex-row items-center justify-between gap-[10px]">
-          <Input label="First Name" placeholder="First Name" />
-          <Input label="Last Name" placeholder="Last Name" />
+          <Input
+            label="First Name"
+            placeholder="First Name"
+            onChange={() => {}}
+          />
+          <Input
+            label="Last Name"
+            placeholder="Last Name"
+            onChange={() => {}}
+          />
         </div>
         <div>
-          <Input label="Email" placeholder="Your email" />
           <Input
-            type="password"
+            label="Email"
+            placeholder="Your email"
+            value={email || ""}
+            onChange={(e) => setMail(e.target.value)}
+          />
+          <Input
+            type="text"
             label="Password"
+            value={password || ""}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="**********"
             icons={<CloseEye className="w-[20px] h-[20px]" />}
           />
           <Input
-            type="password"
+            type="text"
             label="Confirm Password"
             placeholder="**********"
+            value={confirmPassword || ""}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             icons={<CloseEye className="w-[20px] h-[20px]" />}
           />
         </div>
         <div className="flex flex-row items-center justify-between ">
           <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#121]">
-            <input type="checkbox" className="cursor-pointer " />I agree to all
-            the Terms and Privacy Policies
+            <input
+              type="checkbox"
+              className="cursor-pointer "
+              checked={isAgree}
+              onChange={() => setIsAgree(!isAgree)}
+            />
+            I agree to all the Terms and Privacy Policies
           </span>
         </div>
         <Button title="Register now" onClick={handleRegister} />

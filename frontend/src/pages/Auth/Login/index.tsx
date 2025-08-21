@@ -6,8 +6,8 @@ import apiRequest from "../../../api/apiRequest";
 import { useState } from "react";
 
 const Login = () => {
-  const [email, setMail] = useState("bunyamin");
-  const [password, setPassword] = useState("tester");
+  const [email, setMail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -25,8 +25,15 @@ const Login = () => {
       <div className="flex flex-col gap-4 w-full">
         <h5 className="text-[20px] font-bold">Login</h5>
         <p className="text-[12px] font-semibold">Login to access account</p>
-        <Input label="Email" placeholder="Testing" />
         <Input
+          label="Email"
+          placeholder="Testing"
+          value={email || ""}
+          onChange={(e) => setMail(e.target.value)}
+        />
+        <Input
+          onChange={(e) => setPassword(e.target.value)}
+          value={password || ""}
           type="password"
           label="Password"
           placeholder="********"
