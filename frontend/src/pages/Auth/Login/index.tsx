@@ -4,11 +4,13 @@ import OpenEye from "../../../assets/svg/openEye.svg?react";
 import Button from "../../../components/button/Button";
 import apiRequest from "../../../api/apiRequest";
 import { useEffect, useState } from "react";
+import { clearError, getError, ErrorState } from "../../../utils/errorHelpers";
 
 const Login = () => {
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isRemember, setIsRemember] = useState(false);
+
   const handleLogin = async () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -20,7 +22,7 @@ const Login = () => {
     }
 
     if (Object.keys(newErrors).length > 0) {
-      setError((prev) => ({ ...prev, ...newErrors }));
+      setErrors((prev) => ({ ...prev, ...newErrors }));
       return;
     }
 
@@ -42,17 +44,25 @@ const Login = () => {
       console.log("LOGIN ERRROR : ", err);
     }
   };
-  const [error, setError] = useState<{ [key: string]: string }>({});
+  const [errors, setErrors] = useState<ErrorState>({});
 
-  const getError = (field: string) => {
-    if (!field) return null;
-    console.log(error[field]);
-    return error[field];
-  };
+  // const getError = (field: string) => {
+  //   if (!field) return null;
+  //   console.log(error[field]);
+  //   return error[field];
+  // };
+
+  // const clearError = (field: string) => {
+  //   setError((prev) => {
+  //     const updated = { ...prev };
+  //     delete updated[field];
+  //     return updated;
+  //   });
+  // };
 
   useEffect(() => {
-    console.log(error);
-  }, [error]);
+    console.log(errors);
+  }, [errors]);
 
   return (
     <>
@@ -61,7 +71,8 @@ const Login = () => {
         <p className="text-[12px] font-semibold">Login to access account</p>
         <Input
           label="Email"
-          error={getError("email")}
+          error={getError(errors, "email")}
+          clearError={() => setErrors((prev) => clearError(prev, "email"))}
           placeholder="Testing"
           value={email || ""}
           onChange={(e) => setMail(e.target.value)}
@@ -70,7 +81,8 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           value={password || ""}
           type="password"
-          error={getError("password")}
+          error={getError(errors, "password")}
+          clearError={() => setErrors((prev) => clearError(prev, "password"))}
           label="Password"
           placeholder="********"
           icons={<CloseEye className="w-[20px] h-[20px]" />}
@@ -86,12 +98,10 @@ const Login = () => {
           </span>
           <p className="text-[#07689F] text-[14px]">Forgot password?</p>
         </div>
-        {getError("email") && <span>{getError("email")}</span>}
+        {getError(errors, "email") && <span>{getError(errors, "email")}</span>}
         <Button title="Login" onClick={handleLogin} />
       </div>
       <span className="text-[14px] text-[#000] font-normal">Or</span>
-      <button onClick={() => {}}>Add Error Message</button>
-      <button onClick={() => {}}>Get error</button>
     </>
   );
 };

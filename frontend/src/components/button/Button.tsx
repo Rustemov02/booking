@@ -11,6 +11,7 @@ interface ButtonProps {
   variant?: string;
   size?: string;
   icon?: ReactNode | JSX.Element;
+  type?: "submit" | "reset" | "button" | undefined;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -21,6 +22,7 @@ const Button: FC<ButtonProps> = ({
   size = "standart",
   icon,
   to,
+  type,
 }) => {
   const sizeStylesStandart =
     "rounded-[4px] py-2 px-4 text-bold text-[16px]/[22px]";
@@ -46,11 +48,14 @@ const Button: FC<ButtonProps> = ({
       onClick={handleClickButton}
       className={`${variantStyles} ${sizeStyles} w-full text-center cursor-pointer transition-all duration-500`}
     >
-      <button className={` ${className}  w-full flex flex-row items-center ${icon ? 'justify-between' : 'justify-center'}`}>
+      <button
+        type={type}
+        className={` ${className}  w-full flex flex-row items-center ${
+          icon ? "justify-between" : "justify-center"
+        }`}
+      >
         <p>{title} </p>
-        {icon && (
-          <span className="w-[24px] h-[24px]"> {icon}</span>
-        )}
+        {icon && <span className="w-[24px] h-[24px]"> {icon}</span>}
       </button>
     </div>
   );

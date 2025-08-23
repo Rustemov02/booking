@@ -5,6 +5,7 @@ import apiRequest from "../../../api/apiRequest";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { getError, clearError, ErrorState } from "../../../utils/errorHelpers";
 
 const Register = () => {
   const [isAgree, setIsAgree] = useState(false);
@@ -12,7 +13,20 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleRegister = async () => {
+  const [errors, setErrors] = useState<ErrorState>({});
+
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(e);
+    const formData = new FormData(e.currentTarget);
+
+    const values = Object.fromEntries(formData.entries());
+
+    console.log(values);
+
+    const newErrors: ErrorState = {};
+
     if (!isAgree) {
       return toast("You must accept the agreement !", {
         icon: "🤨",
@@ -39,58 +53,64 @@ const Register = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-full">
-        <h5 className="text-[20px] font-bold">Register</h5>
-
-        <div className="w-full flex flex-row items-center justify-between gap-[10px]">
-          <Input
-            label="First Name"
-            placeholder="First Name"
-            onChange={() => {}}
-          />
-          <Input
-            label="Last Name"
-            placeholder="Last Name"
-            onChange={() => {}}
-          />
-        </div>
-        <div>
-          <Input
-            label="Email"
-            placeholder="Your email"
-            value={email || ""}
-            onChange={(e) => setMail(e.target.value)}
-          />
-          <Input
-            type="text"
-            label="Password"
-            value={password || ""}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="**********"
-            icons={<CloseEye className="w-[20px] h-[20px]" />}
-          />
-          <Input
-            type="text"
-            label="Confirm Password"
-            placeholder="**********"
-            value={confirmPassword || ""}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            icons={<CloseEye className="w-[20px] h-[20px]" />}
-          />
-        </div>
-        <div className="flex flex-row items-center justify-between ">
-          <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#121]">
-            <input
-              type="checkbox"
-              className="cursor-pointer "
-              checked={isAgree}
-              onChange={() => setIsAgree(!isAgree)}
+      <form onSubmit={handleRegister}>
+        <div className="flex flex-col gap-4 w-full">
+          <h5 className="text-[20px] font-bold">Register</h5>
+          <div className="w-full flex flex-row items-center justify-between gap-[10px]">
+            <Input
+              name="firstName"
+              label="First Name"
+              placeholder="First Name"
+              onChange={() => {}}
             />
-            I agree to all the Terms and Privacy Policies
-          </span>
+            <Input
+              name="lastName"
+              label="Last Name"
+              placeholder="Last Name"
+              onChange={() => {}}
+            />
+          </div>
+          <div>
+            <Input
+              label="Email"
+              name="email"
+              placeholder="Your email"
+              value={email || ""}
+              onChange={(e) => setMail(e.target.value)}
+            />
+            <Input
+              type="text"
+              name="password"
+              label="Password"
+              value={password || ""}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="**********"
+              icons={<CloseEye className="w-[20px] h-[20px]" />}
+            />
+            <Input
+              type="text"
+              name="confirmPassword"
+              label="Confirm Password"
+              placeholder="**********"
+              value={confirmPassword || ""}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              icons={<CloseEye className="w-[20px] h-[20px]" />}
+            />
+          </div>
+          <div className="flex flex-row items-center justify-between ">
+            <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#121]">
+              <input
+                type="checkbox"
+                className="cursor-pointer "
+                checked={isAgree}
+                onChange={() => setIsAgree(!isAgree)}
+              />
+              I agree to all the Terms and Privacy Policies
+            </span>
+          </div>
+          <Button title="Register now" type="submit" />
         </div>
-        <Button title="Register now" onClick={handleRegister} />
-      </div>
+      </form>
       <span className="text-[14px] text-[#000] font-normal">Or</span>
     </>
   );

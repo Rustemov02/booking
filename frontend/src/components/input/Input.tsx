@@ -24,7 +24,7 @@ const Input = ({
   label,
   style,
   onChange,
-  icons,  
+  icons,
   error,
   clearError,
 }: TypeInput) => {
@@ -34,7 +34,13 @@ const Input = ({
   };
   return (
     <div style={style} className="flex flex-col gap-1 items-star w-full">
-      <label className="text-[14px] text-[#000] font-normal">{label}</label>
+      <label
+        className={`text-[14px] text-[#000] font-normal ${
+          error ? "text-[red]" : ""
+        }`}
+      >
+        {label}
+      </label>
       <div
         className={`flex flex-row items-center justify-between  px-2 py-3 w-full bg-[#fff] rounded-[10px] border border-[#A6A6A6] text-[#A6A6A6] ${
           error ? "border-2 border-[red]" : ""
