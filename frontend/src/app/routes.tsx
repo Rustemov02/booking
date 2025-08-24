@@ -11,6 +11,9 @@ const SearchResultPage = lazy(
   () => import("../pages/SearchResult/SearchResult")
 );
 const FavouritesPage = lazy(() => import("../pages/Favourites/Favourites"));
+const CardDetails = lazy(
+  () => import("../pages/Home/Cards/CardDetails/Details")
+);
 
 const allRoutes = [
   {
@@ -42,6 +45,10 @@ const allRoutes = [
       {
         path: "favourites",
         element: <FavouritesPage />,
+      },
+      {
+        path: "cards/:id",
+        element: <CardDetails />,
       },
     ],
   },

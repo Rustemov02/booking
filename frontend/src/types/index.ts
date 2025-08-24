@@ -24,7 +24,7 @@ export interface CardDataTypes {
 }
 export interface CardTypes {
   basePath?: string | ((id: string) => string);
-  onClick?: () => void;
+  onClick?: (id: string) => void;
   className?: string;
   position?: string;
   setIsSaved?: (isSaved: boolean, id?: string) => void;

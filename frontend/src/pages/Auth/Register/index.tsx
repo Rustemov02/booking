@@ -18,9 +18,9 @@ const Register = () => {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(e);
     const formData = new FormData(e.currentTarget);
 
+    console.log("Form data : ", formData);
     const values = Object.fromEntries(formData.entries());
 
     console.log(values);

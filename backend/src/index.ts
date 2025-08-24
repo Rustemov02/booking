@@ -30,6 +30,21 @@ app.get("/api/rooms", async (req: Request, res: Response) => {
   }
 });
 
+app.get("/api/rooms/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const room = await Room.findById(id);
+
+    if (!room) {
+      res.status(400).json({ error: "Room not found " });
+    }
+    res.json({ room });
+  } catch (err) {
+    console.log("Failed to get room by id ", err);
+    res.status(500).json({ error: "Failed to get room" });
+  }
+});
+
 // GET Saved Rooms
 app.get("/api/rooms/favourites", async (req: Request, res: Response) => {
   try {

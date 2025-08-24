@@ -49,7 +49,6 @@ const Card: FC<CardTypes> = ({
     }
   };
 
-  console.log(data);
   const toggleSave = (e: any) => {
     e.stopPropagation();
     // setIsSaved?.(!isSaved, data?._id);
@@ -57,7 +56,7 @@ const Card: FC<CardTypes> = ({
   };
 
   const handleRoute = () => {
-    onClick?.();
+    onClick?.(_id);
     if (!basePath) return;
     if (typeof basePath === "function") {
       // navigate(basePath(id.toString()));

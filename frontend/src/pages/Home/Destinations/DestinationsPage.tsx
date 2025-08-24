@@ -4,6 +4,7 @@ import Card from "../../../components/card/Card";
 import PageHeader from "../../../components/pageHeader/PageHeader";
 import getRoutes from "../../../modules";
 import { RoomTypes } from "../../../types";
+import { useNavigate } from "react-router-dom";
 
 const DestinationsPage = () => {
   const routes = getRoutes();
@@ -27,11 +28,17 @@ const DestinationsPage = () => {
 
     fetchRooms();
   }, []);
- 
+
   useEffect(() => console.log(rooms), [rooms]);
 
+  const navigate = useNavigate();
+
   // FOR CARD DETAILS
-  const handleRequest = async () => {};
+  const handleRequest = async (id: string) => {
+    console.log("CARD ID :  ", id);
+    navigate(`cards/${id}`);
+  };
+
   return (
     <div className="pt-24 px-4 py-6 space-y-4 w-full max-w-[1220px] m-auto">
       <PageHeader title="Explore Stay in Trending Destinations" />
