@@ -47,7 +47,7 @@ const allRoutes = [
         element: <FavouritesPage />,
       },
       {
-        path: "cards/:id",
+        path: "rooms/:id",
         element: <CardDetails />,
       },
     ],

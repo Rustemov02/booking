@@ -36,7 +36,7 @@ const DestinationsPage = () => {
   // FOR CARD DETAILS
   const handleRequest = async (id: string) => {
     console.log("CARD ID :  ", id);
-    navigate(`cards/${id}`);
+    navigate(`rooms/${id}`);
   };
 
   return (
