@@ -36,12 +36,12 @@ app.get("/api/rooms/:id", async (req: Request, res: Response) => {
     const room = await Room.findById(id);
 
     if (!room) {
-      res.status(400).json({ error: "Room not found " });
+      return res.status(400).json({ error: "Room not found " });
     }
-    res.json({ room });
+    return res.json({ room });
   } catch (err) {
     console.log("Failed to get room by id ", err);
-    res.status(500).json({ error: "Failed to get room" });
+    return res.status(500).json({ error: "Failed to get room" });
   }
 });
 
@@ -50,7 +50,7 @@ app.get("/api/rooms/favourites", async (req: Request, res: Response) => {
   try {
     const savedRooms = await Room.find({ isSaved: true });
 
-    res.json({ rooms: savedRooms });
+    return res.json({ rooms: savedRooms });
   } catch (err) {
     console.log("Error while fetchind favourites rooms...");
     return res.status(500).json({ error: "Favourites otaqlar tapılmadı !" });
