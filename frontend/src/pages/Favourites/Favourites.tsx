@@ -15,8 +15,8 @@ const FavouritesPage = () => {
         onError: (err) => console.log(err),
       });
 
-      console.log(response);
-      setFavouritesRooms(response.rooms);
+      console.log("Favourites rooms : ", response);
+      setFavouritesRooms(response.rooms || []);
     } catch (err) {
       console.log("ERROr : ", err);
     }

@@ -50,6 +50,7 @@ app.get("/api/rooms/favourites", async (req: Request, res: Response) => {
   try {
     const savedRooms = await Room.find({ isSaved: true });
 
+    console.log("SAVED ROOMS : ", savedRooms);
     return res.json({ rooms: savedRooms });
   } catch (err) {
     console.log("Error while fetchind favourites rooms...");
@@ -121,6 +122,12 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
     console.error("Error updating room:", err);
     res.status(500).json({ errorMessage: "### Failed to update room" });
   }
+});
+
+
+app.get("/test-fav", (req, res) => {
+  console.log("Test favourites hit!");
+  res.json({ ok: true });
 });
 
 app.listen(PORT, () => console.log(`Server running at localhost://${PORT} !`));
