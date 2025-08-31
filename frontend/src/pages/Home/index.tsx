@@ -42,7 +42,6 @@ const Home = () => {
         </div>
       </div>
 
-
       {/* <Footer/> */}
       <Outlet />
     </>

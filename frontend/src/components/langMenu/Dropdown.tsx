@@ -17,7 +17,7 @@ const LanguageDropdown = () => {
 
   return (
     <div>
-      <div className="w-fit cursor-pointer relative" onClick={()=>setIsOpen(!isOpen)}>
+      <div className="w-[24px] cursor-pointer relative" onClick={()=>setIsOpen(!isOpen)}>
         <img src={selectedLang} alt="flag" />
       </div>
 

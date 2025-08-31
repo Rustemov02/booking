@@ -1,25 +1,23 @@
 import BookingBar from "../../components/bookingBar/bookingBar";
 
 const Intro = () => {
- 
   return (
     <div className="relative flex justify-center items-center">
       <div
-        className="w-full h-[400px] mt-10 relative"
+        className="w-full h-[300px]  flex items-start justify-center"
         style={{
-          backgroundImage: "url('/backgroundImg.jpg')",
+          backgroundImage: "url('/bg-homepage.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <p className="absolute top-1/2 left-[10%] text-[44px] font-bold  text-[#FFF]">
-          Discover Your Trip <br />
-          Worldwide
-        </p>
+        {/* <p className="font-bold text-[#FFF] text-[20px] !mt-6">
+          Find your next stay
+        </p> */}
+        <BookingBar />
       </div>
       {/* <MiniBar /> */}
-      <BookingBar extraStyle="absolute  top-105 max-w-[1220px]  mx-auto bg-white" />
     </div>
   );
 };

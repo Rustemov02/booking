@@ -5,12 +5,12 @@ import CategorySection from "../components/categorySection/categorySection";
 
 const PageLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <>
+    <main className="">
       <GuestHeader />
-      <CategorySection />
+      {/* <CategorySection /> */}
       {children}
       <Footer />
-    </>
+    </main>
   );
 };
 
