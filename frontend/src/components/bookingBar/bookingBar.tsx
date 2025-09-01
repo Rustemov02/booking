@@ -79,12 +79,17 @@ const BookingBar = ({
   }, [error]);
   const testRef = useClickOutSide(() => setIsPersonalModalOpen(false));
 
+  const [hovered , setHovered] = useState<string | null>(null)
+
   return (
-    <section className="absolute w-full max-w-[850px] h-[50px] rounded-[32px] bg-[#FFFFFF] top-20 grid grid-cols-[2fr_auto_auto_2fr]">
-      <div>fasd</div>
-      <div className="w-[120px]">fasd</div>
-      <div className="w-[120px]">fasd</div>
-      <div>fasd</div>
+    <section className="absolute w-full max-w-[850px] rounded-[50px] bg-[#FFFFFF] top-20 grid grid-cols-[2fr_auto_auto_auto_auto_auto_2fr] items-center gap-2">
+      <div className="py-[15px] px-8 rounded-[50px]  hover:bg-[#ece8e8] cursor-pointer" onMouseEnter={()=>setHovered("where")} onMouseLeave={()=>setHovered(null)}>Where <br/><span>Search destinations</span></div>
+      <div className={`w-[2px] rounded-[5px] h-[40px] bg-[#EBEBEB] ${hovered === 'where' || hovered === 'checkIn' ? "opacity-0" : ""}`}></div>
+      <div className="w-[150px] px-8 py-[15px] rounded-[50px]  hover:bg-[#ece8e8] cursor-pointer" onMouseEnter={()=>setHovered("checkIn")} onMouseLeave={()=>setHovered(null)}>Check in <br/><span>Add dates</span></div>
+      <div className={`w-[2px] rounded-[5px] h-[40px] bg-[#EBEBEB] ${hovered === 'checkIn' || hovered === 'checkOut' ? 'opacity-0' : ""}`}></div>
+      <div className="w-[150px] px-8 py-[15px] rounded-[50px]  hover:bg-[#ece8e8] cursor-pointer" onMouseEnter={()=>setHovered("checkOut")} onMouseLeave={()=>setHovered(null)}>Check out <br/><span>Add dates</span></div>
+      <div className={`w-[2px] rounded-[5px] h-[40px] bg-[#EBEBEB] ${hovered === 'checkOut' || hovered === 'guests' ? "opacity-0" : ''}`}></div>
+      <div className="py-[15px] px-8 rounded-[50px] hover:bg-[#ece8e8] cursor-pointer" onMouseEnter={()=>setHovered("guests")} onMouseLeave={()=>setHovered(null)}>Who <br/> <span>Add guests</span></div>
     </section>
   );
 };
