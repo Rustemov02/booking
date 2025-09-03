@@ -28,16 +28,18 @@ const Counter = ({
     <div className="flex flex-row items-center justify-between w-full max-w-25 rounded-sm py-2 px-1 bg-white ">
       <DecreaseIcon
         onClick={handleDecrease}
-        className={`cursor-pointer w-[25px] h-[25px] border rounded-full ${
-          currentNumb === 0 ? "text-[gray]" : ""
+        className={`w-[25px] h-[25px] border rounded-full transition-all duration-300 ${
+          currentNumb === 0
+            ? "opacity-50 cursor-not-allowed"
+            : "opacity-100 cursor-pointer"
         }`}
       />
-      <span className="text-[16px] text-[#222222] select-none">
+      <span className="text-[16px] w-[18px] text-center text-[#222222] select-none">
         {currentNumb}
       </span>
       <IncreaseIcon
         onClick={handleIncrease}
-        className="cursor-pointer w-[25px] h-[25px] border rounded-full"
+        className={`cursor-pointer w-[25px] h-[25px] border rounded-full transition-all duration-500 opacity-70 hover:opacity-100 `}
       />
     </div>
   );

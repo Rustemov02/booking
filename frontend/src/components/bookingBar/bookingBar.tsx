@@ -1,39 +1,25 @@
-import HotelIcon from "../../assets/svg/hotel.svg";
-import peopleAdd from "../../assets/svg/peopleAdd.svg";
-import CalendarIcon from "../../assets/svg/calendar.svg?react";
-import ArrowDown from "../../assets/svg/arrow-down.svg?react";
-import { DatePicker } from "rsuite";
 import { useEffect, useState } from "react";
-import styles from "./bar.module.css";
 import Counter from "../counter/Counter";
-import Switch from "../toggleSwitch/Switch";
-import Close from "../../assets/svg/Close";
 import { BookingBarTypes } from "../../types";
 import toast from "react-hot-toast";
 import useClickOutSide from "../../hooks/useClickOutside";
 import { useLocation, useNavigate } from "react-router-dom";
-import apiRequest from "../../api/apiRequest";
 import { motion } from "framer-motion";
-import SelectionModal from "../modal/SelectionModal";
-
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
+import Icon from "@/assets/svg/Apple.svg?react";
 const BookingBar = ({
-  extraStyle,
   data,
 }: {
   extraStyle?: string;
   data?: BookingBarTypes;
 }) => {
-  // structure
-  const [isCheckInModalOpen, setIsCheckInModalOpen] = useState(false);
-  const [isCheckOutModalOpen, setIsCheckOutModalOpen] = useState(false);
-  const [isPersonalModalOpen, setIsPersonalModalOpen] =
-    useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const location = useLocation();
+  const [range, setRange] = useState<{ from?: Date; to?: Date }>({});
 
   const navigate = useNavigate();
-  //data
   const [bookingData, setBookingData] = useState<BookingBarTypes>(
     data || {
       checkIn: null,
@@ -139,10 +125,6 @@ const BookingBar = ({
     },
   ]);
 
-  useEffect(() => {
-    console.log(guestsData);
-  }),
-    [guestsData];
   return (
     <section
       ref={clickedOutside}
@@ -174,6 +156,17 @@ const BookingBar = ({
           <span>Search destinations</span>
         </div>
       </div>
+      {selectedBox === "where" && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="absolute top-full bg-white rounded-[20px] py-4 px-8 mt-2 w-1/2 h-[120px] shadow-lg"
+        >
+          Suggested Destination
+        </motion.div>
+      )}
 
       {/* LINE */}
 
@@ -190,10 +183,10 @@ const BookingBar = ({
       {/* CHECK IN  */}
       <div
         onClick={() => setSelectedBox("checkIn")}
-        className={`w-[150px] px-8 py-[15px] rounded-[50px]  hover:bg-[#ece8e8] cursor-pointer duration-500  ${
+        className={`w-[150px] px-8 py-[15px] rounded-[50px] border-none  hover:bg-[#ece8e8] cursor-pointer duration-500  ${
           selectedBox === "checkIn"
-            ? "!bg-[#FFFFFF] border border-[#ddc2c2] shadow scale-103"
-            : "border-none"
+            ? "!bg-[#FFFFFF] border-[#ddc2c2] shadow scale-103"
+            : ""
         }`}
         onMouseEnter={() => setHovered("checkIn")}
         onMouseLeave={() => setHovered(null)}
@@ -226,10 +219,10 @@ const BookingBar = ({
       {/* CHECK OUT */}
       <div
         onClick={() => setSelectedBox("checkOut")}
-        className={`w-[150px] px-8 py-[15px] rounded-[50px]  hover:bg-[#ece8e8] cursor-pointer duration-500 transform ${
+        className={`w-[150px] px-8 py-[15px] rounded-[50px] border-none  hover:bg-[#ece8e8] cursor-pointer duration-500 transform ${
           selectedBox === "checkOut"
-            ? "!bg-[#FFFFFF] border border-[#ddc2c2] shadow scale-103 "
-            : "border-none"
+            ? "!bg-[#FFFFFF] border-[#ddc2c2] shadow scale-103 "
+            : ""
         }`}
         onMouseEnter={() => setHovered("checkOut")}
         onMouseLeave={() => setHovered(null)}
@@ -246,7 +239,33 @@ const BookingBar = ({
           <span>Add dates</span>
         </div>
       </div>
-
+      {(selectedBox === "checkIn" || selectedBox === "checkOut") && (
+        <motion.div
+          initial={{ opacity: 0, x: selectedBox === "checkIn" ? -50 : 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -50 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="absolute top-full left-[8%] bg-white rounded-[20px] py-4 px-8 mt-2 w-max flex h-auto shadow-lg"
+        >
+          <div className="flex gap-10 bg-transparent rounded-2xl mx-auto">
+            <DayPicker
+              mode="range"
+              selected={range}
+              onSelect={setRange}
+              numberOfMonths={2}
+              pagedNavigation
+              modifiersClassNames={{
+                selected: "!bg-[#222222] text-white rounded-full",
+                range_start: "bg-blue-600 text-white rounded-l-full",
+                range_end: "!bg-[#222222] text-white rounded-r-full",
+                range_middle: "!bg-[#F7F7F7] !text-[#222222]",
+                today: "!rounded-full !text-[blue]",
+                chevron: "!border !border-[red]",
+              }}
+            />
+          </div>
+        </motion.div>
+      )}
       {/* LINE */}
 
       <div
@@ -283,29 +302,37 @@ const BookingBar = ({
         </div>
       </div>
 
-      <div className="absolute top-full right-0 bg-white rounded-[20px] py-4 px-8 mt-2 w-[400px] h-auto ">
-        {guestsData.map((item, index) => (
-          <div className={`pt-3 pr-1 pl-0`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <p>{item.label}</p>
-                <span>{item.title}</span>
-              </div>
-              <Counter
-                count={item.count}
-                onChange={(count) =>
-                  setGuestsData((prev) =>
-                    prev.map((g) =>
-                      g.label === item.label ? { ...g, count } : g
+      {selectedBox === "guests" && (
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className={`absolute top-full right-0 bg-white rounded-[20px] py-4 px-8 mt-2 w-[400px] h-auto shadow-lg`}
+        >
+          {guestsData.map((item, index) => (
+            <div className={`pt-3 pr-1 pl-0`}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p>{item.label}</p>
+                  <span>{item.title}</span>
+                </div>
+                <Counter
+                  count={item.count}
+                  onChange={(count) =>
+                    setGuestsData((prev) =>
+                      prev.map((g) =>
+                        g.label === item.label ? { ...g, count } : g
+                      )
                     )
-                  )
-                }
-              />
+                  }
+                />
+              </div>
+              {guestsData.length - 1 === index ? "" : <hr />}
             </div>
-            {guestsData.length - 1 === index ? "" : <hr />}
-          </div>
-        ))}
-      </div>
+          ))}
+        </motion.div>
+      )}
     </section>
   );
 };
