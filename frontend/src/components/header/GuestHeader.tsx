@@ -22,9 +22,11 @@ const GuestHeader = () => {
 
   return (
     <>
-      <section className="flex flex-row items-center justify-between px-4 py-2 gap-4 w-full max-w-[1220px] mx-auto">
+      <section
+        className={`flex flex-row items-center justify-between px-4 py-2 gap-4 w-full max-w-[1220px] mx-auto `}
+      >
         <div>
-          <Logo className="w-[120px]" />
+          {/* <Logo className="w-[120px]" /> */}
           {/* <img src={logo} alt="Logo" className="w-[80px] md:w-[130px]" /> */}
         </div>
         <div className="flex items-center gap-2">
