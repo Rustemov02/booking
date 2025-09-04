@@ -41,15 +41,17 @@ const DestinationsPage = () => {
 
   return (
     <div className="pt-24 px-4 py-6 space-y-4 w-full max-w-[1220px] m-auto">
-      <PageHeader title="Explore Stay in Trending Destinations" />
-      <div className="text- font-semibold text-[#000]">Find Hot Stays</div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] items-center flex-wrap gap-6">
+      <PageHeader title="Homes guests love" />
+      {/* <div className="text- font-semibold text-[#000]">Find Hot Stays</div> */}
+      {/* grid-cols-[repeat(auto-fill,minmax(270px,1fr))] */}
+      <div className="grid  items-center flex-wrap gap-6">
         {rooms?.map((card: any) => (
           <Card
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
             data={card}
+            version="list"
           />
         ))}
       </div>
