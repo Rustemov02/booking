@@ -126,7 +126,7 @@ export default {
         "3xl": "var(--s-3xl)",
         "4xl": "var(--s-4xl)",
         "5xl": "var(--s-5xl)",
-      }, 
+      },
     },
     screens: {
       ns: "0px",
@@ -141,5 +141,5 @@ export default {
       xl2: "1920px",
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindscss/line-clamp")],
 };
