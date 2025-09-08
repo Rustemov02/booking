@@ -5,7 +5,7 @@ const PageHeader: FC<{ title: string; sideText?: string }> = ({
   sideText,
 }) => {
   return (
-    <div className="w-full flex flex-row items-center justify-between">
+    <div className="w-full flex flex-col items-start justify-between">
       <p className="text-[32px] font-bold text-neutral-950">{title}</p>
       <p>{sideText}</p>
     </div>

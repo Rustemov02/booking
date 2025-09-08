@@ -6,7 +6,7 @@ import getRoutes from "../../../modules";
 import { RoomTypes } from "../../../types";
 import { useNavigate } from "react-router-dom";
 
-const DestinationsPage = () => {
+const GuestsLove = () => {
   const routes = getRoutes();
 
   const [rooms, setRooms] = useState<RoomTypes[]>([]);
@@ -44,14 +44,59 @@ const DestinationsPage = () => {
       <PageHeader title="Homes guests love" />
       {/* <div className="text- font-semibold text-[#000]">Find Hot Stays</div> */}
       {/* grid-cols-[repeat(auto-fill,minmax(270px,1fr))] */}
-      <div className="grid  items-center flex-wrap gap-6">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] lg:grid-cols-4 items-center flex-wrap gap-6">
         {rooms?.map((card: any) => (
           <Card
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
             data={card}
-            version="list"
+            version="grid"
+          />
+        ))}
+        {rooms?.map((card: any) => (
+          <Card
+            onClick={handleRequest}
+            basePath={routes.destinationDetail}
+            setData={setRooms}
+            data={card}
+            version="grid"
+          />
+        ))}
+        {rooms?.map((card: any) => (
+          <Card
+            onClick={handleRequest}
+            basePath={routes.destinationDetail}
+            setData={setRooms}
+            data={card}
+            version="grid"
+          />
+        ))}
+        {rooms?.map((card: any) => (
+          <Card
+            onClick={handleRequest}
+            basePath={routes.destinationDetail}
+            setData={setRooms}
+            data={card}
+            version="grid"
+          />
+        ))}
+        {rooms?.map((card: any) => (
+          <Card
+            onClick={handleRequest}
+            basePath={routes.destinationDetail}
+            setData={setRooms}
+            data={card}
+            version="grid"
+          />
+        ))}
+        {rooms?.map((card: any) => (
+          <Card
+            onClick={handleRequest}
+            basePath={routes.destinationDetail}
+            setData={setRooms}
+            data={card}
+            version="grid"
           />
         ))}
       </div>
@@ -59,4 +104,4 @@ const DestinationsPage = () => {
   );
 };
 
-export default DestinationsPage;
+export default GuestsLove;

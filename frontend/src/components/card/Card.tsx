@@ -174,7 +174,7 @@ const Card: FC<CardTypes> = ({
         onClick={handleRoute}
         className={`${
           version === "grid" ? "flex" : "flex md:hidden"
-        }  group relative rounded-xl overflow-hidden shadow-lg shadow-gray-400 w-[270px] h-auto flex-col items-start cursor-pointer transition-all duration-500 scale-100 hover:scale-102`}
+        }  group relative rounded-xl overflow-hidden shadow-lg shadow-gray-400 w-full h-auto flex-col items-start cursor-pointer transition-all duration-500 scale-100 hover:scale-102`}
       >
         <div className="relative">
           <img src={Room} alt="cardImage" className={`w-full aspect-6/5`} />
@@ -293,7 +293,10 @@ const Card: FC<CardTypes> = ({
               <span>Includes taxes and charges</span>
             </div>
 
-            <div className="p-2 rounded-lg bg-[blue] text-white font-semibold flex items-center gap-2">
+            <div
+              onClick={() => handleRoute()}
+              className="p-2 rounded-lg bg-[blue] text-white font-semibold flex items-center gap-2 cursor-pointer"
+            >
               <span>See availability</span> <ArrowRight className="w-[18px]" />
             </div>
           </div>

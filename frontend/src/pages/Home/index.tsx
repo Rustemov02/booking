@@ -2,9 +2,10 @@ import { Outlet } from "react-router-dom";
 import CategorySection from "../../components/categorySection/categorySection";
 import GuestHeader from "../../components/header/GuestHeader";
 import Intro from "../../pages/Home/Intro";
-import DestinationsPage from "./Destinations/DestinationsPage";
-import PastOffers from "./PastOffers/PastOffers";
+import GuestsLove from "./GuestsLove/GuestsLove";
+import PastOffers from "./TrendingDestinations/TrendingDestinations";
 import Footer from "../Footer/Footer";
+import TripPlanner from "./TripPlanner/TripPlanner";
 
 const Home = () => {
   return (
@@ -13,8 +14,9 @@ const Home = () => {
 
       {/* <CategorySection /> */}
       <Intro />
-      <DestinationsPage />
       <PastOffers />
+      <GuestsLove />
+      <TripPlanner />
 
       {/* additional component */}
       {/* FIXME:  improve style and add upload image for background */}
