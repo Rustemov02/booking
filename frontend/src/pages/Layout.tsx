@@ -9,7 +9,7 @@ const PageLayout = ({ children }: { children: ReactNode }) => {
       <GuestHeader />
       {/* <CategorySection /> */}
       {children}
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 };

@@ -15,8 +15,8 @@ const Home = () => {
       {/* <CategorySection /> */}
       <Intro />
       <PastOffers />
-      <GuestsLove />
       <TripPlanner />
+      <GuestsLove />
 
       {/* additional component */}
       {/* FIXME:  improve style and add upload image for background */}

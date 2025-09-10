@@ -111,7 +111,7 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
       { new: true }
     );
 
-    await console.log("Room updated ", updatedRoom);
+    console.log("Room updated ", updatedRoom);
 
     if (!updatedRoom) {
       return res.status(404).json({ error: "Otaq tapılmadı!" });
@@ -124,10 +124,6 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
   }
 });
 
-
-app.get("/test-fav", (req, res) => {
-  console.log("Test favourites hit!");
-  res.json({ ok: true });
-});
+ 
 
 app.listen(PORT, () => console.log(`Server running at localhost://${PORT} !`));

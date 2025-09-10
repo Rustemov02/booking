@@ -24,7 +24,7 @@ const TripPlanner = () => {
     );
   };
   return (
-    <section className="w-full max-w-[1220px] m-auto px-4 py-6">
+    <section className="w-full max-w-[1220px] m-auto px-4 py-6 flex flex-col gap-3">
       <PageHeader
         title="Quick and easy trip planner"
         sideText="Pick a vibe and explore the top destinations in Azerbaijan"
@@ -37,8 +37,8 @@ const TripPlanner = () => {
               onClick={() => setSelectedItem(item)}
               className={` text-[14px] py-[11px] px-4 rounded-3xl border cursor-pointer transition duration-500 ${
                 selectedItem === item
-                  ? "text-[#006CE4] "
-                  : "text-[#1A1A1A] border-transparent"
+                  ? "text-white bg-[#006CE4]"
+                  : "text-[#1A1A1A] border"
               }`}
             >
               {item}

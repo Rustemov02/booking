@@ -40,7 +40,7 @@ const GuestsLove = () => {
   };
 
   return (
-    <div className="pt-24 px-4 py-6 space-y-4 w-full max-w-[1220px] m-auto">
+    <div className="px-4 py-6 space-y-4 w-full max-w-[1220px] m-auto">
       <PageHeader title="Homes guests love" />
       {/* <div className="text- font-semibold text-[#000]">Find Hot Stays</div> */}
       {/* grid-cols-[repeat(auto-fill,minmax(270px,1fr))] */}
