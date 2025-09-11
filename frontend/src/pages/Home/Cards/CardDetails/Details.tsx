@@ -14,6 +14,7 @@ import InfoModal from "../../../../components/modal/InfoModal";
 const CardDetails = () => {
   const [room, setRoom] = useState<any>();
   const { id } = useParams();
+  const [isInfoModal, setIsInfoModal] = useState(false);
 
   const getCardDetails = async () => {
     try {
@@ -104,13 +105,21 @@ const CardDetails = () => {
             <p className="text-[16px] font-normal">{service}</p>
           ))}
         </div>
-        <div className="bg-[#F2F2F2] w-fit py-[14px] px-6 text-[16px] rounded-xl cursor-pointer font-semibold hover:bg-[#e4d7d7] ">
+        <div
+          onClick={() => setIsInfoModal(true)}
+          className="bg-[#F2F2F2] w-fit py-[14px] px-6 text-[16px] rounded-xl cursor-pointer font-semibold hover:bg-[#e4d7d7] "
+        >
           Show all amenities
         </div>
       </div>
 
-      <InfoModal isModalOpen={true} onClose={() => {}}>
-        {" "}fasdfasd
+      <InfoModal
+        title="About this space"
+        isModalOpen={isInfoModal}
+        onClose={() => setIsInfoModal(false)}
+      >
+        {" "}
+        fasdfasd
       </InfoModal>
     </div>
   );
