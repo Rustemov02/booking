@@ -5,12 +5,18 @@ import Button from "../../../components/button/Button";
 import apiRequest from "../../../api/apiRequest";
 import { useEffect, useState } from "react";
 import { clearError, getError, ErrorState } from "../../../utils/errorHelpers";
+import { RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
+import { setUser } from "../../../store/user_store";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isRemember, setIsRemember] = useState(false);
+  const dispatch = useDispatch();
 
+  const user = useSelector((state: RootState) => state);
   const handleLogin = async () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -33,12 +39,29 @@ const Login = () => {
         data: { email, password },
       });
 
+      const {
+        userId,
+        accessToken,
+        refreshToken,
+        firstName,
+        lastName,
+        roleName,
+      } = res;
+
+      const userData = {
+        userId,
+        accessToken,
+        refreshToken,
+        firstName,
+        lastName,
+        roleName,
+      };
       if (isRemember) {
-        localStorage.setItem("refreshToken", res.refreshToken);
-        localStorage.setItem("accessToken", res.accessToken);
+        dispatch(setUser(userData));
+        
+        localStorage.setItem("authState", JSON.stringify(userData));
       } else {
-        sessionStorage.setItem("refreshToken", res.refreshToken);
-        sessionStorage.setItem("accessToken", res.accessToken);
+        sessionStorage.setItem("authState", JSON.stringify(userData));
       }
     } catch (err) {
       console.log("LOGIN ERRROR : ", err);
@@ -87,6 +110,10 @@ const Login = () => {
           placeholder="********"
           icons={<CloseEye className="w-[20px] h-[20px]" />}
         />
+
+        <button onClick={() => console.log(user.userReducer)}>
+          Check data
+        </button>
         <div className="flex flex-row items-center justify-between">
           <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#121]">
             <input
@@ -101,6 +128,7 @@ const Login = () => {
         {getError(errors, "email") && <span>{getError(errors, "email")}</span>}
         <Button title="Login" onClick={handleLogin} />
       </div>
+
       <span className="text-[14px] text-[#000] font-normal">Or</span>
     </>
   );

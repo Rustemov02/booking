@@ -1,23 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface CounterState {
-  name: string;
-  surname: string;
-  gender: "man" | "woman";
+  userId: string;
+  firstName: string;
+  lastName: string;
+  accessToken: string;
+  refreshToken: string;
+  roleName: string;
 }
 
-const initialState: CounterState = {
-  name: "",
-  surname: "",
-  gender: "man",
+const initialAuthData = JSON.parse(
+  localStorage.getItem("authState") || "{}"
+) || {
+  userId: "",
+  firstName: "",
+  lastName: "",
+  accessToken: "",
+  refreshToken: "",
+  roleName: "",
 };
+
+const initialState: CounterState = initialAuthData;
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      return { ...state, ...action.payload };
+    },
+  },
 });
 
-
-
+export const { setUser } = userSlice.actions;
 export default userSlice.reducer;

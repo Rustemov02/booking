@@ -9,6 +9,11 @@ import { getError, clearError, ErrorState } from "../../../utils/errorHelpers";
 
 const Register = () => {
   const [isAgree, setIsAgree] = useState(false);
+
+  const [fullNameData, setFullNameData] = useState({
+    firstName: "",
+    lastName: "",
+  });
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,11 +42,13 @@ const Register = () => {
       return toast.error("Şifrələr uyğun gəlmir !");
     }
 
+    const { firstName, lastName } = fullNameData;
+    
     try {
       const res = await apiRequest({
         method: "POST",
         url: "/auth/register",
-        data: { email, password },
+        data: { email, password, firstName, lastName },
       });
 
       console.log("Register data : ", res);
@@ -61,13 +68,23 @@ const Register = () => {
               name="firstName"
               label="First Name"
               placeholder="First Name"
-              onChange={() => {}}
+              onChange={(e) =>
+                setFullNameData((prev) => ({
+                  ...prev,
+                  firstName: e.target.value,
+                }))
+              }
             />
             <Input
               name="lastName"
               label="Last Name"
               placeholder="Last Name"
-              onChange={() => {}}
+              onChange={(e) =>
+                setFullNameData((prev) => ({
+                  ...prev,
+                  lastName: e.target.value,
+                }))
+              }
             />
           </div>
           <div>

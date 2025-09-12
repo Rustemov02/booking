@@ -14,15 +14,21 @@ let refreshTokens: string[] = []; //əslində DB-də saxlanmalıdır
 // Qeydiyyat
 router.post("/register", async (req, res) => {
   try {
-    console.log(req.body);
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName, roleName } = req.body;
 
     const userExists = await User.findOne({ email });
     if (userExists)
       return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hashedPassword });
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
+      roleName: roleName || "user",  
+    });
+
     await newUser.save();
 
     res.status(201).json({ message: "User registered successfully" });
@@ -36,23 +42,40 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user: any = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    const accessToken = jwt.sign({ userId: user._id }, JWT_SECRET, {
-      expiresIn: "15m",
-    });
+    // Access token
+    const accessToken = jwt.sign(
+      { userId: user._id, roleName: user.roleName },
+      JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    // Refresh token
     const refreshToken = jwt.sign({ userId: user._id }, REFRESH_TOKEN_SECRET, {
       expiresIn: "30d",
     });
 
     refreshTokens.push(refreshToken);
 
-    res.status(200).json({ accessToken, refreshToken, email: user.email });
+    // Access token expiry date
+    const decoded: any = jwt.decode(accessToken);
+    const expires = new Date(decoded.exp * 1000).toISOString();
+
+    res.status(200).json({
+      accessToken,
+      expires,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      refreshToken,
+      roleName: user.roleName,
+      userId: user._id,
+    });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err });
   }
