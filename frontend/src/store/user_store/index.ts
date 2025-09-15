@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface CounterState {
+interface UserState {
   userId: string;
   firstName: string;
   lastName: string;
@@ -20,17 +20,22 @@ const initialAuthData = JSON.parse(
   roleName: "",
 };
 
-const initialState: CounterState = initialAuthData;
+const initialState: UserState = initialAuthData;
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    //named  reducers but exported as actions
     setUser: (state, action) => {
       return { ...state, ...action.payload };
+    },
+
+    logout: (state, action) => {
+      return { ...state };
     },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, logout } = userSlice.actions;
 export default userSlice.reducer;

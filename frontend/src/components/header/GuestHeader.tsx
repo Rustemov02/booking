@@ -2,21 +2,25 @@ import { useState } from "react";
 import HamburgerMenu from "../../assets/svg/HamburgerMenu";
 import Button from "../button/Button";
 import LanguageDropdown from "../langMenu/Dropdown";
-import Search from "../search/Search";
 import SideModal from "../modal/sideModal";
 import { useLocation, useNavigate } from "react-router-dom";
-import Sun from "../../assets/svg/sun.svg?react";
 import FavouritesIcon from "../../assets/svg/like.svg?react";
 import Logo from "@/assets/images/logo.svg?react";
 import Question from "@/assets/svg/question.svg?react";
 import Profile from "@/assets/svg/profile.svg?react";
 import Menu from "@/assets/svg/menu.svg?react";
+import { useTranslation } from "react-i18next";
+import type { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 const GuestHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
+  const roleName = useSelector(
+    (state: RootState) => state.userReducer.roleName
+  );
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/register";
 
@@ -29,6 +33,7 @@ const GuestHeader = () => {
           <Logo className="w-[120px]" />
           {/* <img src={logo} alt="Logo" className="w-[80px] md:w-[130px]" /> */}
         </div>
+
         <div className="flex items-center gap-2">
           <span className="hidden md:block">
             <LanguageDropdown />
@@ -42,7 +47,7 @@ const GuestHeader = () => {
             />
           </span>
 
-          {!isAuthPage && (
+          {!roleName ? (
             <div className="flex-1 items-center gap-2 hidden md:flex">
               <Button
                 to="/login"
@@ -57,6 +62,9 @@ const GuestHeader = () => {
                 className="grid-cols-1 "
               />
             </div>
+          ) : (
+            <>
+            </>
           )}
 
           <div className="flex md:hidden">

@@ -13,14 +13,14 @@ const Home = () => {
       {/* <GuestHeader /> */}
 
       {/* <CategorySection /> */}
-      <Intro />
-      <PastOffers />
-      <TripPlanner />
-      <GuestsLove />
-
+      {/* <Intro /> */}
+      {/* <PastOffers /> */}
+      {/* <TripPlanner /> */}
+      {/* <GuestsLove /> */}
+    
       {/* additional component */}
       {/* FIXME:  improve style and add upload image for background */}
-      <div
+      {/* <div
         style={{
           backgroundImage: "url('/backgroundImg.jpg')",
           backgroundSize: "cover",
@@ -42,7 +42,7 @@ const Home = () => {
             </span>
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* <Footer/> */}
       <Outlet />

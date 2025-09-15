@@ -28,7 +28,6 @@ const Register = () => {
     console.log("Form data : ", formData);
     const values = Object.fromEntries(formData.entries());
 
-    console.log(values);
 
     const newErrors: ErrorState = {};
 
