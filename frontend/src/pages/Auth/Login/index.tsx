@@ -9,12 +9,15 @@ import { RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
 import { setUser } from "../../../store/user_store";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isRemember, setIsRemember] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const user = useSelector((state: RootState) => state);
   const handleLogin = async () => {
@@ -56,15 +59,20 @@ const Login = () => {
         lastName,
         roleName,
       };
+
       if (isRemember) {
         dispatch(setUser(userData));
-        
+
         localStorage.setItem("authState", JSON.stringify(userData));
       } else {
         sessionStorage.setItem("authState", JSON.stringify(userData));
       }
+
+      navigate("/");
+      toast.success("Əməliyyat uğurludur");
     } catch (err) {
       console.log("LOGIN ERRROR : ", err);
+      toast.error("Əməliyyat uğursuzdur");
     }
   };
   const [errors, setErrors] = useState<ErrorState>({});
@@ -93,6 +101,7 @@ const Login = () => {
         <h5 className="text-[20px] font-bold">Login</h5>
         <p className="text-[12px] font-semibold">Login to access account</p>
         <Input
+          name='email'
           label="Email"
           error={getError(errors, "email")}
           clearError={() => setErrors((prev) => clearError(prev, "email"))}
@@ -101,6 +110,7 @@ const Login = () => {
           onChange={(e) => setMail(e.target.value)}
         />
         <Input
+          name="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password || ""}
           type="password"

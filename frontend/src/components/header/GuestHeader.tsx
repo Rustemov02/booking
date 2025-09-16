@@ -12,18 +12,32 @@ import Menu from "@/assets/svg/menu.svg?react";
 import { useTranslation } from "react-i18next";
 import type { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
+import MenuIcon from "@/assets/svg/menu.svg?react";
+import useClickOutSide from "../../hooks/useClickOutside";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/user_store";
+import toast from "react-hot-toast";
 
 const GuestHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const roleName = useSelector(
     (state: RootState) => state.userReducer.roleName
   );
-  const isAuthPage =
-    location.pathname === "/login" || location.pathname === "/register";
 
+  const clickedOutside = useClickOutSide(() => {
+    setMenuOpen(false);
+  });
+
+  const handleLogout = () => {
+    navigate("/login");
+    dispatch(logout());
+    toast.success("Logout oldunuz !");
+  };
   return (
     <>
       <section
@@ -63,8 +77,37 @@ const GuestHeader = () => {
               />
             </div>
           ) : (
-            <>
-            </>
+            <div
+              onClick={() => setMenuOpen(!menuOpen)}
+              ref={clickedOutside}
+              className="relative cursor-pointer bg-white py-1 px-2 rounded-xl"
+            >
+              <MenuIcon className="w-6 cursor-pointer transition duration-500 " />
+
+              <div
+                className={`${
+                  menuOpen
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 pointer-events-none"
+                } flex flex-col items-start absolute top-[35px] p-2 z-50 rounded-xl right-[6px] w-[100px] bg-white`}
+              >
+                <p className="py-1 px-2 cursor-pointer hover:bg-[#F6F7F9] rounded-sm w-full">
+                  Profile
+                </p>
+                <p
+                  onClick={() => console.log("setting")}
+                  className="py-1 px-2 cursor-pointer hover:bg-[#F6F7F9] rounded-sm w-full"
+                >
+                  Settings
+                </p>
+                <p
+                  onClick={handleLogout}
+                  className="py-1 px-2 cursor-pointer hover:bg-[#F6F7F9] rounded-sm w-full"
+                >
+                  Logout
+                </p>
+              </div>
+            </div>
           )}
 
           <div className="flex md:hidden">

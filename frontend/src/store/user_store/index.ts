@@ -10,7 +10,9 @@ interface UserState {
 }
 
 const initialAuthData = JSON.parse(
-  localStorage.getItem("authState") || "{}"
+  localStorage.getItem("authState") ||
+    sessionStorage.getItem("authState") ||
+    "{}"
 ) || {
   userId: "",
   firstName: "",
@@ -20,6 +22,14 @@ const initialAuthData = JSON.parse(
   roleName: "",
 };
 
+const emptyUser: UserState = {
+  userId: "",
+  firstName: "",
+  lastName: "",
+  accessToken: "",
+  refreshToken: "",
+  roleName: "",
+};
 const initialState: UserState = initialAuthData;
 
 export const userSlice = createSlice({
@@ -31,8 +41,9 @@ export const userSlice = createSlice({
       return { ...state, ...action.payload };
     },
 
-    logout: (state, action) => {
-      return { ...state };
+    logout: () => {
+      localStorage.removeItem("authState");
+      return emptyUser;
     },
   },
 });
