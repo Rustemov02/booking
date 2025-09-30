@@ -35,17 +35,29 @@ const Input = ({
   return (
     <div style={style} className="flex flex-col gap-1 items-star w-full">
       <label
-        className={`text-[14px] text-[#000] font-normal ${
+        className={`text-[14px] text-neutral-900 font-semibold ${
           error ? "text-[red]" : ""
         }`}
       >
         {label}
       </label>
       <div
-        className={`flex flex-row items-center justify-between  px-2 py-3 w-full bg-[#fff] rounded-[10px] border border-[#A6A6A6] text-[#A6A6A6] ${
-          error ? "border-2 border-[red]" : ""
+        className={`flex flex-row items-start justify-start gap-4  px-2 py-3 w-full bg-[#fff] rounded-[10px] border border-[#A6A6A6] text-[#A6A6A6] ${
+          error ? "border border-[red]" : ""
         }`}
       >
+        <div className="w-fit">
+          {icons &&
+            (Array.isArray(icons) ? (
+              <>
+                {icons.map((item) => {
+                  <span>{item}</span>;
+                })}
+              </>
+            ) : (
+              <span className="cursor-pointer">{icons}</span>
+            ))}
+        </div>
         <input
           className={`outline-none bg-none placeholder:text-[#A6A6A6]`}
           type={type}
@@ -54,17 +66,8 @@ const Input = ({
           defaultValue={defaultValue}
           placeholder={placeholder}
           onChange={handleChange}
+          onFocus={clearError}
         />
-        {icons &&
-          (Array.isArray(icons) ? (
-            <>
-              {icons.map((item) => {
-                <span>{item}</span>;
-              })}
-            </>
-          ) : (
-            <span className="cursor-pointer">{icons}</span>
-          ))}
       </div>
       <span className="text-[12px] text-[red]">{error && error}</span>
     </div>

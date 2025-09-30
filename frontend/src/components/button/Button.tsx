@@ -50,12 +50,12 @@ const Button: FC<ButtonProps> = ({
     >
       <button
         type={type}
-        className={` ${className}  w-full flex flex-row items-center ${
-          icon ? "justify-between" : "justify-center"
+        className={` ${className}  w-full flex flex-row items-center gap-3 ${
+          icon ? "justify-center" : "justify-center"
         }`}
-      >
-        <p>{title} </p>
+        >
         {icon && <span className="w-[24px] h-[24px]"> {icon}</span>}
+        <p>{title} </p>
       </button>
     </div>
   );

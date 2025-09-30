@@ -11,6 +11,7 @@ import { setUser } from "../../../store/user_store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Mail from "../../../assets/svg/mail.svg?react";
 
 const Login = () => {
   const [email, setMail] = useState("");
@@ -98,16 +99,23 @@ const Login = () => {
   return (
     <>
       <div className="flex flex-col gap-4 w-full">
-        <h5 className="text-[20px] font-bold">Login</h5>
-        <p className="text-[12px] font-semibold">Login to access account</p>
+        <div>
+          <p className="!text-[26px] font-bold text-neutral-900">
+            Let's get you back on track
+          </p>
+          <p className="text-[14px] font-semibold text-neutral-500">
+            Login to access account
+          </p>
+        </div>
         <Input
-          name='email'
+          name="email"
           label="Email"
           error={getError(errors, "email")}
           clearError={() => setErrors((prev) => clearError(prev, "email"))}
           placeholder="Testing"
           value={email || ""}
           onChange={(e) => setMail(e.target.value)}
+          icons={<Mail className="w-5 h-5"/>}
         />
         <Input
           name="password"
