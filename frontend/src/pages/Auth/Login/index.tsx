@@ -144,7 +144,7 @@ const Login = () => {
 
         {getError(errors, "email") && <span>{getError(errors, "email")}</span>}
         <div className="mt-3">
-          <Button title="Login" onClick={handleLogin} />
+          <Button title="Login" variant="outline" onClick={handleLogin} />
         </div>
       </div>
     </>

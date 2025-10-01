@@ -10,41 +10,50 @@ import TripPlanner from "./TripPlanner/TripPlanner";
 const Home = () => {
   return (
     <>
-      {/* <GuestHeader /> */}
-
-      {/* <CategorySection /> */}
       <Intro />
       <PastOffers />
       <TripPlanner />
       <GuestsLove />
     
-      {/* additional component */}
-      {/* FIXME:  improve style and add upload image for background */}
-      <div
-        style={{
-          backgroundImage: "url('/backgroundImg.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="w-full h-[400px] mt-10 relative max-w-[1220px] mx-auto px-4 ">
-          <p className="text-[20px] sm:text-[28px] lg:text-[40px] transition-all text-white font-bold absolute top-11 flex flex-col">
-            <span>Get Inspirations For Your Next Trip</span>
-            <span className="text-[14px] sm:text-[18px] lg:text-[20px] font-normal w-3/4 lg:w-full lg:font-semibold">
-              Read About Wonderful Adventure We Love Most
-            </span>
-          </p>
-          <p className="flex flex-col text-[22px] sm:text-[32px] md:text-[38px] lg:text-[40px] text-white font-bold w-[90%] sm:w-[60%] lg:w-[40%] text-end absolute bottom-11 right-0 pr-4">
-            <span>Difficult Roads Lead To Beautiful Destination.</span>
-            <span className="text-[18px] font-normal cursor-pointer transition-all duration-500 hover:scale-x-95">
-              Read More {">"}
-            </span>
-          </p>
+      {/* Inspirational Section */}
+      <div className="relative w-full mt-10 overflow-hidden">
+        <div
+          className="w-full h-[300px] sm:h-[350px] md:h-[400px] bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('/backgroundImg.jpg')",
+          }}
+        >
+          {/* Overlay for better text visibility */}
+          <div className="absolute inset-0 bg-black/20" />
+          
+          <div className="relative max-w-[1220px] mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-8 sm:py-10 lg:py-11">
+            {/* Top Text */}
+            <div className="space-y-2 sm:space-y-3">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-bold leading-tight">
+                Get Inspirations For Your Next Trip
+              </h2>
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-normal sm:font-medium lg:font-semibold max-w-2xl">
+                Read About Wonderful Adventure We Love Most
+              </p>
+            </div>
+
+            {/* Bottom Text */}
+            <div className="ml-auto max-w-[90%] sm:max-w-[60%] lg:max-w-[40%] text-right space-y-2">
+              <h3 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-white font-bold leading-tight">
+                Difficult Roads Lead To Beautiful Destination.
+              </h3>
+              <button className="text-base sm:text-lg text-white font-normal cursor-pointer transition-transform duration-300 hover:translate-x-1 inline-flex items-center group">
+                Read More 
+                <span className="ml-1 transition-transform duration-300 group-hover:translate-x-1">
+                  {">"}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <Footer/>
+      {/* <Footer /> */}
       <Outlet />
     </>
   );

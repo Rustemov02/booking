@@ -4,10 +4,11 @@ import { BookingBarTypes } from "../../types";
 import toast from "react-hot-toast";
 import useClickOutSide from "../../hooks/useClickOutside";
 import { useLocation, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import Icon from "@/assets/svg/Apple.svg?react";
+import { Search } from "lucide-react";
+
 const BookingBar = ({
   data,
 }: {
@@ -31,32 +32,9 @@ const BookingBar = ({
     }
   );
 
-  // const boxes = [
-  //   {
-  //     key: "where",
-  //     label: "Where",
-  //     sub: "Search destinations",
-  //     width: 180, // optional: highlight ölçüsü üçün
-  //   },
-  //   {
-  //     key: "checkIn",
-  //     label: "Check in",
-  //     sub: "Add dates",
-  //     width: 200,
-  //   },
-  //   {
-  //     key: "checkOut",
-  //     label: "Check out",
-  //     sub: "Add dates",
-  //     width: 200,
-  //   },
-  //   {
-  //     key: "guests",
-  //     label: "Who",
-  //     sub: "Add guests",
-  //     width: 180,
-  //   },
-  // ];
+  // Mobile modal state
+  const [showMobileModal, setShowMobileModal] = useState(false);
+  const [mobileStep, setMobileStep] = useState<"where" | "dates" | "guests">("where");
 
   const clearCheckData = (type: "checkIn" | "checkOut") => {
     setBookingData((prev) => ({
@@ -79,14 +57,13 @@ const BookingBar = ({
     const params = new URLSearchParams(queryParams);
 
     const currentPath = location.pathname;
-
     const basePath = currentPath.includes("searchResult") ? "" : "searchResult";
 
     navigate(`${basePath}?${params}`);
-
     setIsLoading(false);
+    setShowMobileModal(false);
 
-    console.log("Search button clikced !");
+    console.log("Search button clicked!");
   };
 
   useEffect(() => {
@@ -126,18 +103,19 @@ const BookingBar = ({
   ]);
 
   const commonContainerStyles =
-    "py-[15px] px-8 rounded-[50px] border-none hover:bg-[#ece8e8] cursor-pointer duration-500 transform";
+    "py-3 sm:py-4 px-4 sm:px-6 md:px-8 rounded-full border-none hover:bg-gray-100 cursor-pointer transition-all duration-300";
 
-  const hoveringStyles = "!bg-[#FFFFFF] border-[#ddc2c2] shadow scale-103";
+  const hoveringStyles = "!bg-white shadow-lg scale-105";
 
   return (
-    <section className="w-full flex items-center">
+    <section className="w-full flex items-center justify-center px-4">
+      {/* DESKTOP VERSION */}
       <div
         ref={clickedOutside}
         onClick={() => setMainClicked(selectedBox !== null)}
-        className={`mx-auto relative top-0 hidden md:grid md:max-w-[850px] rounded-[50px] w-full ${
-          selectedBox !== null ? "bg-[#d4cece] " : "bg-[#FFFFFF] shadow-lg"
-        } top-20 grid grid-cols-[2fr_repeat(5,auto)_2fr] items-center gap-2 transition-all duration-600`}
+        className={`mx-auto relative hidden md:grid max-w-[850px] rounded-full w-full ${
+          selectedBox !== null ? "bg-gray-200" : "bg-white shadow-lg"
+        } grid-cols-[2fr_auto_150px_auto_150px_auto_1fr] items-center gap-1 transition-all duration-500`}
       >
         {/* WHERE */}
         <div
@@ -151,31 +129,33 @@ const BookingBar = ({
           {selectedBox === "where" && (
             <motion.div
               layoutId="highlight"
-              className="absolute inset-0 rounded-[50px] bg-white shadow"
+              className="absolute inset-0 rounded-full bg-white shadow-lg"
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
           )}
           <div className="relative z-10">
-            Where <br />
-            <span>Search destinations</span>
+            <p className="text-xs font-semibold text-gray-900">Where</p>
+            <p className="text-sm text-gray-500">Search destinations</p>
           </div>
         </div>
-        {selectedBox === "where" && (
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="absolute top-full bg-white rounded-[20px] py-4 px-8 mt-2 w-1/2 h-[120px] shadow-lg"
-          >
-            Suggested Destination
-          </motion.div>
-        )}
 
-        {/* LINE */}
+        <AnimatePresence>
+          {selectedBox === "where" && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 bg-white rounded-3xl py-6 px-8 mt-3 w-[400px] shadow-2xl z-50"
+            >
+              <p className="text-sm font-medium text-gray-700">Suggested Destinations</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
+        {/* DIVIDER */}
         <div
-          className={`w-[2px] rounded-[5px] h-[40px] bg-[#EBEBEB] duration-400 ${
+          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${
             hovered === "where" ||
             hovered === "checkIn" ||
             selectedBox === "where" ||
@@ -183,12 +163,12 @@ const BookingBar = ({
               ? "opacity-0"
               : ""
           }`}
-        ></div>
+        />
 
-        {/* CHECK IN  */}
+        {/* CHECK IN */}
         <div
           onClick={() => setSelectedBox("checkIn")}
-          className={`w-[150px] ${commonContainerStyles} ${
+          className={`${commonContainerStyles} ${
             selectedBox === "checkIn" ? hoveringStyles : ""
           }`}
           onMouseEnter={() => setHovered("checkIn")}
@@ -197,19 +177,19 @@ const BookingBar = ({
           {selectedBox === "checkIn" && (
             <motion.div
               layoutId="highlight"
-              className="absolute inset-0 rounded-[50px] bg-white shadow"
+              className="absolute inset-0 rounded-full bg-white shadow-lg"
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
           )}
           <div className="relative z-10">
-            Check in <br />
-            <span>Add dates</span>
+            <p className="text-xs font-semibold text-gray-900">Check in</p>
+            <p className="text-sm text-gray-500">Add dates</p>
           </div>
         </div>
 
-        {/* LINE */}
+        {/* DIVIDER */}
         <div
-          className={`w-[2px] rounded-[5px] h-[40px] bg-[#EBEBEB] ${
+          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${
             hovered === "checkIn" ||
             hovered === "checkOut" ||
             selectedBox === "checkIn" ||
@@ -217,12 +197,12 @@ const BookingBar = ({
               ? "opacity-0"
               : ""
           }`}
-        ></div>
+        />
 
         {/* CHECK OUT */}
         <div
           onClick={() => setSelectedBox("checkOut")}
-          className={`w-[150px] ${commonContainerStyles} ${
+          className={`${commonContainerStyles} ${
             selectedBox === "checkOut" ? hoveringStyles : ""
           }`}
           onMouseEnter={() => setHovered("checkOut")}
@@ -231,24 +211,25 @@ const BookingBar = ({
           {selectedBox === "checkOut" && (
             <motion.div
               layoutId="highlight"
-              className="absolute inset-0 rounded-[50px] bg-white shadow"
+              className="absolute inset-0 rounded-full bg-white shadow-lg"
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
           )}
           <div className="relative z-10">
-            Check out <br />
-            <span>Add dates</span>
+            <p className="text-xs font-semibold text-gray-900">Check out</p>
+            <p className="text-sm text-gray-500">Add dates</p>
           </div>
         </div>
-        {(selectedBox === "checkIn" || selectedBox === "checkOut") && (
-          <motion.div
-            initial={{ opacity: 0, x: selectedBox === "checkIn" ? -50 : 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="absolute top-full left-[8%] bg-white rounded-[20px] py-4 px-8 mt-2 w-max flex h-auto shadow-lg"
-          >
-            <div className="flex gap-10 bg-transparent rounded-2xl mx-auto">
+
+        <AnimatePresence>
+          {(selectedBox === "checkIn" || selectedBox === "checkOut") && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-[8%] bg-white rounded-3xl py-6 px-8 mt-3 w-max shadow-2xl z-50"
+            >
               <DayPicker
                 mode="range"
                 selected={range}
@@ -256,21 +237,20 @@ const BookingBar = ({
                 numberOfMonths={2}
                 pagedNavigation
                 modifiersClassNames={{
-                  selected: "!bg-[#222222] text-white rounded-full",
+                  selected: "!bg-gray-900 text-white rounded-full",
                   range_start: "bg-blue-600 text-white rounded-l-full",
-                  range_end: "!bg-[#222222] text-white rounded-r-full",
-                  range_middle: "!bg-[#F7F7F7] !text-[#222222]",
-                  today: "!rounded-full !text-[blue]",
-                  chevron: "!border !border-[red]",
+                  range_end: "!bg-gray-900 text-white rounded-r-full",
+                  range_middle: "!bg-gray-100 !text-gray-900",
+                  today: "!rounded-full !text-blue-600 font-bold",
                 }}
               />
-            </div>
-          </motion.div>
-        )}
-        {/* LINE */}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
+        {/* DIVIDER */}
         <div
-          className={`w-[2px] rounded-[5px] h-[40px] bg-[#EBEBEB] ${
+          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${
             hovered === "checkOut" ||
             hovered === "guests" ||
             selectedBox === "checkOut" ||
@@ -278,7 +258,7 @@ const BookingBar = ({
               ? "opacity-0"
               : ""
           }`}
-        ></div>
+        />
 
         {/* GUESTS */}
         <div
@@ -292,58 +272,215 @@ const BookingBar = ({
           {selectedBox === "guests" && (
             <motion.div
               layoutId="highlight"
-              className="absolute inset-0 rounded-[50px] bg-white shadow"
+              className="absolute inset-0 rounded-full bg-white shadow-lg"
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
           )}
           <div className="relative z-10">
-            Who <br /> <span>Add guests</span>
+            <p className="text-xs font-semibold text-gray-900">Who</p>
+            <p className="text-sm text-gray-500">Add guests</p>
           </div>
         </div>
 
-        {selectedBox === "guests" && (
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`absolute top-full right-0 bg-white rounded-[20px] py-4 px-8 mt-2 w-[400px] h-auto shadow-lg`}
-          >
-            {guestsData.map((item, index) => (
-              <div className={`pt-3 pr-1 pl-0`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p>{item.label}</p>
-                    <span>{item.title}</span>
-                  </div>
-                  <Counter
-                    count={item.count}
-                    onChange={(count) =>
-                      setGuestsData((prev) =>
-                        prev.map((g) =>
-                          g.label === item.label ? { ...g, count } : g
+        <AnimatePresence>
+          {selectedBox === "guests" && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full right-0 bg-white rounded-3xl py-6 px-8 mt-3 w-[400px] shadow-2xl z-50"
+            >
+              {guestsData.map((item, index) => (
+                <div key={item.label} className="py-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                      <p className="text-sm text-gray-500">{item.title}</p>
+                    </div>
+                    <Counter
+                      count={item.count}
+                      onChange={(count) =>
+                        setGuestsData((prev) =>
+                          prev.map((g) =>
+                            g.label === item.label ? { ...g, count } : g
+                          )
                         )
-                      )
-                    }
-                  />
+                      }
+                    />
+                  </div>
+                  {guestsData.length - 1 !== index && (
+                    <hr className="mt-4 border-gray-200" />
+                  )}
                 </div>
-                {guestsData.length - 1 === index ? "" : <hr />}
-              </div>
-            ))}
-          </motion.div>
-        )}
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* SEARCH BUTTON - Desktop */}
+        <button
+          onClick={handleSubmit}
+          disabled={isLoading}
+          className="absolute right-2 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Search className="w-5 h-5" />
+        </button>
       </div>
 
-      <div
-        className={`absolute top-0 left-0 w-full height-full overflow-hidden`}
-      >
-        <div
-          className={`flex items-center justify-center md:hidden mx-auto w-11/12 rounded-[50px] border py-[10px] px-[19px]`}
+      {/* MOBILE VERSION */}
+      <div className="md:hidden w-full max-w-md">
+        <button
+          onClick={() => setShowMobileModal(true)}
+          className="flex items-center justify-between w-full rounded-full bg-white shadow-lg border border-gray-200 py-3 px-5 hover:shadow-xl transition-shadow"
         >
-          <p className={`text-[14px] text-[#222222] font-semibold`}>
-            Start your search
-          </p>
-        </div>
+          <div className="flex items-center gap-3">
+            <Search className="w-5 h-5 text-gray-600" />
+            <p className="text-sm text-gray-900 font-semibold">Start your search</p>
+          </div>
+        </button>
+
+        {/* Mobile Modal */}
+        <AnimatePresence>
+          {showMobileModal && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShowMobileModal(false)}
+                className="fixed inset-0 bg-black/50 z-[100]"
+              />
+
+              {/* Modal Content */}
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                className="fixed inset-x-0 bottom-0 bg-white rounded-t-3xl z-[101] max-h-[90vh] overflow-y-auto"
+              >
+                {/* Header */}
+                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-gray-900">Search</h2>
+                  <button
+                    onClick={() => setShowMobileModal(false)}
+                    className="text-gray-500 hover:text-gray-900"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 space-y-4">
+                  {/* Where Section */}
+                  <div className="border border-gray-300 rounded-2xl p-4">
+                    <label className="text-xs font-semibold text-gray-900 block mb-1">
+                      Where
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Search destinations"
+                      className="w-full text-sm text-gray-600 outline-none"
+                    />
+                  </div>
+
+                  {/* Dates Section */}
+                  <div className="border border-gray-300 rounded-2xl p-4">
+                    <label className="text-xs font-semibold text-gray-900 block mb-2">
+                      When
+                    </label>
+                    <div className="flex gap-4">
+                      <div className="flex-1">
+                        <p className="text-xs text-gray-500 mb-1">Check in</p>
+                        <button
+                          onClick={() => setMobileStep("dates")}
+                          className="text-sm text-gray-900 hover:underline"
+                        >
+                          Add dates
+                        </button>
+                      </div>
+                      <div className="w-[1px] bg-gray-300" />
+                      <div className="flex-1">
+                        <p className="text-xs text-gray-500 mb-1">Check out</p>
+                        <button
+                          onClick={() => setMobileStep("dates")}
+                          className="text-sm text-gray-900 hover:underline"
+                        >
+                          Add dates
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Calendar for Mobile */}
+                  {mobileStep === "dates" && (
+                    <div className="border border-gray-300 rounded-2xl p-4">
+                      <DayPicker
+                        mode="range"
+                        selected={range}
+                        onSelect={setRange}
+                        numberOfMonths={1}
+                        modifiersClassNames={{
+                          selected: "!bg-gray-900 text-white rounded-full",
+                          range_start: "bg-blue-600 text-white rounded-l-full",
+                          range_end: "!bg-gray-900 text-white rounded-r-full",
+                          range_middle: "!bg-gray-100 !text-gray-900",
+                          today: "!rounded-full !text-blue-600 font-bold",
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {/* Guests Section */}
+                  <div className="border border-gray-300 rounded-2xl p-4">
+                    <label className="text-xs font-semibold text-gray-900 block mb-3">
+                      Who
+                    </label>
+                    {guestsData.map((item, index) => (
+                      <div key={item.label}>
+                        <div className="flex items-center justify-between py-3">
+                          <div>
+                            <p className="text-sm font-semibold text-gray-900">
+                              {item.label}
+                            </p>
+                            <p className="text-xs text-gray-500">{item.title}</p>
+                          </div>
+                          <Counter
+                            count={item.count}
+                            onChange={(count) =>
+                              setGuestsData((prev) =>
+                                prev.map((g) =>
+                                  g.label === item.label ? { ...g, count } : g
+                                )
+                              )
+                            }
+                          />
+                        </div>
+                        {guestsData.length - 1 !== index && (
+                          <hr className="border-gray-200" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer with Search Button */}
+                <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4">
+                  <button
+                    onClick={handleSubmit}
+                    disabled={isLoading}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Search className="w-5 h-5" />
+                    Search
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

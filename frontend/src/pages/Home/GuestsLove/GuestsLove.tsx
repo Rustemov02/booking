@@ -35,18 +35,19 @@ const GuestsLove = () => {
 
   // FOR CARD DETAILS
   const handleRequest = async (id: string) => {
-    console.log("CARD ID :  ", id);
+    console.log("CARD ID: ", id);
     navigate(`rooms/${id}`);
   };
 
   return (
-    <div className="px-4 py-6 space-y-4 w-full max-w-[1220px] m-auto">
+    <div className="px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 space-y-6 w-full max-w-[1220px] mx-auto">
       <PageHeader title="Homes guests love" />
-      {/* <div className="text- font-semibold text-[#000]">Find Hot Stays</div> */}
-      {/* grid-cols-[repeat(auto-fill,minmax(270px,1fr))] */}
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] lg:grid-cols-4 items-center flex-wrap gap-6">
+
+      {/* Responsive Grid */}
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
         {rooms?.map((card: any) => (
           <Card
+            key={card.id}
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
@@ -56,6 +57,7 @@ const GuestsLove = () => {
         ))}
         {rooms?.map((card: any) => (
           <Card
+            key={`${card.id}-2`}
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
@@ -65,6 +67,7 @@ const GuestsLove = () => {
         ))}
         {rooms?.map((card: any) => (
           <Card
+            key={`${card.id}-3`}
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
@@ -74,6 +77,7 @@ const GuestsLove = () => {
         ))}
         {rooms?.map((card: any) => (
           <Card
+            key={`${card.id}-4`}
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
@@ -83,6 +87,7 @@ const GuestsLove = () => {
         ))}
         {rooms?.map((card: any) => (
           <Card
+            key={`${card.id}-5`}
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
@@ -92,6 +97,7 @@ const GuestsLove = () => {
         ))}
         {rooms?.map((card: any) => (
           <Card
+            key={`${card.id}-6`}
             onClick={handleRequest}
             basePath={routes.destinationDetail}
             setData={setRooms}
