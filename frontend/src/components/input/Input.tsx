@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 interface TypeInput {
   type?: string;
@@ -8,8 +8,11 @@ interface TypeInput {
   placeholder?: string;
   name?: string;
   errorMessage?: string;
-  style?: any;
-  icons?: ReactNode | ReactNode[];
+  style?: React.CSSProperties;
+  icons?: {
+    open: ReactNode;
+    close?: ReactNode;
+  };
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string | null;
   clearError?: () => void;
@@ -28,48 +31,60 @@ const Input = ({
   error,
   clearError,
 }: TypeInput) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
     clearError?.();
   };
+
+  const handleIconClick = () => {
+    if (type === "password") {
+      setShowPassword((prev) => !prev);
+    }
+  };
+
+  const inputType =
+    type === "password" ? (showPassword ? "text" : "password") : type;
+
   return (
-    <div style={style} className="flex flex-col gap-1 items-star w-full">
-      <label
-        className={`text-[14px] text-neutral-900 font-semibold ${
-          error ? "text-[red]" : ""
-        }`}
-      >
-        {label}
-      </label>
+    <div style={style} className="flex flex-col gap-1 w-full">
+      {label && (
+        <label
+          className={`text-[14px] font-semibold ${
+            error ? "text-red-500" : "text-neutral-900"
+          }`}
+        >
+          {label}
+        </label>
+      )}
+
       <div
-        className={`flex flex-row items-start justify-start gap-4  px-2 py-3 w-full bg-[#fff] rounded-[10px] border border-[#A6A6A6] text-[#A6A6A6] ${
-          error ? "border border-[red]" : ""
-        }`}
+        className={`flex items-center gap-2 px-3 py-2 w-full bg-white rounded-[10px] border ${
+          error ? "border-red-500" : "border-[#A6A6A6]"
+        } focus-within:border-[#4E46E5]`}
       >
-        <div className="w-fit">
-          {icons &&
-            (Array.isArray(icons) ? (
-              <>
-                {icons.map((item) => {
-                  <span>{item}</span>;
-                })}
-              </>
-            ) : (
-              <span className="cursor-pointer">{icons}</span>
-            ))}
-        </div>
+        {icons && type === "password" && (
+          <span
+            className="cursor-pointer flex items-center"
+            onClick={handleIconClick}
+          >
+            {showPassword ? icons.open : icons.close}
+          </span>
+        )}
+
         <input
-          className={`outline-none bg-none placeholder:text-[#A6A6A6]`}
-          type={type}
+          className="outline-none flex-1 bg-transparent text-neutral-900"
+          type={inputType}
           name={name}
           value={value}
           defaultValue={defaultValue}
           placeholder={placeholder}
           onChange={handleChange}
-          onFocus={clearError}
         />
       </div>
-      <span className="text-[12px] text-[red]">{error && error}</span>
+
+      {error && <span className="text-[12px] text-red-500">{error}</span>}
     </div>
   );
 };

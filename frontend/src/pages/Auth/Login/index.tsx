@@ -103,7 +103,7 @@ const Login = () => {
           <p className="!text-[26px] font-bold text-neutral-900">
             Let's get you back on track
           </p>
-          <p className="text-[14px] font-semibold text-neutral-500">
+          <p className="text-[14px] font-normal text-neutral-500">
             Login to access account
           </p>
         </div>
@@ -112,10 +112,9 @@ const Login = () => {
           label="Email"
           error={getError(errors, "email")}
           clearError={() => setErrors((prev) => clearError(prev, "email"))}
-          placeholder="Testing"
           value={email || ""}
           onChange={(e) => setMail(e.target.value)}
-          icons={<Mail className="w-5 h-5"/>}
+          icons={<Mail className="w-5 h-5" />}
         />
         <Input
           name="password"
@@ -129,25 +128,25 @@ const Login = () => {
           icons={<CloseEye className="w-[20px] h-[20px]" />}
         />
 
-        <button onClick={() => console.log(user.userReducer)}>
-          Check data
-        </button>
         <div className="flex flex-row items-center justify-between">
-          <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#121]">
+          <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#747474]">
             <input
               type="checkbox"
               onClick={() => setIsRemember(!isRemember)}
               className="cursor-pointer"
             />
-            Remember Me
+            Keep me logged in
           </span>
-          <p className="text-[#07689F] text-[14px]">Forgot password?</p>
+          <p className="text-[#4E46E5] text-[14px] font-semibold">
+            Forgot password?
+          </p>
         </div>
-        {getError(errors, "email") && <span>{getError(errors, "email")}</span>}
-        <Button title="Login" onClick={handleLogin} />
-      </div>
 
-      <span className="text-[14px] text-[#000] font-normal">Or</span>
+        {getError(errors, "email") && <span>{getError(errors, "email")}</span>}
+        <div className="mt-3">
+          <Button title="Login" onClick={handleLogin} />
+        </div>
+      </div>
     </>
   );
 };
