@@ -40,11 +40,11 @@ const GuestsLove = () => {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 space-y-6 w-full max-w-[1220px] mx-auto">
+    <div className="px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16 space-y-8 w-full max-w-[1220px] mx-auto">
       <PageHeader title="Homes guests love" />
 
       {/* Responsive Grid */}
-      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
         {rooms?.map((card: any) => (
           <Card
             key={card.id}

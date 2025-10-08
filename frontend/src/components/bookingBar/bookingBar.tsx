@@ -34,7 +34,9 @@ const BookingBar = ({
 
   // Mobile modal state
   const [showMobileModal, setShowMobileModal] = useState(false);
-  const [mobileStep, setMobileStep] = useState<"where" | "dates" | "guests">("where");
+  const [mobileStep, setMobileStep] = useState<"where" | "dates" | "guests">(
+    "where"
+  );
 
   const clearCheckData = (type: "checkIn" | "checkOut") => {
     setBookingData((prev) => ({
@@ -115,7 +117,7 @@ const BookingBar = ({
         onClick={() => setMainClicked(selectedBox !== null)}
         className={`mx-auto relative hidden md:grid max-w-[850px] rounded-full w-full ${
           selectedBox !== null ? "bg-gray-200" : "bg-white shadow-lg"
-        } grid-cols-[2fr_auto_150px_auto_150px_auto_1fr] items-center gap-1 transition-all duration-500`}
+        } grid-cols-[2fr_auto_150px_auto_150px_auto_1fr_50px] items-center gap-1 transition-all duration-500`}
       >
         {/* WHERE */}
         <div
@@ -148,7 +150,9 @@ const BookingBar = ({
               transition={{ duration: 0.2 }}
               className="absolute top-full left-0 bg-white rounded-3xl py-6 px-8 mt-3 w-[400px] shadow-2xl z-50"
             >
-              <p className="text-sm font-medium text-gray-700">Suggested Destinations</p>
+              <p className="text-sm font-medium text-gray-700">
+                Suggested Destinations
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -295,7 +299,9 @@ const BookingBar = ({
                 <div key={item.label} className="py-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {item.label}
+                      </p>
                       <p className="text-sm text-gray-500">{item.title}</p>
                     </div>
                     <Counter
@@ -318,11 +324,11 @@ const BookingBar = ({
           )}
         </AnimatePresence>
 
-        {/* SEARCH BUTTON - Desktop */}
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="absolute right-2 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="absolute right-2 text-white p-3 rounded-full 
+          transition-all duration-300 scale-140 hover:scale-150 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Search className="w-5 h-5" />
         </button>
@@ -336,7 +342,9 @@ const BookingBar = ({
         >
           <div className="flex items-center gap-3">
             <Search className="w-5 h-5 text-gray-600" />
-            <p className="text-sm text-gray-900 font-semibold">Start your search</p>
+            <p className="text-sm text-gray-900 font-semibold">
+              Start your search
+            </p>
           </div>
         </button>
 
@@ -362,8 +370,10 @@ const BookingBar = ({
                 className="fixed inset-x-0 bottom-0 bg-white rounded-t-3xl z-[101] max-h-[90vh] overflow-y-auto"
               >
                 {/* Header */}
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-900">Search</h2>
+                <div className="sticky top-0 bg-white z-10 border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    Search
+                  </h2>
                   <button
                     onClick={() => setShowMobileModal(false)}
                     className="text-gray-500 hover:text-gray-900"
@@ -445,7 +455,9 @@ const BookingBar = ({
                             <p className="text-sm font-semibold text-gray-900">
                               {item.label}
                             </p>
-                            <p className="text-xs text-gray-500">{item.title}</p>
+                            <p className="text-xs text-gray-500">
+                              {item.title}
+                            </p>
                           </div>
                           <Counter
                             count={item.count}
