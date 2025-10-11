@@ -1,8 +1,8 @@
 import { FC, JSX, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface ButtonProps {
-  title: string;
+  title?: string;
   width?: number;
   height?: number;
   onClick?: () => void;
@@ -12,6 +12,7 @@ interface ButtonProps {
   size?: string;
   icon?: ReactNode | JSX.Element;
   type?: "submit" | "reset" | "button" | undefined;
+  children?: ReactNode;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -23,6 +24,7 @@ const Button: FC<ButtonProps> = ({
   icon,
   to,
   type,
+  children,
 }) => {
   const sizeStylesStandart =
     "rounded-[4px] py-2 px-4 text-bold text-[16px]/[22px]";
@@ -34,11 +36,11 @@ const Button: FC<ButtonProps> = ({
 
   const variantStyles = variant === "standart" ? standart : primary;
   const sizeStyles = size === "standart" ? sizeStylesStandart : sizeStylesSmall;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const handleClickButton = () => {
-    if (to) {
-      navigate(`${to}`);
-    }
+    // if (to) {
+    //   navigate(`${to}`);
+    // }
 
     onClick?.();
   };

@@ -1,5 +1,5 @@
-import { Button } from "./ui/button";
-import { Hotel, Globe, User } from "lucide-react";
+import { Hotel, Globe } from "lucide-react";
+import Button from "./button/Button";
 
 export function Header() {
   return (
@@ -13,16 +13,16 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="sm" className="gap-2 hidden sm:flex">
+          <Button className="gap-2 hidden sm:flex">
             <Globe className="h-4 w-4" />
             <span>English</span>
           </Button>
-          <Button variant="outline" size="sm">
+          {/* <Button variant="outline" size="sm">
             Sign in
           </Button>
           <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
             Register
-          </Button>
+          </Button> */}
         </div>
       </div>
     </header>

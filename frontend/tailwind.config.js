@@ -141,5 +141,5 @@ export default {
       xl2: "1920px",
     },
   },
-  plugins: [require("@tailwindscss/line-clamp")],
+  plugins: [require("@tailwindcss/line-clamp")],
 };
