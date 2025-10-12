@@ -1,64 +1,74 @@
-import { FC, JSX, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 
-interface ButtonProps {
-  title: string;
-  width?: number;
-  height?: number;
-  onClick?: () => void;
-  className?: string;
-  to?: string;
-  variant?: string;
-  size?: string;
-  icon?: ReactNode | JSX.Element;
-  type?: "submit" | "reset" | "button" | undefined;
+type ButtonVariant =
+  | "default"
+  | "destructive"
+  | "outline"
+  | "secondary"
+  | "ghost"
+  | "link";
+type ButtonSize = "default" | "sm" | "lg" | "icon";
+
+interface ButtonProps extends React.ComponentProps<"button"> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  asChild?: boolean;
 }
 
-const Button: FC<ButtonProps> = ({
-  title,
-  onClick,
-  className,
-  variant = "standart",
-  size = "standart",
-  icon,
-  to,
-  type,
-}) => {
-  const sizeStylesStandart =
-    "rounded-[4px] py-2 px-4 text-bold text-[16px]/[22px]";
-  const sizeStylesSmall = "h-[22px] rounded-[4px]";
-  const standart =
-    "bg-[#4E46E5] border border-[#07689F]  text-[#FFF]  hover:bg-[#FFF] hover:text-[#07689F] hover:border hover:border-[#07689F]";
-  const primary =
-    "bg-transparent border-1 border-[#07689F] text-[#07689F] hover:bg-[#07689F] hover:border-[#07689F] hover:text-[#FFF]";
+const getButtonClasses = (
+  variant: ButtonVariant = "default",
+  size: ButtonSize = "default",
+  className?: string
+): string => {
+  // Base classes
+  const baseClasses =
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive";
 
-  const variantStyles = variant === "standart" ? standart : primary;
-  const sizeStyles = size === "standart" ? sizeStylesStandart : sizeStylesSmall;
-  const navigate = useNavigate();
-  const handleClickButton = () => {
-    if (to) {
-      navigate(`${to}`);
-    }
-
-    onClick?.();
+  // Variant classes
+  const variantClasses: Record<ButtonVariant, string> = {
+    default: "bg-primary text-primary-foreground hover:bg-primary/90",
+    destructive:
+      "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+    outline:
+      "border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+    ghost:
+      "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+    link: "text-primary underline-offset-4 hover:underline",
   };
 
-  return (
-    <div
-      onClick={handleClickButton}
-      className={`${variantStyles} ${sizeStyles} w-full text-center cursor-pointer transition-all duration-500`}
-    >
-      <button
-        type={type}
-        className={` ${className}  w-full flex flex-row items-center gap-3 ${
-          icon ? "justify-center" : "justify-center"
-        }`}
-      >
-        {icon && <span className="w-[24px] h-[24px]"> {icon}</span>}
-        <p>{title} </p>
-      </button>
-    </div>
-  );
+  // Size classes
+  const sizeClasses: Record<ButtonSize, string> = {
+    default: "h-9 px-4 py-2 has-[>svg]:px-3",
+    sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+    lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+    icon: "size-9 rounded-md",
+  };
+
+  // Combine classes
+  return `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${
+    className || ""
+  }`.trim();
 };
 
+function Button({
+  className,
+  variant = "default",
+  size = "default",
+  asChild = false,
+  ...props
+}: ButtonProps) {
+  const Comp = asChild ? Slot : "button";
+
+  return (
+    <Comp
+      data-slot="button"
+      className={getButtonClasses(variant, size, className)}
+      {...props}
+    />
+  );
+}
+
 export default Button;
+export type { ButtonProps, ButtonVariant, ButtonSize };

@@ -1,92 +1,29 @@
-import { ReactNode, useState } from "react";
+import * as React from "react";
 
-interface TypeInput {
-  type?: string;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  value?: string;
-  defaultValue?: string;
-  placeholder?: string;
-  name?: string;
-  errorMessage?: string;
-  style?: React.CSSProperties;
-  icons?: {
-    open: ReactNode;
-    close?: ReactNode;
-  };
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string | null;
-  clearError?: () => void;
+  error?: string;
 }
 
-const Input = ({
-  type = "text",
-  value,
-  defaultValue,
-  placeholder,
-  name,
-  label,
-  style,
-  onChange,
-  icons,
-  error,
-  clearError,
-}: TypeInput) => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-    clearError?.();
-  };
-
-  const handleIconClick = () => {
-    if (type === "password") {
-      setShowPassword((prev) => !prev);
-    }
-  };
-
-  const inputType =
-    type === "password" ? (showPassword ? "text" : "password") : type;
-
-  return (
-    <div style={style} className="flex flex-col gap-1 w-full">
-      {label && (
-        <label
-          className={`text-[14px] font-semibold ${
-            error ? "text-red-500" : "text-neutral-900"
-          }`}
-        >
-          {label}
-        </label>
-      )}
-
-      <div
-        className={`flex items-center gap-2 px-3 py-2 w-full bg-white rounded-[10px] border ${
-          error ? "border-red-500" : "border-[#A6A6A6]"
-        } focus-within:border-[#4E46E5]`}
-      >
-        {icons && type === "password" && (
-          <span
-            className="cursor-pointer flex items-center"
-            onClick={handleIconClick}
-          >
-            {showPassword ? icons.open : icons.close}
-          </span>
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ label, error, className, ...props }, ref) => {
+    return (
+      <div className="flex flex-col space-y-1 w-full">
+        {label && (
+          <label className="text-sm font-medium text-gray-700">{label}</label>
         )}
-
         <input
-          className="outline-none flex-1 bg-transparent text-neutral-900"
-          type={inputType}
-          name={name}
-          value={value}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          onChange={handleChange}
+          ref={ref}
+          className={`w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm
+            focus:border-blue-500 focus:ring-2 focus:ring-blue-400 outline-none transition
+            ${error ? "border-red-500" : ""}
+            ${className || ""}`}
+          {...props}
         />
+        {error && <p className="text-xs text-red-500">{error}</p>}
       </div>
+    );
+  }
+);
 
-      {error && <span className="text-[12px] text-red-500">{error}</span>}
-    </div>
-  );
-};
-
-export default Input;
+Input.displayName = "Input";

@@ -232,7 +232,7 @@ const BookingBar = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-[8%] bg-white rounded-3xl py-6 px-8 mt-3 w-max shadow-2xl z-50"
+              className="absolute top-full left-[8%] bg-white rounded-3xl py-6 px-8 mt-3 w-max shadow-2xl"
             >
               <DayPicker
                 mode="range"

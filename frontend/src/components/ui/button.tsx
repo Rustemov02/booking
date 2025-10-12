@@ -39,13 +39,12 @@ export function Button({
 
   return (
     <button
-      className="border-2 border-red-500"
-      // className={cn(
-      //   baseStyles,
-      //   variantStyles[variant],
-      //   sizeStyles[size],
-      //   className
-      // )}
+      className={cn(
+        baseStyles,
+        variantStyles[variant],
+        sizeStyles[size],
+        className
+      )}
       {...props}
     />
   );

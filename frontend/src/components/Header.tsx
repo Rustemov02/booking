@@ -13,10 +13,10 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button className="gap-2 hidden sm:flex">
+          {/* <Button className="gap-2 hidden sm:flex">
             <Globe className="h-4 w-4" />
             <span>English</span>
-          </Button>
+          </Button> */}
           {/* <Button variant="outline" size="sm">
             Sign in
           </Button>
