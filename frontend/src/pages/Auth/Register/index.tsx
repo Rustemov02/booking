@@ -2,7 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import apiRequest from "../../../api/apiRequest";
 import Button from "../../../components/button/Button";
-import Input from "../../../components/input/Input";
+import {Input} from "../../../components/input/Input";
 import CloseEye from "../../../assets/svg/closeEye.svg?react";
 import OpenEye from "../../../assets/svg/openEye.svg?react";
 import { ErrorState } from "../../../utils/errorHelpers";

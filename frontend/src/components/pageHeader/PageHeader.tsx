@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Globe, Menu, X } from "lucide-react";
 import Modal from "../../components/modal/sideModal";
+import { useNavigate } from "react-router-dom";
 const HotelHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <header className="w-full bg-white border-b border-gray-200">
@@ -44,7 +47,10 @@ const HotelHeader: React.FC = () => {
             </button>
 
             {/* Sign in button */}
-            <button className="px-4 lg:px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer">
+            <button
+              onClick={() => navigate("/login")}
+              className="px-4 lg:px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
+            >
               Sign in
             </button>
 

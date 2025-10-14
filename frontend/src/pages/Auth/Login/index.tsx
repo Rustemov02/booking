@@ -1,4 +1,4 @@
-import Input from "../../../components/input/Input";
+import {Input} from "../../../components/input/Input";
 import CloseEye from "../../../assets/svg/closeEye.svg?react";
 import OpenEye from "../../../assets/svg/openEye.svg?react";
 import Button from "../../../components/button/Button";
@@ -144,7 +144,9 @@ const Login = () => {
 
         {getError(errors, "email") && <span>{getError(errors, "email")}</span>}
         <div className="mt-3">
-          <Button title="Login" variant="outline" onClick={handleLogin} />
+          <Button title="Login" variant="outline" onClick={handleLogin}>
+            Login
+          </Button>
         </div>
       </div>
     </>

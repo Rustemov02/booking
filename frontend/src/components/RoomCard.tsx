@@ -11,6 +11,7 @@ import {
   X,
   MapPin,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Types
 interface RoomFeature {
@@ -145,7 +146,7 @@ export function RoomCard({
   const [open, setOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-
+  const navigate = useNavigate();
   const roomFeatures = getRoomFeatures();
 
   const handleLike = useCallback((e: React.MouseEvent) => {
@@ -163,7 +164,7 @@ export function RoomCard({
 
   const handleBookNow = useCallback(() => {
     console.log(`Booking ${name} for AZN ${price}/night`);
-    // Handle booking logic
+    window.location.href = "hotel/checkoutRoom/12341";
   }, [name, price]);
 
   return (
