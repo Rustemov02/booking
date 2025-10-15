@@ -124,6 +124,4 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
   }
 });
 
- 
-
 app.listen(PORT, () => console.log(`Server running at localhost://${PORT} !`));

@@ -63,86 +63,12 @@ const SearchResult = () => {
     console.log(filterData);
   }, [filterData]);
 
-  const testData = [
-    "Breakfast included",
-    "All-inclusive",
-    "Free-cancellation",
-    "Testing",
-    "Text",
-    "Writet",
-    "Pet Friendly",
-  ];
-
-  const roomFilterData = [
-    "Own Bathroom",
-    "Kitchen",
-    "See view",
-    "Baby bed",
-    "Bathtub",
-  ];
-
-  const gustsRating = [
-    "All",
-    "Outstanding 9+",
-    "Very good 8+",
-    "Good 7+",
-    "Excelent",
-    "Poor",
-  ];
-
-  const distanceFromCentre = [
-    "Less Than 1 km",
-    "Less Than 5 km",
-    "Less Than 15 km",
-  ];
-
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [selectedRating, setSelectedRating] = useState<string[]>([]);
   const [selectedDistance, setSelectedDistance] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState("list");
   const personCount = { adult: 1, children: 2 };
-
-  // Filter Content Component (reusable for desktop and mobile)
-  const FilterContent = () => (
-    <>
-      <h3 className="text-xl sm:text-2xl text-gray-700 font-bold mb-4">
-        Filter by
-      </h3>
-
-      <p className="text-sm text-gray-900 font-normal mb-4">
-        Your budget For Per Night
-      </p>
-
-      <div className="space-y-4">
-        <MarkFilter
-          title="Popular Filters"
-          options={testData}
-          selectedFilterItems={setSelectedItems}
-        />
-
-        <MarkFilter
-          title="Room Facilities"
-          options={roomFilterData}
-          selectedFilterItems={setSelectedRooms}
-        />
-
-        <MarkFilter
-          isCheckbox={false}
-          title="Gusts Rating"
-          options={gustsRating}
-          selectedFilterItems={setSelectedRating}
-        />
-
-        <MarkFilter
-          isCheckbox={false}
-          title="Distance From The Centre"
-          options={distanceFromCentre}
-          selectedFilterItems={setSelectedDistance}
-        />
-      </div>
-    </>
-  );
 
   const hotels = [
     {
@@ -235,6 +161,8 @@ const SearchResult = () => {
       amenities: ["WiFi", "Pool", "Breakfast"],
     },
   ];
+
+  console.log(filterData);
   return (
     <div className="min-h-screen bg-neutral-50">
       <div className="container mx-auto px-4 py-8 max-w-7xl">

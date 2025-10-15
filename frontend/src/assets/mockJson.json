@@ -1,0 +1,382 @@
+[
+  {
+    "name": "Deluxe Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+    "rating": 4.2,
+    "reviews": 452,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "35 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 2 Guests"
+      }
+    ],
+    "description": "Experience luxury and comfort in our beautifully appointed room. Each room features modern amenities, elegant décor, and stunning views. Enjoy complimentary WiFi, premium bedding, and 24/7 room service. Perfect for both business and leisure travelers.",
+    "price": 245,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Executive Suite",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427",
+    "rating": 4.8,
+    "reviews": 328,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "55 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 3 Guests"
+      }
+    ],
+    "description": "Spacious executive suite with separate living area and work desk. Perfect for extended stays with premium amenities including espresso machine, luxury bath products, and panoramic city views.",
+    "price": 380,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Standard Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a",
+    "rating": 4.0,
+    "reviews": 587,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "25 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 2 Guests"
+      }
+    ],
+    "description": "Comfortable and affordable room with all essential amenities. Ideal for budget-conscious travelers who don't want to compromise on quality. Clean, modern, and conveniently located.",
+    "price": 165,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Presidential Suite",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304",
+    "rating": 4.9,
+    "reviews": 156,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "95 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Premium Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 4 Guests"
+      }
+    ],
+    "description": "Ultimate luxury experience with master bedroom, dining area, and private terrace. Features include Jacuzzi, premium entertainment system, butler service, and exclusive access to VIP lounge.",
+    "price": 750,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Family Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39",
+    "rating": 4.5,
+    "reviews": 412,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "45 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 4 Guests"
+      }
+    ],
+    "description": "Perfect for families with children. Includes separate sleeping areas, kid-friendly amenities, and safety features. Enjoy spacious comfort with connecting rooms available upon request.",
+    "price": 320,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Ocean View Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32",
+    "rating": 4.7,
+    "reviews": 298,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "38 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 2 Guests"
+      }
+    ],
+    "description": "Wake up to breathtaking Caspian Sea views from your private balcony. Modern design meets coastal elegance with premium amenities and serene atmosphere perfect for romantic getaways.",
+    "price": 295,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Business Class Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6",
+    "rating": 4.3,
+    "reviews": 523,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "32 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 2 Guests"
+      }
+    ],
+    "description": "Designed for business travelers with ergonomic workspace, high-speed internet, and convenient desk setup. Includes complimentary printing service and access to business center.",
+    "price": 210,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Penthouse Suite",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd",
+    "rating": 5.0,
+    "reviews": 89,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "120 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Premium Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 6 Guests"
+      }
+    ],
+    "description": "Top-floor luxury penthouse with 360-degree city views, private rooftop terrace, full kitchen, and state-of-the-art entertainment system. Ultimate privacy and sophistication.",
+    "price": 950,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": false
+  },
+  {
+    "name": "Garden View Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1595576508898-0ad5c879a061",
+    "rating": 4.4,
+    "reviews": 367,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "30 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Mini Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 2 Guests"
+      }
+    ],
+    "description": "Peaceful retreat overlooking lush gardens. Natural light floods the room creating a tranquil ambiance. Perfect for guests seeking relaxation away from city noise.",
+    "price": 195,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  },
+  {
+    "name": "Honeymoon Suite",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461",
+    "rating": 4.9,
+    "reviews": 234,
+    "features": [
+      {
+        "icon": "wifi",
+        "name": "Free WiFi"
+      },
+      {
+        "icon": "tv",
+        "name": "Smart TV"
+      },
+      {
+        "icon": "space",
+        "name": "50 m² Space"
+      },
+      {
+        "icon": "ac",
+        "name": "Air Conditioning"
+      },
+      {
+        "icon": "minibar",
+        "name": "Champagne Bar"
+      },
+      {
+        "icon": "guests",
+        "name": "Up to 2 Guests"
+      }
+    ],
+    "description": "Romantic suite designed for newlyweds with king-size bed, rose petal decoration, champagne on arrival, and private Jacuzzi. Includes complimentary couple's spa treatment.",
+    "price": 450,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true
+  }
+]

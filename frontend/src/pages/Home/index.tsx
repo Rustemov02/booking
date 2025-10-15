@@ -15,6 +15,8 @@ import {
 } from "../../components/ui/tabs";
 import { motion } from "framer-motion";
 import { Sparkles, TrendingUp, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
+import apiRequest from "../../api/apiRequest";
 
 export default function Home() {
   const destinations = [
@@ -48,65 +50,25 @@ export default function Home() {
     },
   ];
 
-  const rooms = [
-    {
-      name: "Deluxe Room",
-      image:
-        "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMHJvb218ZW58MXx8fHwxNzU5OTQ5NDA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 9.2,
-      reviews: 432,
-      location: "Baku, Azerbaijan",
-      price: 245,
-      originalPrice: 320,
-    },
-    {
-      name: "Premium Suite",
-      image:
-        "https://images.unsplash.com/photo-1632141021009-a6b6021cde21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBob3RlbCUyMGludGVyaW9yfGVufDF8fHx8MTc1OTk0OTQxMXww&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 9.5,
-      reviews: 287,
-      location: "Dubai, UAE",
-      price: 425,
-    },
-    {
-      name: "Standard Room",
-      image:
-        "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMHJvb218ZW58MXx8fHwxNzU5OTQ5NDA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 8.8,
-      reviews: 523,
-      location: "Paris, France",
-      price: 185,
-      originalPrice: 250,
-    },
-    {
-      name: "Executive Suite",
-      image:
-        "https://images.unsplash.com/photo-1632141021009-a6b6021cde21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBob3RlbCUyMGludGVyaW9yfGVufDF8fHx8MTc1OTk0OTQxMXww&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 9.4,
-      reviews: 198,
-      location: "Tokyo, Japan",
-      price: 385,
-    },
-    {
-      name: "Luxury Room",
-      image:
-        "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMHJvb218ZW58MXx8fHwxNzU5OTQ5NDA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 9.1,
-      reviews: 356,
-      location: "Baku, Azerbaijan",
-      price: 295,
-    },
-    {
-      name: "Presidential Suite",
-      image:
-        "https://images.unsplash.com/photo-1632141021009-a6b6021cde21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBob3RlbCUyMGludGVyaW9yfGVufDF8fHx8MTc1OTk0OTQxMXww&ixlib=rb-4.1.0&q=80&w=1080",
-      rating: 9.8,
-      reviews: 124,
-      location: "Dubai, UAE",
-      price: 650,
-      originalPrice: 800,
-    },
-  ];
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = await apiRequest({
+          method: "GET",
+          url: "/api/rooms/",
+          onError: (err) => console.log(err),
+          onSuccess: (data) => setRooms(data.rooms),
+        });
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchRooms();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">

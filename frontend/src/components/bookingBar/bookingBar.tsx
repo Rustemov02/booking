@@ -46,16 +46,34 @@ const BookingBar = ({
   };
 
   const handleSubmit = async () => {
+    if (!range.to || !range.from) {
+      console.log(";lg;gbdfg");
+      return;
+    }
     setIsLoading(true);
     setError("");
+    // const { adults, children, rooms, petFriendly } = bookingData;
+    const adults = guestsData?.filter((item) => item.label === "Adults");
+ 
 
-    const queryParams = Object.entries(bookingData).reduce(
-      (acc, [key, value]) => {
-        acc[key] = String(value);
-        return acc;
-      },
-      {} as Record<string, string>
-    );
+    const queryParams = {
+      adults: adults?.count,
+      children,
+      rooms,
+      petFriendly,
+      checkIn: range?.from?.toISOString().split("T")[0],
+      checkOut: range?.to?.toISOString().split("T")[0],
+    };
+
+    console.log(queryParams);
+    // Object.entries(bookingData).reduce(
+    //   (acc, [key, value]) => {
+    //     acc[key] = String(value);
+    //     return acc;
+    //   },
+    //   {} as Record<string, string>
+    // );
+    console.log(queryParams);
     const params = new URLSearchParams(queryParams);
 
     const currentPath = location.pathname;
@@ -111,6 +129,7 @@ const BookingBar = ({
 
   return (
     <section className="w-full flex items-center justify-center px-4">
+      <button onClick={() => console.log(range)}>Check date</button>
       {/* DESKTOP VERSION */}
       <div
         ref={clickedOutside}
