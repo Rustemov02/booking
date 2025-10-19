@@ -4,7 +4,7 @@ import Room from "@/assets/images/Photo 3.png";
 import HeartIcon from "../../assets/svg/like.svg?react";
 import { CardTypes } from "../../types";
 import apiRequest from "../../api/apiRequest";
-import ArrowRight from "@/assets/svg/ArrowRight.svg?react";
+import ArrowRight from "@/assets/svg/arrowRight.svg?react";
 
 const Card: FC<CardTypes> = ({
   onClick,
