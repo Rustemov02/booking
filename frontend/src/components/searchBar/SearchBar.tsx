@@ -20,11 +20,11 @@ export function SearchBar({
   onModifySearch,
   onToggleFilters,
 }: SearchBarProps) {
-  const activeFilters = [
-    { label: "Free WiFi", value: "wifi" },
-    { label: "Pool", value: "pool" },
-    { label: "Breakfast", value: "breakfast" },
-  ];
+  // const activeFilters = [
+  //   { label: "Free WiFi", value: "wifi" },
+  //   { label: "Pool", value: "pool" },
+  //   { label: "Breakfast", value: "breakfast" },
+  // ];
 
   return (
     <motion.div
@@ -33,7 +33,7 @@ export function SearchBar({
       className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 mb-8"
     >
       {/* Search Summary */}
-      <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-5">
+      <div className="flex flex-col lg:flex-row lg:items-center gap-6">
         <div className="flex-1 flex flex-wrap items-center gap-6">
           <div className="flex items-center gap-3">
             <div className="bg-teal-50 p-2.5 rounded-xl">
@@ -82,13 +82,13 @@ export function SearchBar({
             onClick={onModifySearch}
             className="bg-teal-600 hover:bg-teal-700 rounded-xl px-6"
           >
-            Modify Search
+            Home page
           </Button>
         </div>
       </div>
 
       {/* Active Filters */}
-      {activeFilters.length > 0 && (
+      {/* {activeFilters.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap pt-5 border-t border-neutral-100">
           <span className="text-sm text-neutral-600">Active filters:</span>
           {activeFilters.map((filter) => (
@@ -109,7 +109,7 @@ export function SearchBar({
             Clear all
           </Button>
         </div>
-      )}
+      )} */}
     </motion.div>
   );
 }

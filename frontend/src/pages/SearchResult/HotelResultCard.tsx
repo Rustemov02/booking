@@ -4,24 +4,32 @@ import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 // import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useState } from "react";
+import apiRequest from "../../api/apiRequest";
 
-interface HotelResultCardProps {
-  id: string;
+export interface HotelResultCardProps {
+  _id: string;
   name: string;
+  location: string;
   image: string;
   rating: number;
   reviews: number;
-  location: string;
+  features: {
+    icon: string;
+    name: string;
+  }[];
   description: string;
   price: number;
-  originalPrice?: number;
-  distance?: string;
-  amenities?: string[];
-  isSponsored?: boolean;
+  currency: string;
+  priceUnit: string;
+  available: boolean;
+  capacity: number;
+  petFriendly: boolean;
+  isSaved: boolean;
   viewMode?: "list" | "grid";
 }
 
 export function HotelResultCard({
+  _id,
   name,
   image,
   rating,
@@ -29,10 +37,11 @@ export function HotelResultCard({
   location,
   description,
   price,
-  originalPrice,
-  distance,
-  amenities = [],
-  isSponsored = false,
+  isSaved,
+  // originalPrice,
+  // distance,
+  // amenities = [],
+  // isSponsored = false,
   viewMode = "list",
 }: HotelResultCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -51,6 +60,21 @@ export function HotelResultCard({
   };
 
   const isGridView = viewMode === "grid";
+
+  // const toggleSave = async (e: any) => {
+  //   // e.stopPropagation();
+  //   console.log(_id);
+  //   try {
+  //     await apiRequest({
+  //       method: "PATCH",
+  //       url: `/api/rooms/${_id}`,
+  //       data: { isSaved: true },
+  //       onError: (err) => console.log("ERROR : ", err),
+  //     });
+  //   } catch (err) {
+  //     console.log("Error : ", err);
+  //   }
+  // };
 
   return (
     <motion.div
@@ -76,17 +100,17 @@ export function HotelResultCard({
             alt={name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
-          <button
-            onClick={() => setIsFavorite(!isFavorite)}
+          {/* <button
+            // onClick={() => toggleSave()}
             className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm p-2.5 rounded-full hover:bg-white transition-all shadow-md"
           >
             <Heart
               className={`h-5 w-5 transition-all ${
-                isFavorite ? "fill-rose-500 text-rose-500" : "text-neutral-600"
+                isSaved ? "fill-rose-500 text-rose-500" : "text-neutral-600"
               }`}
             />
-          </button>
-          {isSponsored && (
+          </button> */}
+          {/* {isSponsored && (
             <Badge className="absolute top-4 left-4 bg-teal-600 text-white border-0 px-3 py-1 rounded-full shadow-md">
               Featured
             </Badge>
@@ -95,7 +119,7 @@ export function HotelResultCard({
             <Badge className="absolute bottom-4 left-4 bg-rose-600 text-white border-0 px-3 py-1 rounded-full shadow-md">
               {Math.round(((originalPrice - price) / originalPrice) * 100)}% Off
             </Badge>
-          )}
+          )} */}
         </div>
 
         {/* Content Section */}
@@ -108,9 +132,9 @@ export function HotelResultCard({
               <div className="flex items-center gap-2 text-sm text-neutral-500 mb-2">
                 <MapPin className="h-4 w-4 flex-shrink-0" />
                 <span>{location}</span>
-                {distance && (
+                {/* {distance && (
                   <span className="text-neutral-400">• {distance}</span>
-                )}
+                )} */}
               </div>
             </div>
             <div className="flex items-center gap-1.5 bg-teal-50 text-teal-700 px-3 py-2 rounded-xl ml-3">
@@ -140,7 +164,7 @@ export function HotelResultCard({
           </p>
 
           {/* Amenities */}
-          {amenities.length > 0 && (
+          {/* {amenities.length > 0 && (
             <div className="flex items-center gap-4 mb-5">
               {amenities.slice(0, 3).map((amenity, index) => (
                 <div
@@ -157,17 +181,17 @@ export function HotelResultCard({
                 </span>
               )}
             </div>
-          )}
+          )} */}
 
           {/* Price and CTA */}
           <div className="flex items-center justify-between mt-auto pt-5 border-t border-neutral-100">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                {originalPrice && (
+              <div className="flex items-center gap-2 mb-1 ">
+                {/* {originalPrice && (
                   <span className="text-sm text-neutral-400 line-through">
                     ${originalPrice}
                   </span>
-                )}
+                )} */}
               </div>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-3xl text-neutral-900">${price}</span>

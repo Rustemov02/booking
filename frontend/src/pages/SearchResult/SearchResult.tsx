@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BookingBar from "../../components/bookingBar/bookingBar";
 import MarkFilter from "../../components/markFilter/MarkFilter";
 import Card from "../../components/card/Card";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { BookingBarTypes } from "../../types";
 import apiRequest from "../../api/apiRequest";
 import toast from "react-hot-toast";
@@ -12,24 +12,35 @@ import { SearchBar } from "../../components/searchBar/SearchBar";
 import { Button } from "../../components/ui/button";
 import { FilterSidebar } from "../../components/Filter/FilterSidebar";
 import { Sheet, SheetContent } from "../../components/ui/sheet";
-import { HotelResultCard } from "./HotelResultCard";
+import { HotelResultCard, HotelResultCardProps } from "./HotelResultCard";
 
 const SearchResult = () => {
   const [searchParams] = useSearchParams();
   const [error, setError] = useState("");
-  const [filterData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState<HotelResultCardProps[]>([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const params = Object.fromEntries(searchParams.entries());
 
-  const bookingBarData: BookingBarTypes = {
+  const bookingBarData: {
+    checkIn: string | null;
+    checkOut: string | null;
+    location: string | null;
+    adults: number;
+    children: number;
+    rooms: number;
+    pets: number;
+  } = {
     checkIn: params.checkIn || null,
     checkOut: params.checkOut || null,
+    location: params.destination || null,
     adults: params.adults ? Number(params.adults) : 1,
     children: params.children ? Number(params.children) : 0,
     rooms: params.rooms ? Number(params.rooms) : 1,
-    petFriendly: params.petFriendly === "true",
+    pets: params.pets ? Number(params.pets) : 0,
   };
+
+  const { location, checkIn, checkOut, adults, children } = bookingBarData;
 
   useEffect(() => {
     if (error) toast.error(error);
@@ -51,12 +62,14 @@ const SearchResult = () => {
           toast.error("Xəta baş verdi");
         }
         setFilterData(response?.rooms);
+        console.log("RESPONSE ROOMS : ", response?.rooms);
       } catch (err) {
         console.log("ERROR :", err);
       }
     };
 
     searchResult();
+    // console.log(bookingBarData);
   }, [searchParams]);
 
   useEffect(() => {
@@ -70,118 +83,120 @@ const SearchResult = () => {
   const [viewMode, setViewMode] = useState("list");
   const personCount = { adult: 1, children: 2 };
 
-  const hotels = [
-    {
-      id: "1",
-      name: "Grand Luxury Hotel & Spa",
-      image:
-        "https://images.unsplash.com/photo-1634041441461-a1789d008830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGV4dGVyaW9yfGVufDF8fHx8MTc2MDI1OTg4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      rating: 9.2,
-      reviews: 1284,
-      location: "Downtown Dubai, UAE",
-      description:
-        "Experience ultimate luxury with stunning city views, world-class dining, and a rooftop infinity pool. Perfect for business and leisure travelers.",
-      price: 245,
-      originalPrice: 320,
-      distance: "0.5 km from center",
-      amenities: ["WiFi", "Pool", "Breakfast"],
-      isSponsored: true,
-    },
-    {
-      id: "2",
-      name: "Boutique Resort & Suites",
-      image:
-        "https://images.unsplash.com/photo-1752874068731-ac862330e666?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3V0aXF1ZSUyMGhvdGVsJTIwcm9vbXxlbnwxfHx8fDE3NjAxODE1NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      rating: 8.9,
-      reviews: 856,
-      location: "Marina Bay, Dubai",
-      description:
-        "Charming boutique hotel offering personalized service, elegant rooms, and a serene atmosphere. Located near major attractions and shopping districts.",
-      price: 185,
-      originalPrice: 250,
-      distance: "1.2 km from center",
-      amenities: ["WiFi", "Breakfast"],
-    },
-    {
-      id: "3",
-      name: "Paradise Resort & Casino",
-      image:
-        "https://images.unsplash.com/photo-1722409195473-d322e99621e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXNvcnQlMjBzd2ltbWluZyUyMHBvb2x8ZW58MXx8fHwxNzYwMTc1MjgxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      rating: 9.5,
-      reviews: 2134,
-      location: "Palm Jumeirah, Dubai",
-      description:
-        "All-inclusive beachfront resort featuring multiple pools, spa facilities, and entertainment options. Ideal for families and couples seeking relaxation.",
-      price: 425,
-      distance: "3.5 km from center",
-      amenities: ["WiFi", "Pool", "Breakfast"],
-    },
-    {
-      id: "4",
-      name: "Executive Business Hotel",
-      image:
-        "https://images.unsplash.com/photo-1563340284-cadcc9976727?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXR5JTIwaG90ZWwlMjB2aWV3fGVufDF8fHx8MTc2MDIwMTE3Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      rating: 8.7,
-      reviews: 643,
-      location: "Business Bay, Dubai",
-      description:
-        "Modern hotel designed for business travelers with state-of-the-art meeting rooms, high-speed internet, and convenient airport access.",
-      price: 195,
-      distance: "0.8 km from center",
-      amenities: ["WiFi", "Breakfast"],
-    },
-    {
-      id: "5",
-      name: "Imperial Palace Hotel",
-      image:
-        "https://images.unsplash.com/photo-1743061339900-e40775a80524?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMGxvYmJ5JTIwaW50ZXJpb3J8ZW58MXx8fHwxNzYwMjI4MzcyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      rating: 9.4,
-      reviews: 1567,
-      location: "City Center, Dubai",
-      description:
-        "Sophisticated luxury hotel with classical elegance, Michelin-star dining, and impeccable service. A landmark destination in the heart of the city.",
-      price: 385,
-      originalPrice: 480,
-      distance: "0.3 km from center",
-      amenities: ["WiFi", "Pool", "Breakfast"],
-      isSponsored: true,
-    },
-    {
-      id: "6",
-      name: "Coastal View Resort",
-      image:
-        "https://images.unsplash.com/photo-1634041441461-a1789d008830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGV4dGVyaW9yfGVufDF8fHx8MTc2MDI1OTg4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      rating: 9.1,
-      reviews: 923,
-      location: "Jumeirah Beach, Dubai",
-      description:
-        "Beachfront paradise with private beach access, water sports, and spectacular sunset views. Perfect for a memorable vacation experience.",
-      price: 295,
-      distance: "4.2 km from center",
-      amenities: ["WiFi", "Pool", "Breakfast"],
-    },
-  ];
+  // const hotels = [
+  //   {
+  //     id: "1",
+  //     name: "Grand Luxury Hotel & Spa",
+  //     image:
+  //       "https://images.unsplash.com/photo-1634041441461-a1789d008830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGV4dGVyaW9yfGVufDF8fHx8MTc2MDI1OTg4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  //     rating: 9.2,
+  //     reviews: 1284,
+  //     location: "Downtown Dubai, UAE",
+  //     description:
+  //       "Experience ultimate luxury with stunning city views, world-class dining, and a rooftop infinity pool. Perfect for business and leisure travelers.",
+  //     price: 245,
+  //     originalPrice: 320,
+  //     distance: "0.5 km from center",
+  //     amenities: ["WiFi", "Pool", "Breakfast"],
+  //     isSponsored: true,
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "Boutique Resort & Suites",
+  //     image:
+  //       "https://images.unsplash.com/photo-1752874068731-ac862330e666?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3V0aXF1ZSUyMGhvdGVsJTIwcm9vbXxlbnwxfHx8fDE3NjAxODE1NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  //     rating: 8.9,
+  //     reviews: 856,
+  //     location: "Marina Bay, Dubai",
+  //     description:
+  //       "Charming boutique hotel offering personalized service, elegant rooms, and a serene atmosphere. Located near major attractions and shopping districts.",
+  //     price: 185,
+  //     originalPrice: 250,
+  //     distance: "1.2 km from center",
+  //     amenities: ["WiFi", "Breakfast"],
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Paradise Resort & Casino",
+  //     image:
+  //       "https://images.unsplash.com/photo-1722409195473-d322e99621e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXNvcnQlMjBzd2ltbWluZyUyMHBvb2x8ZW58MXx8fHwxNzYwMTc1MjgxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  //     rating: 9.5,
+  //     reviews: 2134,
+  //     location: "Palm Jumeirah, Dubai",
+  //     description:
+  //       "All-inclusive beachfront resort featuring multiple pools, spa facilities, and entertainment options. Ideal for families and couples seeking relaxation.",
+  //     price: 425,
+  //     distance: "3.5 km from center",
+  //     amenities: ["WiFi", "Pool", "Breakfast"],
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "Executive Business Hotel",
+  //     image:
+  //       "https://images.unsplash.com/photo-1563340284-cadcc9976727?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXR5JTIwaG90ZWwlMjB2aWV3fGVufDF8fHx8MTc2MDIwMTE3Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  //     rating: 8.7,
+  //     reviews: 643,
+  //     location: "Business Bay, Dubai",
+  //     description:
+  //       "Modern hotel designed for business travelers with state-of-the-art meeting rooms, high-speed internet, and convenient airport access.",
+  //     price: 195,
+  //     distance: "0.8 km from center",
+  //     amenities: ["WiFi", "Breakfast"],
+  //   },
+  //   {
+  //     id: "5",
+  //     name: "Imperial Palace Hotel",
+  //     image:
+  //       "https://images.unsplash.com/photo-1743061339900-e40775a80524?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMGxvYmJ5JTIwaW50ZXJpb3J8ZW58MXx8fHwxNzYwMjI4MzcyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  //     rating: 9.4,
+  //     reviews: 1567,
+  //     location: "City Center, Dubai",
+  //     description:
+  //       "Sophisticated luxury hotel with classical elegance, Michelin-star dining, and impeccable service. A landmark destination in the heart of the city.",
+  //     price: 385,
+  //     originalPrice: 480,
+  //     distance: "0.3 km from center",
+  //     amenities: ["WiFi", "Pool", "Breakfast"],
+  //     isSponsored: true,
+  //   },
+  //   {
+  //     id: "6",
+  //     name: "Coastal View Resort",
+  //     image:
+  //       "https://images.unsplash.com/photo-1634041441461-a1789d008830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGV4dGVyaW9yfGVufDF8fHx8MTc2MDI1OTg4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  //     rating: 9.1,
+  //     reviews: 923,
+  //     location: "Jumeirah Beach, Dubai",
+  //     description:
+  //       "Beachfront paradise with private beach access, water sports, and spectacular sunset views. Perfect for a memorable vacation experience.",
+  //     price: 295,
+  //     distance: "4.2 km from center",
+  //     amenities: ["WiFi", "Pool", "Breakfast"],
+  //   },
+  // ];
 
-  console.log(filterData);
+  console.log("FILTERED DATA : ", filterData);
+
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-neutral-50">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Search Bar */}
         <SearchBar
-          location="Dubai, UAE"
-          checkIn="Dec 15"
-          checkOut="Dec 18"
-          guests={2}
-          onModifySearch={() => console.log("Modify search")}
+          location={location as string}
+          checkIn={checkIn as string}
+          checkOut={checkOut as string}
+          guests={adults + children}
+          onModifySearch={() => navigate("/")}
           onToggleFilters={() => setShowMobileFilters(true)}
         />
 
         {/* Results Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-3xl text-neutral-900 mb-2">Dubai, UAE</h1>
+            <h1 className="text-3xl text-neutral-900 mb-2">{location}</h1>
             <p className="text-neutral-600">
-              142 properties • Dec 15 - Dec 18 • 2 guests
+              {checkIn} - {checkOut} • {adults + children} guests
             </p>
           </div>
 
@@ -246,21 +261,27 @@ const SearchResult = () => {
           <div className="space-y-6">
             <AnimatePresence mode="wait">
               {viewMode === "grid" ? (
-                <motion.div
-                  key="grid"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="grid grid-cols-1 xl:grid-cols-2 gap-6"
-                >
-                  {hotels.map((hotel) => (
-                    <HotelResultCard
-                      key={hotel.id}
-                      {...hotel}
-                      viewMode="grid"
-                    />
-                  ))}
-                </motion.div>
+                filterData.length === 0 ? (
+                  <div className="w-full h-full flex justify-center items-start">
+                    <p>No data found</p>
+                  </div>
+                ) : (
+                  <motion.div
+                    key="grid"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="grid grid-cols-1 xl:grid-cols-2 gap-6"
+                  >
+                    {filterData.map((hotel) => (
+                      <HotelResultCard
+                        key={hotel._id}
+                        {...hotel}
+                        viewMode="grid"
+                      />
+                    ))}
+                  </motion.div>
+                )
               ) : (
                 <motion.div
                   key="list"
@@ -269,22 +290,28 @@ const SearchResult = () => {
                   exit={{ opacity: 0 }}
                   className="space-y-6"
                 >
-                  {hotels.map((hotel, index) => (
-                    <motion.div
-                      key={hotel.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <HotelResultCard {...hotel} viewMode="list" />
-                    </motion.div>
-                  ))}
+                  {filterData.length === 0 ? (
+                    <div className="w-full h-full flex justify-center items-center">
+                      <p>No data found</p>
+                    </div>
+                  ) : (
+                    filterData.map((hotel, index) => (
+                      <motion.div
+                        key={hotel._id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        <HotelResultCard {...hotel} viewMode="list" />
+                      </motion.div>
+                    ))
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* Load More */}
-            <div className="flex justify-center pt-8">
+            {/* <div className="flex justify-center pt-8">
               <Button
                 variant="outline"
                 size="lg"
@@ -292,7 +319,7 @@ const SearchResult = () => {
               >
                 Load More Results
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

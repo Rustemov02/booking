@@ -1,77 +1,73 @@
-{
-  "rooms": [
-    {
-      "id": "room_101",
-      "name": "Standard Room",
-      "description": "Comfortable room with city view",
-      "capacity": 2,
-      "pricePerNight": 85,
-      "totalPrice": 255,
-      "available": true,
-      "isSaved": true,
-      "images": [
-        "https://example.com/images/room_101_1.jpg",
-        "https://example.com/images/room_101_2.jpg"
-      ],
-      "amenities": [
-        "WiFi",
-        "Air Conditioning",
-        "TV"
-      ],
-      "cancellationPolicy": "Free cancellation until 24h before check-in",
-      "roomSize": 22,
-      "bedType": "Double Bed",
-      "petFriendly": false
-    },
-    {
-      "id": "room_102",
-      "name": "Deluxe Room",
-      "description": "Spacious deluxe room with sea view and balcony",
-      "capacity": 3,
-      "pricePerNight": 120,
-      "totalPrice": 360,
-      "available": true,
-      "isSaved": false,
-      "images": [
-        "https://example.com/images/room_102_1.jpg",
-        "https://example.com/images/room_102_2.jpg"
-      ],
-      "amenities": [
-        "WiFi",
-        "Air Conditioning",
-        "TV",
-        "Mini Bar",
-        "Balcony"
-      ],
-      "cancellationPolicy": "Free cancellation until 48h before check-in",
-      "roomSize": 35,
-      "bedType": "King Size Bed",
-      "petFriendly": true
-    },
-    {
-      "id": "room_103",
-      "name": "Family Suite",
-      "description": "Large suite suitable for families, with kitchenette",
-      "capacity": 4,
-      "pricePerNight": 180,
-      "totalPrice": 540,
-      "available": false,
-      "isSaved": true,
-      "images": [
-        "https://example.com/images/room_103_1.jpg",
-        "https://example.com/images/room_103_2.jpg"
-      ],
-      "amenities": [
-        "WiFi",
-        "Air Conditioning",
-        "TV",
-        "Kitchenette",
-        "Sofa Bed"
-      ],
-      "cancellationPolicy": "Non-refundable",
-      "roomSize": 50,
-      "bedType": "2 Queen Beds",
-      "petFriendly": true
-    }
-  ]
-}
+[
+  {
+    "_id": { "$oid": "650000000000000000000001" },
+    "name": "Deluxe Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+    "rating": 4.2,
+    "reviews": 452,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "tv", "name": "Smart TV" },
+      { "icon": "space", "name": "35 m² Space" },
+      { "icon": "ac", "name": "Air Conditioning" },
+      { "icon": "minibar", "name": "Mini Bar" },
+      { "icon": "guests", "name": "Up to 2 Guests" }
+    ],
+    "description": "Experience luxury and comfort in our beautifully appointed room with elegant décor and modern amenities.",
+    "price": 400,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 2,
+    "petFriendly": false,
+    "isSaved": false
+  },
+  {
+    "_id": { "$oid": "650000000000000000000002" },
+    "name": "Executive Suite",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    "rating": 4.8,
+    "reviews": 684,
+    "features": [
+      { "icon": "wifi", "name": "High-Speed WiFi" },
+      { "icon": "tv", "name": "Smart TV 55”" },
+      { "icon": "space", "name": "65 m² Space" },
+      { "icon": "balcony", "name": "Private Balcony" },
+      { "icon": "jacuzzi", "name": "Jacuzzi" },
+      { "icon": "guests", "name": "Up to 4 Guests" }
+    ],
+    "description": "Spacious suite designed for executives and families, featuring premium furnishings and city skyline views.",
+    "price": 820,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 4,
+    "petFriendly": true,
+    "isSaved": false
+  },
+  {
+    "_id": { "$oid": "650000000000000000000003" },
+    "name": "Standard Twin Room",
+    "location": "Ganja, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1606046604972-77cc76aee944",
+    "rating": 3.9,
+    "reviews": 218,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "tv", "name": "Flat Screen TV" },
+      { "icon": "space", "name": "25 m² Space" },
+      { "icon": "ac", "name": "Air Conditioning" },
+      { "icon": "guests", "name": "Up to 2 Guests" }
+    ],
+    "description": "Comfortable twin room ideal for short stays or business travelers seeking simplicity and value.",
+    "price": 220,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 2,
+    "petFriendly": false,
+    "isSaved": false
+  }
+]

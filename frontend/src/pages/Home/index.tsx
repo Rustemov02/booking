@@ -83,7 +83,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xlF font-bold text-white mb-4">
               Find Your Perfect Stay
             </h1>
             <p className="text-xl text-white/90">

@@ -7,7 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import { Search } from "lucide-react";
+import { ChevronRight, MapPin, Search } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Input } from "../ui/input";
 
 const BookingBar = ({
   data,
@@ -23,12 +25,32 @@ const BookingBar = ({
   const navigate = useNavigate();
   const [bookingData, setBookingData] = useState<BookingBarTypes>(
     data || {
+      destination: null,
       checkIn: null,
       checkOut: null,
-      adults: 1,
-      children: 0,
       rooms: 1,
-      petFriendly: false,
+      guests: [
+        {
+          label: "Rooms",
+          title: "Rooms count",
+          count: 0,
+        },
+        {
+          label: "Adults",
+          title: "Ages 13 or above",
+          count: 0,
+        },
+        {
+          label: "Children",
+          title: "Ages 2-12",
+          count: 0,
+        },
+        {
+          label: "Pets",
+          title: "Bringing a service animal?",
+          count: 0,
+        },
+      ],
     }
   );
 
@@ -38,6 +60,10 @@ const BookingBar = ({
     "where"
   );
 
+  useEffect(() => {
+    console.log("BOOKING DATA : ", bookingData);
+  }, [bookingData]);
+
   const clearCheckData = (type: "checkIn" | "checkOut") => {
     setBookingData((prev) => ({
       ...prev,
@@ -46,44 +72,35 @@ const BookingBar = ({
   };
 
   const handleSubmit = async () => {
-    if (!range.to || !range.from) {
+    if (!bookingData.checkIn || !bookingData.checkOut) {
       console.log(";lg;gbdfg");
       return;
     }
     setIsLoading(true);
     setError("");
-    // const { adults, children, rooms, petFriendly } = bookingData;
-    const adults = guestsData?.filter((item) => item.label === "Adults");
- 
+
+    const { checkIn, checkOut, guests, destination } = bookingData;
+    const [rooms, adults, children, pets] = guests.map((g) => g.count);
 
     const queryParams = {
-      adults: adults?.count,
+      destination,
+      adults,
       children,
       rooms,
-      petFriendly,
-      checkIn: range?.from?.toISOString().split("T")[0],
-      checkOut: range?.to?.toISOString().split("T")[0],
+      pets,
+      checkIn,
+      checkOut,
     };
 
-    console.log(queryParams);
-    // Object.entries(bookingData).reduce(
-    //   (acc, [key, value]) => {
-    //     acc[key] = String(value);
-    //     return acc;
-    //   },
-    //   {} as Record<string, string>
-    // );
     console.log(queryParams);
     const params = new URLSearchParams(queryParams);
 
     const currentPath = location.pathname;
     const basePath = currentPath.includes("searchResult") ? "" : "searchResult";
 
-    navigate(`${basePath}?${params}`);
     setIsLoading(false);
+    navigate(`${basePath}?${params}`);
     setShowMobileModal(false);
-
-    console.log("Search button clicked!");
   };
 
   useEffect(() => {
@@ -99,37 +116,43 @@ const BookingBar = ({
     setSelectedBox(null);
   });
 
-  const [guestsData, setGuestsData] = useState([
-    {
-      label: "Adults",
-      title: "Ages 13 or above",
-      count: 0,
-    },
-    {
-      label: "Children",
-      title: "Ages 2-12",
-      count: 0,
-    },
-    {
-      label: "Infants",
-      title: "Under 2",
-      count: 0,
-    },
-    {
-      label: "Pets",
-      title: "Bringing a service animal?",
-      count: 0,
-    },
-  ]);
+  // const [guestsData, setGuestsData] = useState([
+  //   {
+  //     label: "Adults",
+  //     title: "Ages 13 or above",
+  //     count: 0,
+  //   },
+  //   {
+  //     label: "Children",
+  //     title: "Ages 2-12",
+  //     count: 0,
+  //   },
+  //   {
+  //     label: "Pets",
+  //     title: "Bringing a service animal?",
+  //     count: 0,
+  //   },
+  // ]);
 
   const commonContainerStyles =
     "py-3 sm:py-4 px-4 sm:px-6 md:px-8 rounded-full border-none hover:bg-gray-100 cursor-pointer transition-all duration-300";
 
   const hoveringStyles = "!bg-white shadow-lg scale-105";
 
+  const destinations: any = [
+    {
+      name: "Azerbaijan",
+      cities: ["Baku", "Qabala", "Qusar", "Zagatala", "Sheki"],
+    },
+  ];
+
+  const [destinationSelectOpen, setDestinationSelectOpen] = useState(false);
+
+  useEffect(() => {
+    if (selectedBox !== "where") setDestinationSelectOpen(false);
+  }, [selectedBox]);
   return (
     <section className="w-full flex items-center justify-center px-4">
-      <button onClick={() => console.log(range)}>Check date</button>
       {/* DESKTOP VERSION */}
       <div
         ref={clickedOutside}
@@ -156,7 +179,9 @@ const BookingBar = ({
           )}
           <div className="relative z-10">
             <p className="text-xs font-semibold text-gray-900">Where</p>
-            <p className="text-sm text-gray-500">Search destinations</p>
+            <p className="text-sm text-gray-500">
+              {bookingData?.destination ?? "Search destinations"}
+            </p>
           </div>
         </div>
 
@@ -167,11 +192,82 @@ const BookingBar = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 bg-white rounded-3xl py-6 px-8 mt-3 w-[400px] shadow-2xl z-50"
+              className="absolute top-full left-0 bg-white rounded-3xl w-[400px] h-auto shadow-2xl z-50"
             >
-              <p className="text-sm font-medium text-gray-700">
-                Suggested Destinations
-              </p>
+              {/* <div className="relative">
+                <Input className="pl-10 pr-4 h-12 bg-white border-neutral-200 rounded-xl focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:border-transparent transition-all" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400" />
+              </div> */}
+
+              <div className="absolute top-full left-0 w-[400px] oveflow-hidden mt-4 bg-white rounded-2xl rounded-tr-none shadow-lg border border-neutral-200">
+                <div className="max-h-[400px] overflow-y-auto">
+                  <div className="px-4 py-3 border-b border-neutral-100">
+                    <h4 className="text-neutral-900">Suggested Destinations</h4>
+                  </div>
+
+                  <div className="py-2">
+                    {destinations.map((country) => (
+                      <div key={country.name} className="mb-1">
+                        {/* Country Header */}
+                        <button
+                          onClick={() =>
+                            setDestinationSelectOpen(!destinationSelectOpen)
+                          }
+                          className="w-full flex items-center  cursor-pointer justify-between px-4 py-2.5 hover:bg-neutral-50 transition-colors group"
+                        >
+                          <div className="flex items-center gap-3 ">
+                            <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center">
+                              <MapPin className="h-4 w-4 text-teal-600" />
+                            </div>
+                            <span className="text-neutral-900">
+                              {country.name}
+                            </span>
+                          </div>
+                          <motion.div
+                            transition={{ duration: 0.2 }}
+                            animate={{
+                              rotate: destinationSelectOpen ? 90 : 0,
+                            }}
+                          >
+                            <ChevronRight className="h-4 w-4 text-neutral-400 group-hover:text-neutral-600" />
+                          </motion.div>
+                        </button>
+
+                        {/* Cities List */}
+                        <AnimatePresence>
+                          {destinationSelectOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="ml-4 pl-8 border-l-2 border-neutral-100">
+                                {country.cities.map((city: string) => (
+                                  <button
+                                    key={city}
+                                    onClick={() => {
+                                      setBookingData((prev) => ({
+                                        ...prev,
+                                        destination: `${city}, ${country.name}`,
+                                      }));
+                                      setSelectedBox(null);
+                                    }}
+                                    className="cursor-pointer w-full text-left px-4 py-2 hover:bg-teal-50 transition-colors rounded-lg text-neutral-700 hover:text-teal-700 my-0.5"
+                                  >
+                                    {city}
+                                  </button>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -255,8 +351,24 @@ const BookingBar = ({
             >
               <DayPicker
                 mode="range"
-                selected={range}
-                onSelect={setRange}
+                selected={{
+                  from: bookingData?.checkIn as Date,
+                  to: bookingData?.checkOut as Date,
+                }}
+                onSelect={(date) => {
+                  console.log(date);
+                  setBookingData((prev: any) => ({
+                    ...prev,
+                    checkIn:
+                      typeof date?.from !== "string"
+                        ? date?.from?.toLocaleDateString("en-CA")
+                        : date?.from,
+                    checkOut:
+                      typeof date?.to !== "string"
+                        ? date?.to?.toLocaleDateString("en-CA")
+                        : date?.from,
+                  }));
+                }}
                 numberOfMonths={2}
                 pagedNavigation
                 modifiersClassNames={{
@@ -314,7 +426,7 @@ const BookingBar = ({
               transition={{ duration: 0.2 }}
               className="absolute top-full right-0 bg-white rounded-3xl py-6 px-8 mt-3 w-[400px] shadow-2xl z-50"
             >
-              {guestsData.map((item, index) => (
+              {bookingData?.guests.map((item, index) => (
                 <div key={item.label} className="py-4">
                   <div className="flex items-center justify-between">
                     <div>
@@ -325,16 +437,22 @@ const BookingBar = ({
                     </div>
                     <Counter
                       count={item.count}
-                      onChange={(count) =>
-                        setGuestsData((prev) =>
-                          prev.map((g) =>
-                            g.label === item.label ? { ...g, count } : g
-                          )
-                        )
-                      }
+                      onChange={(count) => {
+                        setBookingData((prev: BookingBarTypes) => ({
+                          ...prev,
+                          guests: prev?.guests.map(
+                            (g: {
+                              label: string;
+                              title: string;
+                              count: number;
+                            }) => (g.label === item.label ? { ...g, count } : g)
+                          ),
+                        }));
+                        console.log(count);
+                      }}
                     />
                   </div>
-                  {guestsData.length - 1 !== index && (
+                  {bookingData?.guests.length - 1 !== index && (
                     <hr className="mt-4 border-gray-200" />
                   )}
                 </div>
@@ -346,7 +464,7 @@ const BookingBar = ({
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="absolute right-2 text-white p-3 rounded-full 
+          className="absolute right-2 text-white p-3 rounded-full cursor-pointer 
           transition-all duration-300 scale-140 hover:scale-150 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Search className="w-5 h-5" />
@@ -448,8 +566,24 @@ const BookingBar = ({
                     <div className="border border-gray-300 rounded-2xl p-4">
                       <DayPicker
                         mode="range"
-                        selected={range}
-                        onSelect={setRange}
+                        selected={{
+                          from: bookingData?.checkIn as Date,
+                          to: bookingData?.checkOut as Date,
+                        }}
+                        onSelect={(date) => {
+                          console.log(date);
+                          setBookingData((prev: any) => ({
+                            ...prev,
+                            checkIn:
+                              typeof date?.from !== "string"
+                                ? date?.from?.toLocaleDateString("en-CA")
+                                : date?.from,
+                            checkOut:
+                              typeof date?.to !== "string"
+                                ? date?.to?.toLocaleDateString("en-CA")
+                                : date?.from,
+                          }));
+                        }}
                         numberOfMonths={1}
                         modifiersClassNames={{
                           selected: "!bg-gray-900 text-white rounded-full",
@@ -467,7 +601,7 @@ const BookingBar = ({
                     <label className="text-xs font-semibold text-gray-900 block mb-3">
                       Who
                     </label>
-                    {guestsData.map((item, index) => (
+                    {bookingData?.guests.map((item, index) => (
                       <div key={item.label}>
                         <div className="flex items-center justify-between py-3">
                           <div>
@@ -489,7 +623,7 @@ const BookingBar = ({
                             }
                           />
                         </div>
-                        {guestsData.length - 1 !== index && (
+                        {bookingData?.guests.length - 1 !== index && (
                           <hr className="border-gray-200" />
                         )}
                       </div>

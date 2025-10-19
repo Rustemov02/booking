@@ -36,12 +36,15 @@ export interface CardTypes {
 }
 
 export interface BookingBarTypes {
+  destination: string | null;
   checkIn: Date | string | null;
   checkOut: Date | string | null;
-  adults: number;
-  children: number;
   rooms: number;
-  petFriendly?: boolean;
+  guests: {
+    label: string;
+    title: string;
+    count: number;
+  }[];
 }
 
 export interface RoomTypes {

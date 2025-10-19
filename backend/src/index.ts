@@ -30,6 +30,7 @@ app.get("/api/rooms", async (req: Request, res: Response) => {
   }
 });
 
+// GET Rooms by id
 app.get("/api/rooms/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -59,31 +60,90 @@ app.get("/api/rooms/favourites", async (req: Request, res: Response) => {
 });
 
 // GET Filter rooms
+// app.post("/api/rooms/search", async (req: Request, res: Response) => {
+//   try {
+//     const { checkIn, checkOut, adults, children, rooms, petFriendly } =
+//       req.body;
+
+//     // TARİXƏ GÖRƏ FİLTER EDİLMƏYƏCƏK...
+
+//     if (!checkIn || !checkOut || !adults || !children || !rooms) {
+//       return res.status(400).json({ error: "Doldurulmayan sahələr qalıb" });
+//     }
+
+//     const totalGuests = Number(adults) + Number(children);
+//     const roomsNeeded = Number(rooms);
+
+//     const filteredRooms = await Room.find({
+//       available: true,
+//       capacity: { $gte: totalGuests / roomsNeeded },
+//     });
+
+//     console.log("Filtered Rooms : ", filteredRooms);
+//     res.json({
+//       rooms: filteredRooms,
+//     });
+//   } catch (err) {
+//     res.status(500).json({ error: "### Failed while filtering rooms data" });
+//   }
+// });
+
 app.post("/api/rooms/search", async (req: Request, res: Response) => {
   try {
-    const { checkIn, checkOut, adults, children, rooms, petFriendly } =
-      req.body;
+    const {
+      adults,
+      children,
+      rooms,
+      petFriendly,
+      minPrice,
+      maxPrice,
+      minRating,
+      location,
+    } = req.body;
 
-    // TARİXƏ GÖRƏ FİLTER EDİLMƏYƏCƏK...
-
-    if (!checkIn || !checkOut || !adults || !children || !rooms) {
+    // Basic validation
+    if (adults == null || children == null || rooms == null) {
       return res.status(400).json({ error: "Doldurulmayan sahələr qalıb" });
     }
 
     const totalGuests = Number(adults) + Number(children);
     const roomsNeeded = Number(rooms);
+    const requiredCapacity = Math.ceil(totalGuests / roomsNeeded);
 
-    const filteredRooms = await Room.find({
+    // Build MongoDB query
+    const query: Record<string, any> = {
       available: true,
-      capacity: { $gte: totalGuests / roomsNeeded },
-    });
+      capacity: { $gte: requiredCapacity },
+    };
 
-    console.log("Filtered Rooms : ", filteredRooms);
+    if (typeof petFriendly === "boolean") {
+      query.petFriendly = petFriendly;
+    }
+
+    if (minPrice != null || maxPrice != null) {
+      query.price = {};
+      if (minPrice != null) query.price.$gte = Number(minPrice);
+      if (maxPrice != null) query.price.$lte = Number(maxPrice);
+    }
+
+    if (minRating != null) {
+      query.rating = { $gte: Number(minRating) };
+    }
+
+    if (location) {
+      // Partial match, case-insensitive
+      query.location = { $regex: new RegExp(location, "i") };
+    }
+
+    const filteredRooms = await Room.find(query);
+
     res.json({
+      count: filteredRooms.length,
       rooms: filteredRooms,
     });
   } catch (err) {
-    res.status(500).json({ error: "### Failed while filtering rooms data" });
+    console.error("Search error:", err);
+    res.status(500).json({ error: "Serverdə xəta baş verdi" });
   }
 });
 
@@ -93,25 +153,16 @@ app.patch("/api/rooms/:id", async (req: Request, res: Response) => {
     const roomId = req.params.id;
     const { isSaved } = req.body;
 
-    console.log("ROOM ID:", roomId);
-
+    console.log("REQUEST BODY:", req.body);
     if (typeof isSaved !== "boolean") {
       return res.status(400).json({ error: "isSaved boolean olmalıdır!" });
     }
 
-    if (!mongoose.Types.ObjectId.isValid(roomId)) {
-      return res.status(400).json({ error: "Düzgün ObjectId göndərilməyib!" });
-    }
-
-    const objectId = new mongoose.Types.ObjectId(roomId);
-
-    const updatedRoom = await Room.findOneAndUpdate(
-      { _id: objectId },
+    const updatedRoom = await Room.findByIdAndUpdate(
+      roomId,
       { isSaved },
       { new: true }
     );
-
-    console.log("Room updated ", updatedRoom);
 
     if (!updatedRoom) {
       return res.status(404).json({ error: "Otaq tapılmadı!" });
