@@ -8,10 +8,10 @@ import {
   Tv,
   Wind,
   Heart,
-  X,
   MapPin,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Dialog from "./dialog/Dialog";
 
 // Types
 interface RoomFeature {
@@ -48,66 +48,6 @@ const getRoomFeatures = (): RoomFeature[] => [
     label: "Up to 2 Guests",
   },
 ];
-
-// Dialog Component WITH ANIMATION
-const Dialog = ({
-  open,
-  onClose,
-  children,
-}: {
-  open: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}) => {
-  if (!open) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.2s ease-out;
-        }
-        .animate-scaleIn {
-          animation: scaleIn 0.3s ease-out;
-        }
-      `}</style>
-
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Dialog Content */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto animate-scaleIn">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
-          aria-label="Close dialog"
-        >
-          <X className="h-5 w-5 text-gray-600" />
-        </button>
-
-        {children}
-      </div>
-    </div>
-  );
-};
 
 // Badge Component
 const Badge = ({
@@ -188,7 +128,7 @@ export function RoomCard({
             />
 
             {/* Favorite Button */}
-            <button
+            {/* <button
               onClick={handleLike}
               className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
               aria-label={liked ? "Remove from favorites" : "Add to favorites"}
@@ -198,7 +138,7 @@ export function RoomCard({
                   liked ? "fill-red-500 text-red-500" : "text-gray-700"
                 }`}
               />
-            </button>
+            </button> */}
           </div>
 
           {/* Content Section */}

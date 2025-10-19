@@ -1,4 +1,12 @@
 {
   "welcome": "Xoş gəlmisiniz",
-  "description": "Bu, TypeScript və i18n ilə React layihəsidir"
+  "description": "Bu, TypeScript və i18n ilə React layihəsidir",
+  "notAvailableYet": "Bu xüsusiyyət hələ aktiv deyil, amma tezliklə əlavə olunacaq!",
+  "home": {
+    "heroTitle": "Mükəmməl yerini tap",
+    "heroSubtitle": "Azərbaycanın hər yerində otellərdə möhtəşəm endirimləri kəşf et",
+    "trendingDestinations": "Populyar istiqamətlər",
+    "homesGuestsLove": "Qonaqların sevdiyi evlər",
+    "trustedPartner": "Dünyanın hər yerində ideal qalma yerini tapmaqda etibarlı tərəfdaşın."
+  }
 }

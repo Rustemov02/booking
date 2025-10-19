@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Percent, Gift, Clock } from "lucide-react";
+import { ToastMessage } from "../utils/message";
+import { useTranslation } from "react-i18next";
 
 const offers = [
   {
@@ -28,6 +30,7 @@ const offers = [
 ];
 
 export function SpecialOffersSection() {
+  const { t } = useTranslation();
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -65,6 +68,7 @@ export function SpecialOffersSection() {
                 <Button
                   variant="secondary"
                   className="w-full bg-white text-gray-900 hover:bg-gray-100"
+                  onClick={() => ToastMessage(t("notAvailableYet"))}
                 >
                   Learn More
                 </Button>

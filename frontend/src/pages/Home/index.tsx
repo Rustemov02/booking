@@ -17,41 +17,56 @@ import { motion } from "framer-motion";
 import { Sparkles, TrendingUp, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import apiRequest from "../../api/apiRequest";
+import baku from "../../assets/images/baku.jpg";
+import zaqatala from "../../assets/images/zaqatala.jpg";
+import quba from "../../assets/images/quba.jpg";
+import qusar from "../../assets/images/qusar.jfif";
+import qebele from "../../assets/images/qebele.jpg";
+import sheki from "../../assets/images/sheki.jpg";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const destinations = [
     {
+      id: 1,
       name: "Baku",
-      image:
-        "https://images.unsplash.com/photo-1663668045441-a328bb02cc5e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYWt1JTIwY2l0eSUyMGFyY2hpdGVjdHVyZXxlbnwxfHx8fDE3NTk5NDk0MTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      tag: "Popular",
+      properties: 1250,
+      image: baku,
     },
     {
-      name: "Paris",
-      image:
-        "https://images.unsplash.com/photo-1431274172761-fca41d930114?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJpcyUyMGVpZmZlbCUyMHRvd2VyfGVufDF8fHx8MTc1OTg2NDQwNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      tag: "Trending",
+      id: 2,
+      name: "Zakatala",
+      properties: 340,
+      image: zaqatala,
     },
     {
-      name: "Dubai",
-      image:
-        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkdWJhaSUyMHNreWxpbmV8ZW58MXx8fHwxNzU5ODk4NTIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      id: 3,
+      name: "Sheki",
+      properties: 520,
+      image: sheki,
     },
     {
-      name: "Tokyo",
-      image:
-        "https://images.unsplash.com/photo-1713635632551-e633ee4cb95e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b2t5byUyMGNpdHlzY2FwZXxlbnwxfHx8fDE3NTk5MDkwMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      id: 4,
+      name: "Qabala",
+      properties: 420,
+      image: qebele,
     },
     {
-      name: "Swiss Alps",
-      image:
-        "https://images.unsplash.com/photo-1666817059358-940080103885?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMHJlc29ydCUyMGxhbmRzY2FwZXxlbnwxfHx8fDE3NTk5NDk0MTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      tag: "New",
+      id: 5,
+      name: "Qusar",
+      properties: 280,
+      image: qusar,
+    },
+    {
+      id: 6,
+      name: "Quba",
+      properties: 610,
+      image: quba,
     },
   ];
 
   const [rooms, setRooms] = useState([]);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -61,7 +76,8 @@ export default function Home() {
           onError: (err) => console.log(err),
           onSuccess: (data) => setRooms(data.rooms),
         });
-        console.log(response);
+        console.log(response.rooms);
+        setRooms(response.rooms);
       } catch (err) {
         console.log(err);
       }
@@ -84,11 +100,9 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h1 className="text-4xl md:text-5xlF font-bold text-white mb-4">
-              Find Your Perfect Stay
+              {t("home.heroTitle")}
             </h1>
-            <p className="text-xl text-white/90">
-              Discover amazing deals on hotels worldwide
-            </p>
+            <p className="text-xl text-white/90">{t("home.heroSubtitle")}</p>
           </motion.div>
 
           <motion.div
@@ -107,9 +121,11 @@ export default function Home() {
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-6 w-6 text-blue-600" />
-              <h2 className="text-3xl font-semibold">Trending Destinations</h2>
+              <h2 className="text-3xl font-semibold">
+                {t("home.trendingDestinations")}
+              </h2>
             </div>
-            <Button variant="ghost">View All</Button>
+            {/* <Button variant="ghost">View All</Button> */}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
@@ -201,9 +217,11 @@ export default function Home() {
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-2">
               <Sparkles className="h-6 w-6 text-blue-600" />
-              <h2 className="text-3xl font-semibold">Homes Guests Love</h2>
+              <h2 className="text-3xl font-semibold">
+                {t("home.homesGuestsLove")}
+              </h2>
             </div>
-            <Button variant="ghost">View All</Button>
+            {/* <Button variant="ghost">View All</Button> */}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -261,10 +279,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="text-white font-semibold mb-4">Hotels.com</h3>
-              <p className="text-sm">
-                Your trusted partner for finding the perfect accommodation
-                worldwide.
-              </p>
+              <p className="text-sm">{t("home.trustedPartner")}</p>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Company</h4>

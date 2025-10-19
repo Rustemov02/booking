@@ -1,12 +1,41 @@
-import React, { useState } from "react";
-import { Globe, Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import {
+  Globe,
+  HelpCircle,
+  Menu,
+  MenuIcon,
+  Settings,
+  User,
+  X,
+} from "lucide-react";
 import Modal from "../../components/modal/sideModal";
 import { useNavigate } from "react-router-dom";
+import LanguageDropdown from "../langMenu/Dropdown";
+import useClickOutSide from "../../hooks/useClickOutside";
+import { ToastMessage } from "../../utils/message";
+import { t } from "i18next";
+import Dialog from "../dialog/Dialog";
 const HotelHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  const lang = localStorage.getItem("lang");
+  const clickedOutside = useClickOutSide(() => {
+    setMenuOpen(false);
+  });
+
+  const [helpDialogOpen, setHelpDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const isFirstEntry = localStorage.getItem("is_first_entry");
+
+    if (isFirstEntry === null) {
+      setHelpDialogOpen(true);
+      localStorage.setItem("is_first_entry", "false");
+    }
+  }, []);
   return (
     <header className="w-full bg-white border-b border-gray-200">
       <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 py-4">
@@ -41,23 +70,63 @@ const HotelHeader: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-3 lg:gap-4">
             {/* Language selector */}
-            <button className="flex items-center cursor-pointer gap-2 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+            {/* <button className="flex items-center cursor-pointer gap-2 px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
               <Globe size={18} className="text-gray-600" />
               <span className="text-sm font-medium">English</span>
+            </button> */}
+            <LanguageDropdown />
+
+            {/* Help Icon */}
+            <button
+              className="cursor-pointer p-2 rounded-full hover:bg-gray-100 transition-colors"
+              aria-label="Help"
+              onClick={() => setHelpDialogOpen(true)}
+            >
+              <HelpCircle className="w-5 h-5 text-gray-700" />
             </button>
 
+            <div className="relative" ref={clickedOutside}>
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="cursor-pointer flex items-center gap-2 p-2 px-3 bg-white border border-gray-300 rounded-full hover:shadow-md transition-all"
+              >
+                <MenuIcon className="w-4 h-4 text-gray-700" />
+                <User className="w-5 h-5 text-gray-700" />
+              </button>
+
+              {/* Dropdown Menu */}
+              {menuOpen && (
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl z-50 shadow-lg border border-gray-200 py-2 overflow-hidden">
+                  <button
+                    onClick={() => ToastMessage(t("notAvailableYet"))}
+                    className=" cursor-pointer w-full text-left px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50 transition-colors flex items-center gap-3"
+                  >
+                    <User className="w-4 h-4" />
+                    Profile
+                  </button>
+                  <button
+                    onClick={() => ToastMessage(t("notAvailableYet"))}
+                    className=" cursor-pointer w-full text-left px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50 transition-colors flex items-center gap-3"
+                  >
+                    <Settings className="w-4 h-4" />
+                    Settings
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* Sign in button */}
-            <button
+            {/* <button
               onClick={() => navigate("/login")}
               className="px-4 lg:px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
             >
               Sign in
-            </button>
+            </button> */}
 
             {/* Register button */}
-            <button className="px-4 lg:px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg cursor-pointer transition-colors">
+            {/* <button className="px-4 lg:px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg cursor-pointer transition-colors">
               Register
-            </button>
+            </button> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -109,6 +178,28 @@ const HotelHeader: React.FC = () => {
           </div>
         )}
       </div>
+
+      <Dialog open={helpDialogOpen} onClose={() => setHelpDialogOpen(false)}>
+        <div className="h-auto min-h-[250px] flex items-center justify-center pl-8 pr-15 py-3">
+          {lang === "az" ? (
+            <p className="font-semibold text-center text-[23px]">
+              Səhifə hazırda inkişaf mərhələsindədir 🌱 <br /> Yaxın zamanda
+              yeni funksiyalar əlavə olunacaq.
+              <br /> Hazırkı mərhələdə bəzi texniki çətinliklər və kiçik buglar
+              müşahidə oluna bilər. <br />
+              Anlayışınız və dəstəyiniz üçün təşəkkür edirik 💙
+            </p>
+          ) : (
+            <p className="font-semibold text-center text-[23px]">
+              The page is currently under development 🌱 <br /> New features
+              will be added soon to enhance your experience.
+              <br /> At this stage, you may encounter some minor bugs or
+              technical issues.
+              <br /> Thank you for your understanding and support 💙
+            </p>
+          )}
+        </div>
+      </Dialog>
     </header>
   );
 };

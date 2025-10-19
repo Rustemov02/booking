@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, CreditCard, CheckCircle2, Hotel } from "lucide-react";
 import { Button } from "../../components/ui/button";
@@ -7,6 +7,8 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Separator } from "../../components/ui/separator";
 import { BookingSummaryCard } from "../Checkout/BookingSummaryCard";
+import apiRequest from "../../api/apiRequest";
+import { useParams } from "react-router-dom";
 
 export default function CheckoutPage() {
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -19,6 +21,28 @@ export default function CheckoutPage() {
     expiryDate: "",
     cvv: "",
   });
+
+  const { id } = useParams();
+
+  const [currentRoomData, setCurrentRoomData] = useState([]);
+
+  const getRoomDetails = async () => {
+    try {
+      const response = await apiRequest({
+        method: "GET",
+        url: `/api/rooms/${id}`,
+      });
+
+      console.log(response.room);
+      setCurrentRoomData(response.room);
+    } catch (err) {
+      console.log("ROOMS FETCHING ERROR : ", err);
+    }
+  };
+
+  useEffect(() => {
+    getRoomDetails();
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

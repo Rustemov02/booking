@@ -1,4 +1,12 @@
 {
   "welcome": "Welcome",
-  "description": "This is a React project with TypeScript and i18n"
+  "description": "This is a React project with TypeScript and i18n",
+  "notAvailableYet": "This feature isn’t available yet, but it’s coming soon!",
+  "home": {
+    "heroTitle": "Find Your Perfect Stay",
+    "heroSubtitle": "Discover amazing deals on hotels in Azerbaijan",
+    "trendingDestinations": "Trending Destinations",
+    "homesGuestsLove": "Homes Guests Love",
+    "trustedPartner": "Your trusted partner for finding the perfect accommodation worldwide."
+  }
 }

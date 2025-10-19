@@ -65,13 +65,13 @@ const GuestHeader = () => {
             </button>
 
             {/* Favourites Icon */}
-            <button
+            {/* <button
               onClick={() => navigate("favourites")}
               className="p-2 rounded-full hover:bg-gray-100 transition-colors relative"
               aria-label="Favourites"
             >
               <Heart className="w-5 h-5 text-gray-700 hover:text-red-500 transition-colors" />
-            </button>
+            </button> */}
 
             {/* Auth Buttons or User Menu */}
             {!roleName ? (

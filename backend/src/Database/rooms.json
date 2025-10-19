@@ -1,6 +1,5 @@
 [
   {
-    "_id": { "$oid": "650000000000000000000001" },
     "name": "Deluxe Room",
     "location": "Baku, Azerbaijan",
     "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
@@ -24,9 +23,8 @@
     "isSaved": false
   },
   {
-    "_id": { "$oid": "650000000000000000000002" },
     "name": "Executive Suite",
-    "location": "Baku, Azerbaijan",
+    "location": "Zakatala, Azerbaijan",
     "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
     "rating": 4.8,
     "reviews": 684,
@@ -48,9 +46,8 @@
     "isSaved": false
   },
   {
-    "_id": { "$oid": "650000000000000000000003" },
     "name": "Standard Twin Room",
-    "location": "Ganja, Azerbaijan",
+    "location": "Zakatala, Azerbaijan",
     "image": "https://images.unsplash.com/photo-1606046604972-77cc76aee944",
     "rating": 3.9,
     "reviews": 218,
@@ -67,6 +64,158 @@
     "priceUnit": "per night",
     "available": true,
     "capacity": 2,
+    "petFriendly": false,
+    "isSaved": false
+  },
+  {
+    "name": "Family Room",
+    "location": "Qabala, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32",
+    "rating": 4.5,
+    "reviews": 389,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "tv", "name": "Smart TV" },
+      { "icon": "space", "name": "55 m² Space" },
+      { "icon": "kids", "name": "Kids Friendly" },
+      { "icon": "guests", "name": "Up to 5 Guests" }
+    ],
+    "description": "Spacious family room with plenty of space for kids, cozy atmosphere, and forest views.",
+    "price": 600,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 5,
+    "petFriendly": true,
+    "isSaved": false
+  },
+  {
+    "name": "Economy Room",
+    "location": "Qusar, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1616627985723-3fa0e6b5c47f",
+    "rating": 3.7,
+    "reviews": 164,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "tv", "name": "TV" },
+      { "icon": "space", "name": "20 m² Space" }
+    ],
+    "description": "Simple yet comfortable room for budget-conscious travelers seeking convenience and cleanliness.",
+    "price": 150,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 1,
+    "petFriendly": false,
+    "isSaved": false
+  },
+  {
+    "name": "Mountain View Suite",
+    "location": "Qabala, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1600585154206-1fe3f9c9dcd8",
+    "rating": 4.9,
+    "reviews": 712,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "tv", "name": "4K Smart TV" },
+      { "icon": "space", "name": "70 m² Space" },
+      { "icon": "balcony", "name": "Mountain View Balcony" },
+      { "icon": "fireplace", "name": "Fireplace" },
+      { "icon": "guests", "name": "Up to 4 Guests" }
+    ],
+    "description": "Luxury suite with breathtaking mountain views, fireplace, and private terrace — perfect for relaxation.",
+    "price": 950,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 4,
+    "petFriendly": false,
+    "isSaved": false
+  },
+  {
+    "name": "Studio Room",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1590490359683-9c91e7dca3a6",
+    "rating": 4.0,
+    "reviews": 278,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "kitchen", "name": "Small Kitchenette" },
+      { "icon": "space", "name": "28 m² Space" },
+      { "icon": "guests", "name": "Up to 2 Guests" }
+    ],
+    "description": "Modern studio room with a compact design, ideal for solo travelers or couples on short trips.",
+    "price": 310,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 2,
+    "petFriendly": true,
+    "isSaved": false
+  },
+  {
+    "name": "Presidential Suite",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+    "rating": 5.0,
+    "reviews": 1203,
+    "features": [
+      { "icon": "wifi", "name": "High-Speed WiFi" },
+      { "icon": "tv", "name": "Smart TV 65”" },
+      { "icon": "space", "name": "120 m² Space" },
+      { "icon": "jacuzzi", "name": "Jacuzzi & Sauna" },
+      { "icon": "butler", "name": "Private Butler Service" },
+      { "icon": "guests", "name": "Up to 6 Guests" }
+    ],
+    "description": "Ultimate luxury suite offering private lounge, panoramic city views, and premium exclusive service.",
+    "price": 2000,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 6,
+    "petFriendly": false,
+    "isSaved": false
+  },
+  {
+    "name": "Cozy Cabin",
+    "location": "Qusar, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1600585154183-2ee0b1a2b0ff",
+    "rating": 4.3,
+    "reviews": 333,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "fireplace", "name": "Fireplace" },
+      { "icon": "space", "name": "40 m² Space" },
+      { "icon": "guests", "name": "Up to 3 Guests" }
+    ],
+    "description": "Rustic wooden cabin surrounded by nature. Ideal for couples or small families seeking peace and privacy.",
+    "price": 480,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 3,
+    "petFriendly": true,
+    "isSaved": false
+  },
+  {
+    "name": "City View Apartment",
+    "location": "Baku, Azerbaijan",
+    "image": "https://images.unsplash.com/photo-1600585154154-1e4d60c2d2c4",
+    "rating": 4.4,
+    "reviews": 401,
+    "features": [
+      { "icon": "wifi", "name": "Free WiFi" },
+      { "icon": "tv", "name": "Smart TV" },
+      { "icon": "space", "name": "50 m² Space" },
+      { "icon": "balcony", "name": "City View Balcony" },
+      { "icon": "guests", "name": "Up to 3 Guests" }
+    ],
+    "description": "Bright and modern apartment with stunning city views, perfect for extended stays in central Baku.",
+    "price": 520,
+    "currency": "AZN",
+    "priceUnit": "per night",
+    "available": true,
+    "capacity": 3,
     "petFriendly": false,
     "isSaved": false
   }
