@@ -16,6 +16,10 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 connectDB();
 
+app.get("/", (req: Request, res: Response) => {
+  res.send("Booking backend is running");
+});
+
 // =============================    GET ALL ROOMS WITH MONGO   ================================
 
 // GET /api/rooms
