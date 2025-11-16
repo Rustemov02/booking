@@ -1,12 +1,8 @@
-import { Outlet } from "react-router-dom";
-import { Header } from "../../components/Header";
-// import { BookingBar } from "../components/BookingBar";
 import BookingBar from "../../components/bookingBar/bookingBar";
 import { DestinationCard } from "../../components/DestinationCard";
 import { RoomCard } from "../../components/RoomCard";
 import { AmenitiesSection } from "../../components/AmenitiesSection";
 import { SpecialOffersSection } from "../../components/SpecialOffersSection";
-import { Button } from "../../components/ui/button";
 import {
   Tabs,
   TabsContent,
