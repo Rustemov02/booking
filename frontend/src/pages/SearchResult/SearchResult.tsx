@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import BookingBar from "../../components/bookingBar/bookingBar";
-import MarkFilter from "../../components/markFilter/MarkFilter";
-import Card from "../../components/card/Card";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { BookingBarTypes } from "../../types";
 import apiRequest from "../../api/apiRequest";
 import toast from "react-hot-toast";
-import { LayoutGrid, List, SlidersHorizontal, X } from "lucide-react";
+import { LayoutGrid, List } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SearchBar } from "../../components/searchBar/SearchBar";
 import { Button } from "../../components/ui/button";
@@ -40,6 +36,15 @@ const SearchResult = () => {
     pets: params.pets ? Number(params.pets) : 0,
   };
 
+  const [applyFiltersData, setApplyFiltersData] = useState({
+    amenities: [],
+    maxPrice: null,
+    minPrice: null,
+    minRating: null,
+    roomTypes: [],
+  });
+  const { amenities, maxPrice, minPrice, minRating, roomTypes } =
+    applyFiltersData;
   const { location, checkIn, checkOut, adults, children } = bookingBarData;
 
   useEffect(() => {
@@ -52,7 +57,14 @@ const SearchResult = () => {
         const response = await apiRequest({
           method: "POST",
           url: "/api/rooms/search",
-          data: bookingBarData,
+          data: {
+            ...bookingBarData,
+            amenities,
+            maxPrice,
+            minPrice,
+            minRating,
+            roomTypes,
+          },
           onError: (err) => {
             setError(err?.response?.data?.error);
           },
@@ -69,114 +81,19 @@ const SearchResult = () => {
     };
 
     searchResult();
-    // console.log(bookingBarData);
-  }, [searchParams]);
+  }, [searchParams, applyFiltersData]);
 
   useEffect(() => {
     console.log(filterData);
   }, [filterData]);
 
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
-  const [selectedRating, setSelectedRating] = useState<string[]>([]);
-  const [selectedDistance, setSelectedDistance] = useState<string[]>([]);
+  // const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  // const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
+  // const [selectedRating, setSelectedRating] = useState<string[]>([]);
+  // const [selectedDistance, setSelectedDistance] = useState<string[]>([]);
+  // const personCount = { adult: 1, children: 2 };
+
   const [viewMode, setViewMode] = useState("list");
-  const personCount = { adult: 1, children: 2 };
-
-  // const hotels = [
-  //   {
-  //     id: "1",
-  //     name: "Grand Luxury Hotel & Spa",
-  //     image:
-  //       "https://images.unsplash.com/photo-1634041441461-a1789d008830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGV4dGVyaW9yfGVufDF8fHx8MTc2MDI1OTg4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  //     rating: 9.2,
-  //     reviews: 1284,
-  //     location: "Downtown Dubai, UAE",
-  //     description:
-  //       "Experience ultimate luxury with stunning city views, world-class dining, and a rooftop infinity pool. Perfect for business and leisure travelers.",
-  //     price: 245,
-  //     originalPrice: 320,
-  //     distance: "0.5 km from center",
-  //     amenities: ["WiFi", "Pool", "Breakfast"],
-  //     isSponsored: true,
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "Boutique Resort & Suites",
-  //     image:
-  //       "https://images.unsplash.com/photo-1752874068731-ac862330e666?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3V0aXF1ZSUyMGhvdGVsJTIwcm9vbXxlbnwxfHx8fDE3NjAxODE1NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  //     rating: 8.9,
-  //     reviews: 856,
-  //     location: "Marina Bay, Dubai",
-  //     description:
-  //       "Charming boutique hotel offering personalized service, elegant rooms, and a serene atmosphere. Located near major attractions and shopping districts.",
-  //     price: 185,
-  //     originalPrice: 250,
-  //     distance: "1.2 km from center",
-  //     amenities: ["WiFi", "Breakfast"],
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "Paradise Resort & Casino",
-  //     image:
-  //       "https://images.unsplash.com/photo-1722409195473-d322e99621e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXNvcnQlMjBzd2ltbWluZyUyMHBvb2x8ZW58MXx8fHwxNzYwMTc1MjgxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  //     rating: 9.5,
-  //     reviews: 2134,
-  //     location: "Palm Jumeirah, Dubai",
-  //     description:
-  //       "All-inclusive beachfront resort featuring multiple pools, spa facilities, and entertainment options. Ideal for families and couples seeking relaxation.",
-  //     price: 425,
-  //     distance: "3.5 km from center",
-  //     amenities: ["WiFi", "Pool", "Breakfast"],
-  //   },
-  //   {
-  //     id: "4",
-  //     name: "Executive Business Hotel",
-  //     image:
-  //       "https://images.unsplash.com/photo-1563340284-cadcc9976727?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXR5JTIwaG90ZWwlMjB2aWV3fGVufDF8fHx8MTc2MDIwMTE3Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  //     rating: 8.7,
-  //     reviews: 643,
-  //     location: "Business Bay, Dubai",
-  //     description:
-  //       "Modern hotel designed for business travelers with state-of-the-art meeting rooms, high-speed internet, and convenient airport access.",
-  //     price: 195,
-  //     distance: "0.8 km from center",
-  //     amenities: ["WiFi", "Breakfast"],
-  //   },
-  //   {
-  //     id: "5",
-  //     name: "Imperial Palace Hotel",
-  //     image:
-  //       "https://images.unsplash.com/photo-1743061339900-e40775a80524?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob3RlbCUyMGxvYmJ5JTIwaW50ZXJpb3J8ZW58MXx8fHwxNzYwMjI4MzcyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  //     rating: 9.4,
-  //     reviews: 1567,
-  //     location: "City Center, Dubai",
-  //     description:
-  //       "Sophisticated luxury hotel with classical elegance, Michelin-star dining, and impeccable service. A landmark destination in the heart of the city.",
-  //     price: 385,
-  //     originalPrice: 480,
-  //     distance: "0.3 km from center",
-  //     amenities: ["WiFi", "Pool", "Breakfast"],
-  //     isSponsored: true,
-  //   },
-  //   {
-  //     id: "6",
-  //     name: "Coastal View Resort",
-  //     image:
-  //       "https://images.unsplash.com/photo-1634041441461-a1789d008830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbCUyMGV4dGVyaW9yfGVufDF8fHx8MTc2MDI1OTg4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  //     rating: 9.1,
-  //     reviews: 923,
-  //     location: "Jumeirah Beach, Dubai",
-  //     description:
-  //       "Beachfront paradise with private beach access, water sports, and spectacular sunset views. Perfect for a memorable vacation experience.",
-  //     price: 295,
-  //     distance: "4.2 km from center",
-  //     amenities: ["WiFi", "Pool", "Breakfast"],
-  //   },
-  // ];
-
-  console.log("FILTERED DATA : ", filterData);
-
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -220,20 +137,6 @@ const SearchResult = () => {
                 <LayoutGrid className="h-4 w-4" />
               </Button>
             </div>
-
-            {/* Sort */}
-            {/* <Select defaultValue="recommended">
-              <SelectTrigger className="w-[180px] bg-white rounded-xl border-neutral-200 shadow-sm">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="recommended">Recommended</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="rating">Top Rated</SelectItem>
-                <SelectItem value="distance">Distance</SelectItem>
-              </SelectContent>
-            </Select> */}
           </div>
         </div>
 
@@ -241,7 +144,9 @@ const SearchResult = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8">
           {/* Desktop Filters Sidebar */}
           <div className="hidden lg:block">
-            <FilterSidebar />
+            <FilterSidebar
+              onApplyFilters={(data) => setApplyFiltersData(data)}
+            />
           </div>
 
           {/* Mobile Filters Sheet */}

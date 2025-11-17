@@ -5,14 +5,22 @@ import { Label } from "../../components/ui/label";
 import { Button } from "../../components/ui/button";
 import { Separator } from "../../components/ui/separator";
 import { Star, X } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface FilterSidebarProps {
+  // Add a prop to handle the submission of filters
+  onApplyFilters: (filters: {
+    minPrice: number;
+    maxPrice: number;
+    minRating: number | undefined;
+    roomTypes: string[];
+    amenities: string[];
+  }) => void;
   onClose?: () => void;
   isMobile?: boolean;
 }
 
 export function FilterSidebar({
+  onApplyFilters, // New prop
   onClose,
   isMobile = false,
 }: FilterSidebarProps) {
@@ -69,8 +77,31 @@ export function FilterSidebar({
     setSelectedAmenities([]);
   };
 
+  const handleApplyFilters = () => {
+    const [minPrice, maxPrice] = priceRange;
+    
+    // Determine the highest selected rating to use as a minimum.
+    // The server expects minRating (e.g., 4 means 4 stars or more).
+    const minRating = selectedRating.length > 0 ? Math.max(...selectedRating) : undefined;
+
+    // Call the provided callback with the structured filter data
+    onApplyFilters({
+      minPrice,
+      maxPrice,
+      minRating,
+      roomTypes: selectedRoomTypes,
+      amenities: selectedAmenities,
+    });
+    
+    if (isMobile && onClose) {
+        onClose();
+    }
+  };
+
   return (
     <div className="bg-white rounded-2xl border border-neutral-200 p-6 h-fit sticky top-24 shadow-sm">
+      {/* ... (Mobile Header, Clear All button, Price Range, and Separators remain the same) ... */}
+      
       {isMobile && (
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg text-neutral-900">Filters</h3>
@@ -105,11 +136,11 @@ export function FilterSidebar({
         />
         <div className="flex items-center justify-between text-sm text-neutral-600">
           <span className="px-3 py-1.5 bg-neutral-50 rounded-lg">
-            ${priceRange[0]}
+            ₼ {priceRange[0]}
           </span>
           <span className="text-neutral-400">—</span>
           <span className="px-3 py-1.5 bg-neutral-50 rounded-lg">
-            ${priceRange[1]}+
+            ₼ {priceRange[1]}+
           </span>
         </div>
       </div>
@@ -121,11 +152,10 @@ export function FilterSidebar({
         <Label className="mb-4 block text-neutral-700">Star Rating</Label>
         <div className="space-y-3">
           {[5, 4, 3, 2, 1].map((rating) => (
-            <motion.div
+            <div
               key={rating}
-              whileHover={{ x: 2 }}
               className="flex items-center gap-3 cursor-pointer group"
-              onClick={() => toggleRating(rating)}
+              onClick={() => toggleRating(rating)} // Add onClick to the container
             >
               <Checkbox
                 checked={selectedRating.includes(rating)}
@@ -140,7 +170,7 @@ export function FilterSidebar({
                   />
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -152,9 +182,8 @@ export function FilterSidebar({
         <Label className="mb-4 block text-neutral-700">Room Type</Label>
         <div className="space-y-3">
           {roomTypes.map((type) => (
-            <motion.div
+            <div
               key={type.id}
-              whileHover={{ x: 2 }}
               className="flex items-center gap-3 cursor-pointer group"
               onClick={() => toggleRoomType(type.id)}
             >
@@ -166,7 +195,7 @@ export function FilterSidebar({
               <Label className="cursor-pointer text-neutral-600 group-hover:text-neutral-900 transition-colors">
                 {type.label}
               </Label>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -178,9 +207,8 @@ export function FilterSidebar({
         <Label className="mb-4 block text-neutral-700">Amenities</Label>
         <div className="space-y-3 max-h-60 overflow-y-auto pr-2">
           {amenities.map((amenity) => (
-            <motion.div
+            <div
               key={amenity.id}
-              whileHover={{ x: 2 }}
               className="flex items-center gap-3 cursor-pointer group"
               onClick={() => toggleAmenity(amenity.id)}
             >
@@ -192,12 +220,16 @@ export function FilterSidebar({
               <Label className="cursor-pointer text-neutral-600 group-hover:text-neutral-900 transition-colors">
                 {amenity.label}
               </Label>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
 
-      <Button className="w-full bg-teal-600 hover:bg-teal-700 rounded-xl">
+      {/* Apply Filters Button (calls new function) */}
+      <Button 
+        className="w-full bg-teal-600 hover:bg-teal-700 rounded-xl"
+        onClick={handleApplyFilters} // Attach the handler
+      >
         Apply Filters
       </Button>
     </div>

@@ -103,6 +103,9 @@ app.post("/api/rooms/search", async (req: Request, res: Response) => {
       maxPrice,
       minRating,
       location,
+      // New parameters from the client
+      roomTypes,
+      amenities,
     } = req.body;
 
     // Basic validation
@@ -138,6 +141,22 @@ app.post("/api/rooms/search", async (req: Request, res: Response) => {
       // Partial match, case-insensitive
       query.location = { $regex: new RegExp(location, "i") };
     }
+
+    // --- NEW FILTER IMPLEMENTATION ---
+
+    // Room Type Filter (Match any selected type)
+    if (Array.isArray(roomTypes) && roomTypes.length > 0) {
+      query.roomType = { $in: roomTypes };
+      // NOTE: Assumes your Room model has a 'roomType' field (String)
+    }
+
+    // Amenities Filter (Match all selected amenities)
+    if (Array.isArray(amenities) && amenities.length > 0) {
+      query.amenities = { $all: amenities };
+      // NOTE: Assumes your Room model has an 'amenities' field (Array of Strings)
+    }
+
+    // --- END NEW FILTER IMPLEMENTATION ---
 
     const filteredRooms = await Room.find(query);
 
