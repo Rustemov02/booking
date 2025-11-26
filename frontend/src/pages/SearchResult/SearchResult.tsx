@@ -117,7 +117,7 @@ const SearchResult = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
             {/* View Mode Toggle */}
             <div className="flex items-center gap-1 bg-white rounded-xl border border-neutral-200 p-1.5 shadow-sm">
               <Button
