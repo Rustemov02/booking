@@ -9,16 +9,17 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { ChevronRight, MapPin, Search } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 const BookingBar = ({
   data,
 }: {
   extraStyle?: string;
   data?: BookingBarTypes;
 }) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const location = useLocation();
-  const [range, setRange] = useState<{ from?: Date; to?: Date }>({});
 
   const navigate = useNavigate();
   const [bookingData, setBookingData] = useState<BookingBarTypes>(
@@ -29,23 +30,23 @@ const BookingBar = ({
       rooms: 1,
       guests: [
         {
-          label: "Rooms",
-          title: "Rooms count",
+          label: "rooms",
+          title: "roomsTitle",
           count: 0,
         },
         {
-          label: "Adults",
-          title: "Ages 13 or above",
+          label: "adults",
+          title: "adultsTitle",
           count: 0,
         },
         {
-          label: "Children",
-          title: "Ages 2-12",
+          label: "children",
+          title: "childrenTitle",
           count: 0,
         },
         {
-          label: "Pets",
-          title: "Bringing a service animal?",
+          label: "pets",
+          title: "petsTitle",
           count: 0,
         },
       ],
@@ -62,23 +63,10 @@ const BookingBar = ({
     console.log("BOOKING DATA : ", bookingData);
   }, [bookingData]);
 
-  const clearCheckData = (type: "checkIn" | "checkOut") => {
-    setBookingData((prev) => ({
-      ...prev,
-      [type]: null,
-    }));
-  };
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
-
   const [hovered, setHovered] = useState<string | null>(null);
-  const [isMainClicked, setMainClicked] = useState(false);
   const [selectedBox, setSelectedBox] = useState<string | null>(null);
 
   const clickedOutside = useClickOutSide(() => {
-    setMainClicked(false);
     setSelectedBox(null);
   });
 
@@ -101,12 +89,23 @@ const BookingBar = ({
   // ]);
   const handleSubmit = async () => {
     setSelectedBox("");
+    const [, adultsCount, childrenCount] = bookingData.guests.map((g) => g.count);
+
+    if (!bookingData.destination) {
+      toast.error(t("validation.selectDestination"));
+      return;
+    }
+
     if (!bookingData.checkIn || !bookingData.checkOut) {
-      toast.error("Bütün dataları doldurun !");
+      toast.error(t("validation.selectDates"));
+      return;
+    }
+
+    if (adultsCount + childrenCount === 0) {
+      toast.error(t("validation.selectGuests"));
       return;
     }
     setIsLoading(true);
-    setError("");
 
     const { checkIn, checkOut, guests, destination } = bookingData;
     const [rooms, adults, children, pets] = guests.map((g) => g.count);
@@ -122,7 +121,7 @@ const BookingBar = ({
     };
 
     console.log(queryParams);
-    const params = new URLSearchParams(queryParams);
+    const params = new URLSearchParams(queryParams as any);
 
     const currentPath = location.pathname;
     const basePath = currentPath.includes("searchResult") ? "" : "searchResult";
@@ -155,17 +154,15 @@ const BookingBar = ({
       {/* DESKTOP VERSION */}
       <div
         ref={clickedOutside}
-        onClick={() => setMainClicked(selectedBox !== null)}
-        className={`mx-auto relative hidden md:grid max-w-[850px] rounded-full w-full ${
-          selectedBox !== null ? "bg-gray-200" : "bg-white shadow-lg"
-        } grid-cols-[2fr_auto_150px_auto_150px_auto_1fr_50px] items-center gap-1 transition-all duration-500`}
+        onClick={() => { }}
+        className={`mx-auto relative hidden md:grid max-w-[900px] rounded-full w-full ${selectedBox !== null ? "bg-white shadow-xl ring-1 ring-black/5" : "bg-white shadow-lg"
+          } grid-cols-[1.5fr_auto_1fr_auto_1fr_auto_1fr_60px] items-center transition-all duration-500`}
       >
         {/* WHERE */}
         <div
           onClick={() => setSelectedBox("where")}
-          className={`${commonContainerStyles} ${
-            selectedBox === "where" ? hoveringStyles : ""
-          }`}
+          className={`${commonContainerStyles} ${selectedBox === "where" ? hoveringStyles : ""
+            }`}
           onMouseEnter={() => setHovered("where")}
           onMouseLeave={() => setHovered(null)}
         >
@@ -178,9 +175,9 @@ const BookingBar = ({
           )}
           <div className="relative z-10 flex items-center justify-between gap-2">
             <div className="flex-1">
-              <p className="text-xs font-semibold text-gray-900">Where</p>
+              <p className="text-xs font-semibold text-gray-900">{t("bookingBar.where")}</p>
               <p className="text-sm text-gray-500">
-                {bookingData?.destination ?? "Search destinations"}
+                {bookingData?.destination ?? t("bookingBar.searchDestinations")}
               </p>
             </div>
             {bookingData?.destination && (
@@ -218,7 +215,7 @@ const BookingBar = ({
               <div className="absolute top-full left-0 w-[400px] oveflow-hidden mt-4 bg-white rounded-2xl   shadow-lg border border-neutral-200">
                 <div className="max-h-[400px] overflow-y-auto">
                   <div className="px-4 py-3 border-b border-neutral-100">
-                    <h4 className="text-neutral-900">Suggested Destinations</h4>
+                    <h4 className="text-neutral-900">{t("bookingBar.suggestedDestinations")}</h4>
                   </div>
 
                   <div className="py-2">
@@ -292,22 +289,20 @@ const BookingBar = ({
 
         {/* DIVIDER */}
         <div
-          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${
-            hovered === "where" ||
+          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${hovered === "where" ||
             hovered === "checkIn" ||
             selectedBox === "where" ||
             selectedBox === "checkIn"
-              ? "opacity-0"
-              : ""
-          }`}
+            ? "opacity-0"
+            : ""
+            }`}
         />
 
         {/* CHECK IN */}
         <div
           onClick={() => setSelectedBox("dates")}
-          className={`${commonContainerStyles} ${
-            selectedBox === "dates" ? hoveringStyles : ""
-          }`}
+          className={`${commonContainerStyles} ${selectedBox === "dates" ? hoveringStyles : ""
+            }`}
           onMouseEnter={() => setHovered("checkIn")}
           onMouseLeave={() => setHovered(null)}
         >
@@ -320,9 +315,9 @@ const BookingBar = ({
           )}
           <div className="relative z-10 flex items-center justify-between gap-2">
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-gray-900">Check in</p>
+              <p className="text-xs font-semibold text-gray-900">{t("bookingBar.checkIn")}</p>
               <p className="text-sm text-gray-500">
-                {bookingData?.checkIn || "Add dates"}
+                {bookingData?.checkIn ? String(bookingData.checkIn) : t("bookingBar.addDates")}
               </p>
             </div>
             {bookingData?.checkIn && (
@@ -345,21 +340,19 @@ const BookingBar = ({
 
         {/* DIVIDER */}
         <div
-          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${
-            hovered === "checkIn" ||
+          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${hovered === "checkIn" ||
             hovered === "checkOut" ||
             selectedBox === "dates"
-              ? "opacity-0"
-              : ""
-          }`}
+            ? "opacity-0"
+            : ""
+            }`}
         />
 
         {/* CHECK OUT */}
         <div
           onClick={() => setSelectedBox("dates")}
-          className={`${commonContainerStyles} ${
-            selectedBox === "dates" ? hoveringStyles : ""
-          }`}
+          className={`${commonContainerStyles} ${selectedBox === "dates" ? hoveringStyles : ""
+            }`}
           onMouseEnter={() => setHovered("checkOut")}
           onMouseLeave={() => setHovered(null)}
         >
@@ -372,9 +365,9 @@ const BookingBar = ({
           )}
           <div className="relative z-10 flex items-center justify-between gap-2">
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-gray-900">Check out</p>
+              <p className="text-xs font-semibold text-gray-900">{t("bookingBar.checkOut")}</p>
               <p className="text-sm text-gray-500">
-                {bookingData?.checkOut || "Add dates"}
+                {bookingData?.checkOut ? String(bookingData.checkOut) : t("bookingBar.addDates")}
               </p>
             </div>
             {bookingData?.checkOut && (
@@ -449,22 +442,20 @@ const BookingBar = ({
         </AnimatePresence>
         {/* DIVIDER */}
         <div
-          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${
-            hovered === "checkOut" ||
+          className={`w-[1px] h-8 bg-gray-200 transition-opacity duration-300 ${hovered === "checkOut" ||
             hovered === "guests" ||
             selectedBox === "checkOut" ||
             selectedBox === "guests"
-              ? "opacity-0"
-              : ""
-          }`}
+            ? "opacity-0"
+            : ""
+            }`}
         />
 
         {/* GUESTS */}
         <div
           onClick={() => setSelectedBox("guests")}
-          className={`${commonContainerStyles} ${
-            selectedBox === "guests" ? hoveringStyles : ""
-          }`}
+          className={`${commonContainerStyles} ${selectedBox === "guests" ? hoveringStyles : ""
+            }`}
           onMouseEnter={() => setHovered("guests")}
           onMouseLeave={() => setHovered(null)}
         >
@@ -476,8 +467,8 @@ const BookingBar = ({
             />
           )}
           <div className="relative z-10">
-            <p className="text-xs font-semibold text-gray-900">Who</p>
-            <p className="text-sm text-gray-500">Add guests</p>
+            <p className="text-xs font-semibold text-gray-900">{t("bookingBar.who")}</p>
+            <p className="text-sm text-gray-500">{t("bookingBar.addGuests")}</p>
           </div>
         </div>
 
@@ -495,9 +486,11 @@ const BookingBar = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-semibold text-gray-900">
-                        {item.label}
+                        {t(`bookingBar.${item.label}`)}
                       </p>
-                      <p className="text-sm text-gray-500">{item.title}</p>
+                      <p className="text-sm text-gray-500">
+                        {t(`bookingBar.${item.title}`)}
+                      </p>
                     </div>
                     <Counter
                       count={item.count}
@@ -525,14 +518,16 @@ const BookingBar = ({
           )}
         </AnimatePresence>
 
-        <button
-          onClick={handleSubmit}
-          disabled={isLoading}
-          className="absolute right-2 text-blue-600 p-3 rounded-full cursor-pointer 
-          transition-all duration-300 scale-140 hover:scale-150 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <Search className="w-5 h-5" />
-        </button>
+        <div className="pr-2">
+          <button
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="flex items-center justify-center w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full cursor-pointer 
+            transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+          >
+            <Search className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       {/* MOBILE VERSION */}
@@ -625,7 +620,7 @@ const BookingBar = ({
                       <div className="max-h-[300px] overflow-y-auto">
                         <div className="px-4 py-3 border-b border-gray-200 bg-gray-50">
                           <h4 className="text-sm font-semibold text-gray-900">
-                            Suggested Destinations
+                            {t("bookingBar.suggestedDestinations")}
                           </h4>
                         </div>
 
@@ -701,7 +696,7 @@ const BookingBar = ({
                   {/* Dates Section */}
                   <div className="border border-gray-300 rounded-2xl p-4">
                     <label className="text-xs font-semibold text-gray-900 block mb-2">
-                      When
+                      {t("bookingBar.when")}
                     </label>
                     <div className="flex gap-4">
                       <div className="flex-1">
@@ -711,7 +706,7 @@ const BookingBar = ({
                             onClick={() => setMobileStep("dates")}
                             className="text-sm text-gray-900 hover:underline"
                           >
-                            {bookingData?.checkIn || "Add dates"}
+                            {bookingData?.checkIn ? String(bookingData.checkIn) : t("bookingBar.addDates")}
                           </button>
                           {bookingData?.checkIn && (
                             <button
@@ -737,7 +732,7 @@ const BookingBar = ({
                             onClick={() => setMobileStep("dates")}
                             className="text-sm text-gray-900 hover:underline"
                           >
-                            {bookingData?.checkOut || "Add dates"}
+                            {bookingData?.checkOut ? String(bookingData.checkOut) : t("bookingBar.addDates")}
                           </button>
                           {bookingData?.checkOut && (
                             <button
@@ -806,17 +801,17 @@ const BookingBar = ({
                   {/* Guests Section */}
                   <div className="border border-gray-300 rounded-2xl p-4">
                     <label className="text-xs font-semibold text-gray-900 block mb-3">
-                      Who
+                      {t("bookingBar.who")}
                     </label>
                     {bookingData?.guests.map((item, index) => (
                       <div key={item.label}>
                         <div className="flex items-center justify-between py-3">
                           <div>
                             <p className="text-sm font-semibold text-gray-900">
-                              {item.label}
+                              {t(`bookingBar.${item.label}`)}
                             </p>
                             <p className="text-xs text-gray-500">
-                              {item.title}
+                              {t(`bookingBar.${item.title}`)}
                             </p>
                           </div>
                           <Counter
@@ -847,7 +842,7 @@ const BookingBar = ({
                     className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-full flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Search className="w-5 h-5" />
-                    Search
+                    {t("bookingBar.search")}
                   </button>
                 </div>
               </motion.div>

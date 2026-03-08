@@ -2,11 +2,47 @@
   "welcome": "Welcome",
   "description": "This is a React project with TypeScript and i18n",
   "notAvailableYet": "This feature isn’t available yet, but it’s coming soon!",
+  "nav": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "favourites": "Favourites",
+    "help": "Help",
+    "logout": "Logout",
+    "language": "Language",
+    "signin": "Sign in",
+    "register": "Register",
+    "home": "Home"
+  },
   "home": {
     "heroTitle": "Find Your Perfect Stay",
     "heroSubtitle": "Discover amazing deals on hotels in Azerbaijan",
     "trendingDestinations": "Trending Destinations",
     "homesGuestsLove": "Homes Guests Love",
     "trustedPartner": "Your trusted partner for finding the perfect accommodation worldwide."
+  },
+  "validation": {
+    "selectDestination": "Please select a destination!",
+    "selectDates": "Please select your dates!",
+    "selectGuests": "Please select at least one guest!"
+  },
+  "bookingBar": {
+    "rooms": "Rooms",
+    "adults": "Adults",
+    "children": "Children",
+    "pets": "Pets",
+    "roomsTitle": "Rooms count",
+    "adultsTitle": "Ages 13 or above",
+    "childrenTitle": "Ages 2-12",
+    "petsTitle": "Bringing a service animal?",
+    "where": "Where",
+    "searchDestinations": "Search destinations",
+    "checkIn": "Check In",
+    "checkOut": "Check Out",
+    "addDates": "Add dates",
+    "who": "Who",
+    "addGuests": "Add guests",
+    "suggestedDestinations": "Suggested Destinations",
+    "search": "Search",
+    "when": "When"
   }
 }

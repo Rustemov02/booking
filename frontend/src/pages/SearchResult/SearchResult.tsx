@@ -36,11 +36,17 @@ const SearchResult = () => {
     pets: params.pets ? Number(params.pets) : 0,
   };
 
-  const [applyFiltersData, setApplyFiltersData] = useState({
+  const [applyFiltersData, setApplyFiltersData] = useState<{
+    amenities: string[];
+    maxPrice: number | null;
+    minPrice: number | null;
+    minRating: number | undefined;
+    roomTypes: string[];
+  }>({
     amenities: [],
     maxPrice: null,
     minPrice: null,
-    minRating: null,
+    minRating: undefined,
     roomTypes: [],
   });
   const { amenities, maxPrice, minPrice, minRating, roomTypes } =
@@ -59,6 +65,7 @@ const SearchResult = () => {
           url: "/api/rooms/search",
           data: {
             ...bookingBarData,
+            location: bookingBarData.location, // Explicitly pass location
             amenities,
             maxPrice,
             minPrice,
@@ -98,6 +105,23 @@ const SearchResult = () => {
   return (
     <div className="min-h-screen bg-neutral-50">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 group pl-0"
+          >
+            <motion.span
+              animate={{ x: [0, -4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              ←
+            </motion.span>
+            <span>Back to Search</span>
+          </Button>
+        </div>
+
         {/* Search Bar */}
         <SearchBar
           location={location as string}
@@ -145,7 +169,7 @@ const SearchResult = () => {
           {/* Desktop Filters Sidebar */}
           <div className="hidden lg:block">
             <FilterSidebar
-              onApplyFilters={(data) => setApplyFiltersData(data)}
+              onApplyFilters={(data) => setApplyFiltersData(data as any)}
             />
           </div>
 
@@ -156,6 +180,7 @@ const SearchResult = () => {
               className="w-full sm:w-[400px] overflow-y-auto"
             >
               <FilterSidebar
+                onApplyFilters={(data) => setApplyFiltersData(data as any)}
                 onClose={() => setShowMobileFilters(false)}
                 isMobile
               />

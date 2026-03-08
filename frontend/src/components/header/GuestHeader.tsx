@@ -1,14 +1,9 @@
 import { useState } from "react";
-import HamburgerMenu from "../../assets/svg/HamburgerMenu";
 import Button from "../button/Button";
 import LanguageDropdown from "../langMenu/Dropdown";
 import SideModal from "../modal/sideModal";
-import { useLocation, useNavigate } from "react-router-dom";
-import FavouritesIcon from "../../assets/svg/like.svg?react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import Logo from "@/assets/images/logo.svg?react";
-import Question from "@/assets/svg/question.svg?react";
-import Profile from "@/assets/svg/profile.svg?react";
-import Menu from "@/assets/svg/menu.svg?react";
 import { useTranslation } from "react-i18next";
 import type { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
@@ -17,7 +12,7 @@ import useClickOutSide from "../../hooks/useClickOutside";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/user_store";
 import toast from "react-hot-toast";
-import { Heart, HelpCircle, User, LogOut, Settings } from "lucide-react";
+import { Heart, HelpCircle, User, LogOut, Settings, Menu } from "lucide-react";
 
 const GuestHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,20 +69,22 @@ const GuestHeader = () => {
             </button> */}
 
             {/* Auth Buttons or User Menu */}
+            {/* Auth Buttons or User Menu */}
             {!roleName ? (
               <div className="flex items-center gap-2 ml-2">
                 <Button
-                  to="/login"
-                  title="Sign In"
-                  variant="primary"
-                  className="text-sm px-4 py-2 bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 rounded-full transition-all"
-                />
+                  asChild
+                  variant="outline"
+                  className="text-sm px-4 py-2 text-gray-900 border border-gray-300 hover:bg-gray-50 rounded-full transition-all"
+                >
+                  <Link to="/login">Sign In</Link>
+                </Button>
                 <Button
-                  to="/register"
-                  title="Register"
-                  variant="primary"
-                  className="text-sm px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-full transition-all"
-                />
+                  asChild
+                  className="text-sm px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-full transition-all border-none"
+                >
+                  <Link to="/register">Register</Link>
+                </Button>
               </div>
             ) : (
               <div className="relative" ref={clickedOutside}>

@@ -34,6 +34,19 @@ app.get("/api/rooms", async (req: Request, res: Response) => {
   }
 });
 
+// GET Saved Rooms
+app.get("/api/rooms/favourites", async (req: Request, res: Response) => {
+  try {
+    const savedRooms = await Room.find({ isSaved: true });
+
+    console.log("SAVED ROOMS : ", savedRooms);
+    return res.json({ rooms: savedRooms });
+  } catch (err) {
+    console.log("Error while fetchind favourites rooms...");
+    return res.status(500).json({ error: "Favourites otaqlar tapılmadı !" });
+  }
+});
+
 // GET Rooms by id
 app.get("/api/rooms/:id", async (req: Request, res: Response) => {
   try {
@@ -47,19 +60,6 @@ app.get("/api/rooms/:id", async (req: Request, res: Response) => {
   } catch (err) {
     console.log("Failed to get room by id ", err);
     return res.status(500).json({ error: "Failed to get room" });
-  }
-});
-
-// GET Saved Rooms
-app.get("/api/rooms/favourites", async (req: Request, res: Response) => {
-  try {
-    const savedRooms = await Room.find({ isSaved: true });
-
-    console.log("SAVED ROOMS : ", savedRooms);
-    return res.json({ rooms: savedRooms });
-  } catch (err) {
-    console.log("Error while fetchind favourites rooms...");
-    return res.status(500).json({ error: "Favourites otaqlar tapılmadı !" });
   }
 });
 

@@ -2,11 +2,47 @@
   "welcome": "Xoş gəlmisiniz",
   "description": "Bu, TypeScript və i18n ilə React layihəsidir",
   "notAvailableYet": "Bu xüsusiyyət hələ aktiv deyil, amma tezliklə əlavə olunacaq!",
+  "nav": {
+    "profile": "Profil",
+    "settings": "Tənzimləmələr",
+    "favourites": "Sevimlilər",
+    "help": "Kömək",
+    "logout": "Çıxış",
+    "language": "Dil",
+    "signin": "Giriş",
+    "register": "Qeydiyyat",
+    "home": "Ana Səhifə"
+  },
   "home": {
     "heroTitle": "Mükəmməl yerini tap",
     "heroSubtitle": "Azərbaycanın hər yerində otellərdə möhtəşəm endirimləri kəşf et",
     "trendingDestinations": "Populyar istiqamətlər",
     "homesGuestsLove": "Qonaqların sevdiyi evlər",
     "trustedPartner": "Dünyanın hər yerində ideal qalma yerini tapmaqda etibarlı tərəfdaşın."
+  },
+  "validation": {
+    "selectDestination": "Zəhmət olmasa hara gedəcəyinizi qeyd edin!",
+    "selectDates": "Zəhmət olmasa tarixləri daxil edin!",
+    "selectGuests": "Zəhmət olmasa ən azı bir nəfər seçin!"
+  },
+  "bookingBar": {
+    "rooms": "Otaqlar",
+    "adults": "Böyüklər",
+    "children": "Uşaqlar",
+    "pets": "Ev heyvanları",
+    "roomsTitle": "Otaq sayı",
+    "adultsTitle": "13 yaş və yuxarı",
+    "childrenTitle": "2-12 yaş",
+    "petsTitle": "Xidməti heyvan gətirirsiniz?",
+    "where": "Hara",
+    "searchDestinations": "İstiqamətləri axtar",
+    "checkIn": "Giriş",
+    "checkOut": "Çıxış",
+    "addDates": "Tarix əlavə et",
+    "who": "Kim",
+    "addGuests": "Qonaq əlavə et",
+    "suggestedDestinations": "Təklif olunan istiqamətlər",
+    "search": "Axtar",
+    "when": "Nə vaxt"
   }
 }

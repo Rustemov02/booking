@@ -9,6 +9,7 @@ interface ApiRequestOptions {
   headers?: Record<string, string>;
   onSuccess?: (res: any) => void;
   onError?: (err: any) => void;
+  showErrorToast?: boolean;
 }
 const apiRequest = async ({
   method,
@@ -18,6 +19,7 @@ const apiRequest = async ({
   headers,
   onSuccess,
   onError,
+  showErrorToast = true,
 }: ApiRequestOptions) => {
   try {
     const response = await axiosInstance.request({
@@ -36,7 +38,9 @@ const apiRequest = async ({
   } catch (error: any) {
     onError?.(error);
     console.log("API Error : ", error);
-    toast.error("Xəta baş verdi !");
+    if (showErrorToast) {
+      toast.error("Xəta baş verdi !");
+    }
     throw error; // tutulan erroru yuxarı komponentə ötürmək üçün
   }
 };

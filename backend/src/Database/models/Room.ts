@@ -10,6 +10,9 @@ const RoomSchema = new mongoose.Schema({
   petFriendly: Boolean,
   price: Number,
   rating: Number,
+  roomType: String,
+  amenities: [String],
+  location: String,
 });
 
 export const Room = mongoose.model("Room", RoomSchema, "rooms");

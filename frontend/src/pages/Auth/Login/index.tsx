@@ -1,6 +1,5 @@
-import {Input} from "../../../components/input/Input";
+import { Input } from "../../../components/input/Input";
 import CloseEye from "../../../assets/svg/closeEye.svg?react";
-import OpenEye from "../../../assets/svg/openEye.svg?react";
 import Button from "../../../components/button/Button";
 import apiRequest from "../../../api/apiRequest";
 import { useEffect, useState } from "react";
@@ -20,7 +19,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state: RootState) => state);
+  // No unused selector
   const handleLogin = async () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -97,59 +96,76 @@ const Login = () => {
   }, [errors]);
 
   return (
-    <>
-      <div className="flex flex-col gap-4 w-full">
-        <div>
-          <p className="!text-[26px] font-bold text-neutral-900">
-            Let's get you back on track
-          </p>
-          <p className="text-[14px] font-normal text-neutral-500">
-            Login to access account
-          </p>
-        </div>
+    <div className="flex flex-col gap-6 w-full max-w-md mx-auto p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Welcome Back
+        </h1>
+        <p className="text-gray-500">
+          Login to access your booking account
+        </p>
+      </div>
+
+      <div className="space-y-4">
         <Input
           name="email"
-          label="Email"
-          error={getError(errors, "email")}
+          label="Email Address"
+          error={getError(errors, "email") || undefined}
           clearError={() => setErrors((prev) => clearError(prev, "email"))}
           value={email || ""}
           onChange={(e) => setMail(e.target.value)}
-          icons={<Mail className="w-5 h-5" />}
+          icons={<Mail className="w-5 h-5 text-gray-400" />}
+          placeholder="email@example.com"
         />
         <Input
           name="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password || ""}
           type="password"
-          error={getError(errors, "password")}
+          error={getError(errors, "password") || undefined}
           clearError={() => setErrors((prev) => clearError(prev, "password"))}
           label="Password"
-          placeholder="********"
-          icons={<CloseEye className="w-[20px] h-[20px]" />}
+          placeholder="••••••••"
+          icons={<CloseEye className="w-5 h-5 text-gray-400" />}
         />
 
-        <div className="flex flex-row items-center justify-between">
-          <span className="flex flex-row items-center gap-2 justify-between text-[14px] text-[#747474]">
+        <div className="flex items-center justify-between text-sm">
+          <label className="flex items-center gap-2 text-gray-600 cursor-pointer group">
             <input
               type="checkbox"
-              onClick={() => setIsRemember(!isRemember)}
-              className="cursor-pointer"
+              checked={isRemember}
+              onChange={() => setIsRemember(!isRemember)}
+              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
             />
-            Keep me logged in
-          </span>
-          <p className="text-[#4E46E5] text-[14px] font-semibold">
+            <span className="group-hover:text-gray-900 transition-colors">Keep me logged in</span>
+          </label>
+          <button className="text-blue-600 font-semibold hover:text-blue-700 hover:underline transition-colors">
             Forgot password?
-          </p>
+          </button>
         </div>
 
-        {getError(errors, "email") && <span>{getError(errors, "email")}</span>}
-        <div className="mt-3">
-          <Button title="Login" variant="outline" onClick={handleLogin}>
-            Login
-          </Button>
+        <Button
+          title="Login"
+          variant="default"
+          onClick={handleLogin}
+          className="w-full h-12 text-base font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-200 transition-all active:scale-[0.98]"
+        >
+          Sign In
+        </Button>
+
+        <div className="text-center mt-6">
+          <p className="text-gray-500 text-sm">
+            Don't have an account?{" "}
+            <button
+              onClick={() => navigate("/register")}
+              className="text-blue-600 font-semibold hover:underline"
+            >
+              Create an account
+            </button>
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

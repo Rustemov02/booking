@@ -71,6 +71,7 @@ export default function Home() {
           url: "/api/rooms/",
           onError: (err) => console.log(err),
           onSuccess: (data) => setRooms(data.rooms),
+          showErrorToast: false,
         });
         console.log(response.rooms);
         setRooms(response.rooms);
@@ -140,72 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Quick Trip Planner */}
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <MapPin className="h-6 w-6 text-blue-600" />
-              <h2 className="text-3xl font-semibold">Quick Trip Planner</h2>
-            </div>
-            <p className="text-gray-600">
-              Pick a vibe and explore the top destinations in a few clicks
-            </p>
-          </div>
 
-          <Tabs defaultValue="mountains" className="w-full">
-            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 mb-8">
-              <TabsTrigger value="mountains">Mountains</TabsTrigger>
-              <TabsTrigger value="beaches">Beaches</TabsTrigger>
-              <TabsTrigger value="cities">Cities</TabsTrigger>
-              <TabsTrigger value="culture">Culture</TabsTrigger>
-              <TabsTrigger value="outdoors">Outdoors</TabsTrigger>
-            </TabsList>
-            <TabsContent value="mountains" className="space-y-4">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ scale: 1.05 }}
-                    className="relative rounded-lg overflow-hidden shadow-md cursor-pointer h-40"
-                  >
-                    <img
-                      src="https://images.unsplash.com/photo-1666817059358-940080103885?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMHJlc29ydCUyMGxhbmRzY2FwZXxlbnwxfHx8fDE3NTk5NDk0MTF8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                      alt="Mountain destination"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-3 left-3 right-3 text-white">
-                      <p className="font-semibold text-sm">Aspen</p>
-                      <p className="text-xs opacity-90">1,234 properties</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="beaches">
-              <p className="text-center text-gray-500">
-                Beach destinations coming soon...
-              </p>
-            </TabsContent>
-            <TabsContent value="cities">
-              <p className="text-center text-gray-500">
-                City destinations coming soon...
-              </p>
-            </TabsContent>
-            <TabsContent value="culture">
-              <p className="text-center text-gray-500">
-                Cultural destinations coming soon...
-              </p>
-            </TabsContent>
-            <TabsContent value="outdoors">
-              <p className="text-center text-gray-500">
-                Outdoor destinations coming soon...
-              </p>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </section>
 
       {/* Featured Rooms */}
       <section className="py-16 bg-white">

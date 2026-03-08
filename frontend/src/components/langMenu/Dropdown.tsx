@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import Az from "../../assets/flags/flagAz.svg";
 import En from "../../assets/flags/flagEn.svg";
+import Ru from "../../assets/flags/flagRu.svg";
 import { useTranslation } from "react-i18next";
 
 const LanguageDropdown = () => {
@@ -14,7 +15,7 @@ const LanguageDropdown = () => {
   const languages = [
     { code: "az", flag: Az },
     { code: "en", flag: En },
-    // { code: "ru", flag: Ru },
+    { code: "ru", flag: Ru },
   ];
 
   // Dili dəyiş və yadda saxla
@@ -70,9 +71,8 @@ const LanguageDropdown = () => {
           {languages.map((lang) => (
             <div
               key={lang.code}
-              className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-blue-50 transition ${
-                selectedLang === lang.code ? "bg-blue-50" : ""
-              }`}
+              className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-blue-50 transition ${selectedLang === lang.code ? "bg-blue-50" : ""
+                }`}
               onClick={() => handleSelectLang(lang.code as "az" | "en" | "ru")}
             >
               <img

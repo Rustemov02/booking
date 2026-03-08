@@ -1,17 +1,11 @@
 import { ReactNode } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import GuestHeader from "../../components/header/GuestHeader";
-import Button from "../../components/button/Button";
-import Google from "../../assets/svg/Google.svg?react";
 
 interface Props {
   children: ReactNode;
 }
 
 const AuthLayoutWrapper = ({ children }: Props) => {
-  const location = useLocation();
-  const hasAccount = location.pathname === "/login";
-  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col h-screen">
@@ -19,44 +13,31 @@ const AuthLayoutWrapper = ({ children }: Props) => {
       <GuestHeader />
 
       {/* Main content */}
-      <main className="flex flex-1 justify-center items-center px-4">
-        <div className="w-full max-w-[420px] rounded-[12px] border border-neutral-500 p-7 bg-white shadow-sm">
+      <main className="flex flex-1 justify-center items-center px-4 py-12 bg-gray-50/50">
+        <div className="w-full max-w-2xl">
           {/* Children (Login/Register form) */}
-          <div>{children}</div>
+          {children}
 
-          {/* Social login */}
-          <div className="flex flex-col gap-4 w-full mt-5">
+          {/* Social login - Hidden temporarily as requested */}
+          {/* <div className="max-w-md mx-auto mt-8 px-8">
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-transparent text-gray-500">Or continue with</span>
+              </div>
+            </div>
+
             <Button
-              variant="primary"
-              title="Continue with Google"
-              icon={<Google />}
-            />
-          </div>
-
-          {/* Switch to Login/Register */}
-          <div className="mt-4 text-center text-sm">
-            {!hasAccount ? (
-              <>
-                Already have an account?
-                <span
-                  onClick={() => navigate("/login")}
-                  className="text-[#07689F] font-semibold cursor-pointer"
-                >
-                  {" "}Login
-                </span>
-              </>
-            ) : (
-              <>
-                Don’t have an account?
-                <span
-                  onClick={() => navigate("/register")}
-                  className="text-[#07689F] font-semibold cursor-pointer"
-                >
-                  {" "}Sign Up
-                </span>
-              </>
-            )}
-          </div>
+              variant="outline"
+              className="w-full h-12 rounded-xl flex items-center justify-center gap-3 border-gray-200 hover:bg-gray-50 transition-all font-medium"
+              onClick={() => { }}
+            >
+              <Google className="w-5 h-5" />
+              <span>Google</span>
+            </Button>
+          </div> */}
         </div>
       </main>
     </div>

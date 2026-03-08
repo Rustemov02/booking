@@ -1,4 +1,48 @@
 {
   "welcome": "Добро пожаловать",
-  "description": "Это проект React с TypeScript и i18n"
+  "description": "Это проект React с TypeScript и i18n",
+  "notAvailableYet": "Эта функция пока недоступна, но скоро появится!",
+  "nav": {
+    "profile": "Профиль",
+    "settings": "Настройки",
+    "favourites": "Избранное",
+    "help": "Помощь",
+    "logout": "Выйти",
+    "language": "Язык",
+    "signin": "Войти",
+    "register": "Регистрация",
+    "home": "Главная"
+  },
+  "home": {
+    "heroTitle": "Найдите свое идеальное жилье",
+    "heroSubtitle": "Откройте для себя отличные предложения на отели по всему Азербайджану",
+    "trendingDestinations": "Популярные направления",
+    "homesGuestsLove": "Жилье, которое нравится гостям",
+    "trustedPartner": "Ваш надежный партнер в поиске идеального жилья по всему миру."
+  },
+  "validation": {
+    "selectDestination": "Пожалуйста, выберите направление!",
+    "selectDates": "Пожалуйста, выберите даты!",
+    "selectGuests": "Пожалуйста, выберите хотя бы одного гостя!"
+  },
+  "bookingBar": {
+    "rooms": "Номера",
+    "adults": "Взрослые",
+    "children": "Дети",
+    "pets": "Питомцы",
+    "roomsTitle": "Количество номеров",
+    "adultsTitle": "От 13 лет и старше",
+    "childrenTitle": "От 2 до 12 лет",
+    "petsTitle": "Вы берете с собой служебное животное?",
+    "where": "Куда",
+    "searchDestinations": "Поиск направлений",
+    "checkIn": "Заезд",
+    "checkOut": "Выезд",
+    "addDates": "Добавить даты",
+    "who": "Кто",
+    "addGuests": "Добавить гостей",
+    "suggestedDestinations": "Предлагаемые направления",
+    "search": "Поиск",
+    "when": "Когда"
+  }
 }

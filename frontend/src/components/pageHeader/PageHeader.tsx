@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-  Globe,
+  Heart,
   HelpCircle,
+  Home,
+  Hotel,
   Menu,
   MenuIcon,
   Settings,
@@ -13,9 +15,11 @@ import { useNavigate } from "react-router-dom";
 import LanguageDropdown from "../langMenu/Dropdown";
 import useClickOutSide from "../../hooks/useClickOutside";
 import { ToastMessage } from "../../utils/message";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
+import { motion, AnimatePresence } from "framer-motion";
 import Dialog from "../dialog/Dialog";
 const HotelHeader: React.FC = () => {
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -43,24 +47,7 @@ const HotelHeader: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 bg-red-600 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect x="3" y="8" width="3" height="9" fill="white" rx="0.5" />
-                <rect x="8" y="8" width="3" height="9" fill="white" rx="0.5" />
-                <rect x="13" y="8" width="3" height="9" fill="white" rx="0.5" />
-                <path
-                  d="M2 8L10 3L18 8"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <Hotel className="h-5 w-5 text-white" />
             </div>
             <span className="text-lg sm:text-xl font-semibold text-gray-900">
               Hotels.com
@@ -139,44 +126,137 @@ const HotelHeader: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="absolute top-13 z-20 bg-white right-0 w-full md:hidden mt-4 pt-4 border-t border-gray-200 animate-slideDown">
-            <style>{`
-              @keyframes slideDown {
-                from {
-                  opacity: 0;
-                  transform: translateY(-10px);
-                }
-                to {
-                  opacity: 1;
-                  transform: translateY(0);
-                }
-              }
-              .animate-slideDown {
-                animation: slideDown 0.2s ease-out;
-              }
-            `}</style>
+        {/* Mobile Navigation Drawer */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setMobileMenuOpen(false)}
+                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] md:hidden"
+              />
 
-            <nav className="flex flex-col gap-2">
-              {/* Language selector */}
-              <button className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors w-full text-left">
-                <Globe size={18} className="text-gray-600" />
-                <span className="text-sm font-medium">English</span>
-              </button>
+              {/* Drawer */}
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed top-0 right-0 h-full w-[280px] bg-white z-[70] shadow-2xl md:hidden overflow-y-auto"
+              >
+                <div className="flex flex-col h-full">
+                  {/* Header */}
+                  <div className="p-5 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-red-50 to-white">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
+                        <Hotel className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="font-bold text-gray-900">Hotels.com</span>
+                    </div>
+                    <button
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="p-2 hover:bg-white/80 rounded-full transition-colors"
+                    >
+                      <X size={20} className="text-gray-500" />
+                    </button>
+                  </div>
 
-              {/* Sign in button */}
-              <button className="px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors w-full text-left">
-                Sign in
-              </button>
+                  {/* Menu Items */}
+                  <div className="flex-1 p-4 space-y-1">
+                    <button
+                      onClick={() => {
+                        navigate("/hotel");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3.5 text-gray-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all group"
+                    >
+                      <div className="p-2 bg-gray-50 group-hover:bg-red-100 rounded-lg transition-colors">
+                        <Home className="w-5 h-5 text-gray-500 group-hover:text-red-500" />
+                      </div>
+                      <span className="font-medium">{t("nav.home")}</span>
+                    </button>
 
-              {/* Register button */}
-              <button className="px-4 py-3 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors w-full">
-                Register
-              </button>
-            </nav>
-          </div>
-        )}
+                    <button
+                      onClick={() => {
+                        navigate("/hotel/favourites");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3.5 text-gray-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all group"
+                    >
+                      <div className="p-2 bg-gray-50 group-hover:bg-red-100 rounded-lg transition-colors">
+                        <Heart className="w-5 h-5 text-gray-500 group-hover:text-red-500" />
+                      </div>
+                      <span className="font-medium">{t("nav.favourites")}</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        ToastMessage(t("notAvailableYet"));
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3.5 text-gray-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all group"
+                    >
+                      <div className="p-2 bg-gray-50 group-hover:bg-red-100 rounded-lg transition-colors">
+                        <User className="w-5 h-5" />
+                      </div>
+                      <span className="font-medium">{t("nav.profile")}</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        ToastMessage(t("notAvailableYet"));
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3.5 text-gray-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all group"
+                    >
+                      <div className="p-2 bg-gray-50 group-hover:bg-red-100 rounded-lg transition-colors">
+                        <Settings className="w-5 h-5" />
+                      </div>
+                      <span className="font-medium">{t("nav.settings")}</span>
+                    </button>
+
+                    <div className="my-4 border-t border-gray-100 pt-4 px-4">
+                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                        {t("nav.language")}
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <LanguageDropdown />
+                        <span className="text-sm font-medium text-gray-600 capitalize">
+                          {localStorage.getItem("lang") || "en"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="p-5 border-t border-gray-100 space-y-3">
+                    <button
+                      onClick={() => {
+                        navigate("/login");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full py-3 text-gray-700 font-semibold border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors"
+                    >
+                      {t("nav.signin")}
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/register");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg shadow-red-200 transition-all active:scale-[0.98]"
+                    >
+                      {t("nav.register")}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
 
       <Dialog open={helpDialogOpen} onClose={() => setHelpDialogOpen(false)}>
